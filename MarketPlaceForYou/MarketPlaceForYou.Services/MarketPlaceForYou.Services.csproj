@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarketPlaceForYou.Models\MarketPlaceForYou.Models.csproj" />
+    <ProjectReference Include="..\MarketPlaceForYou.Repositories\MarketPlaceForYou.Repositories.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  marketplaceforyou.api:
+    image: ${DOCKER_REGISTRY-}marketplaceforyouapi
+    container_name: "marketplaceforyou.api"
+    build:
+      context: .
+      dockerfile: MarketPlaceForYou.Api/Dockerfile
+    ports: 
+      - '35010:80'
+      - '35020:443'
