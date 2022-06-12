@@ -20,7 +20,7 @@ services:
     environment:
     - POSTGRES_USER=dbuseryasin
     - POSTGRES_PASSWORD=launchpadmay2022project
-    - POSTGRES_DB = mkpfydb
+    - POSTGRES_DB=mkpfydb
     volumes:
     - marketplaceforyou-db:/var/lib/postgresql/data
     ports:

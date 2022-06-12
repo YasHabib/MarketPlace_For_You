@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Repositories
 {
-    public class UserDbContext:DbContext
+    public class MKPFYDbContext:DbContext
     {
-        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
+        public MKPFYDbContext(DbContextOptions<MKPFYDbContext> options) : base(options)
         {
         }
 
         public DbSet<UserInformation> Users => Set<UserInformation>();
+        public DbSet<ListingInformation> Listings => Set<ListingInformation>();
     }
 }

@@ -11,6 +11,9 @@ namespace MarketPlaceForYou.Models.Entities
 {
     public class ListingInformation
     {
+        //empty constructor
+        public ListingInformation() { }
+
         //Creating a listing
         public ListingInformation(ListingAddVM addListing)
         {
@@ -29,7 +32,7 @@ namespace MarketPlaceForYou.Models.Entities
         //foreign key
         [ForeignKey("UserId")]
         public virtual UserInformation Users { get; set; }
-        //[Display(Name = UserInformation)]
+        [Display(Name = "UserInformation")]
         public virtual Guid UserId { get; set; }
 
         [Required]

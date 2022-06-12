@@ -26,16 +26,6 @@ namespace MarketPlaceForYou.Models.Entities
             Email = user.Email;
         }
 
-        ////In the event the user has not entered their address
-        //public UserInformation(UserVM user)
-        //{
-        //    FirstName = user.FirstName;
-        //    LastName = user.LastName;
-        //    Phone = user.Phone;
-        //    City = user.City;
-        //    Email = user.Email;
-        //}
-
         [Key]
         public Guid UserId { get; set; }
         [Required]
