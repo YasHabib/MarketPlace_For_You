@@ -10,3 +10,21 @@ services:
     ports: 
       - '35010:80'
       - '35020:443'
+    depends_on:
+        - marketplaceforyou.db
+
+  marketplaceforyou.db:
+    restart: on-failure
+    image: "docker pull postgres:14.3-alpine3.16"
+    container_name: "marketplaceforyou.db"
+    environment:
+    - POSTGRES_USER=dbuseryasin
+    - POSTGRES_PASSWORD=launchpadmay2022project
+    - POSTGRES_DB = mkpfydb
+    volumes:
+    - marketplaceforyou-db:/var/lib/postgresql/data
+    ports:
+    - "35030:5432"
+volumes:
+    marketplaceforyou-db:
+
