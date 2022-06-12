@@ -15,8 +15,8 @@ namespace MarketPlaceForYou.Models.Entities
         {
         }
 
-        //In the event the user has entered all the informations including Address
-        public UserInformation(UserVM user)
+        //For updating/Add user informations
+        public UserInformation(UserUpdateVM user)
         {
             FirstName = user.FirstName;
             LastName = user.LastName;
