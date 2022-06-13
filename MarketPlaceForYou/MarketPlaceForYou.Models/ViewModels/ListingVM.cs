@@ -9,7 +9,7 @@ namespace MarketPlaceForYou.Models.ViewModels
 {
     public class ListingVM
     {
-        public ListingVM(ListingInformation listInfo) //fetching information from entity to display these to front end
+        public ListingVM(ListingsEntity listInfo) //fetching information from entity to display these to front end
         {
             ListingId = listInfo.ListingId;
             ProdName = listInfo.ProdName;
@@ -18,6 +18,7 @@ namespace MarketPlaceForYou.Models.ViewModels
             Condition = listInfo.Category;
             Price = listInfo.Price;
             City = listInfo.City;
+            Created = listInfo.Created;
         }
 
         public Guid ListingId { get; set; }
@@ -28,5 +29,6 @@ namespace MarketPlaceForYou.Models.ViewModels
         public int Price { get; set; }
         public string? Address { get; set; }
         public string? City { get; set; }
+        public DateTime Created { get; set; }
     }
 }

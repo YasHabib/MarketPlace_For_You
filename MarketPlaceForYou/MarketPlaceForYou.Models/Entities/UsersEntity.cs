@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Models.Entities
 {
-    public class UserInformation
+    public class UsersEntity
     {
         //Default empty property 
-        public UserInformation()
+        public UsersEntity()
         {
         }
 
         //For updating/Add user informations
-        public UserInformation(UserUpdateVM user)
+        public UsersEntity(UserUpdateVM user)
         {
             FirstName = user.FirstName;
             LastName = user.LastName;
@@ -39,7 +39,7 @@ namespace MarketPlaceForYou.Models.Entities
         public string? Phone { get; set; }
         [Required]
         public string? City { get; set; }
-        [Required]
-        public DateTime Created { get; set; }
+        //[Required]
+        //public DateTime Created { get; set; }
     }
 }

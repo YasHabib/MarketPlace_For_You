@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Models.Entities
 {
-    public class ListingInformation
+    public class ListingsEntity
     {
         //empty constructor
-        public ListingInformation() { }
+        public ListingsEntity() { }
 
         //Creating a listing
-        public ListingInformation(ListingAddVM addListing)
+        public ListingsEntity(ListingAddVM addListing)
         {
             ProdName = addListing.ProdName;
             Description = addListing.Description;
@@ -31,7 +31,7 @@ namespace MarketPlaceForYou.Models.Entities
 
         //foreign key
         [ForeignKey("UserId")]
-        public virtual UserInformation Users { get; set; }
+        public virtual UsersEntity Users { get; set; }
         [Display(Name = "UserInformation")]
         public virtual Guid UserId { get; set; }
 
@@ -49,5 +49,7 @@ namespace MarketPlaceForYou.Models.Entities
         public string? Address { get; set; }
         [Required]
         public string? City { get; set; }
+        [Required]
+        public DateTime Created { get; set; }
     }
 }

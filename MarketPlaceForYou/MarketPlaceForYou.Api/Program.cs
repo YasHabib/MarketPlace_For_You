@@ -1,4 +1,6 @@
 using MarketPlaceForYou.Repositories;
+using MarketPlaceForYou.Services.Services;
+using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 void ConfigureHost(ConfigureHostBuilder host)
@@ -21,8 +23,8 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddControllers();
 
     //Setup dependency injection
-    //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-    //builder.Services.AddScoped<IGameService, GameService>();
+    builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+    builder.Services.AddScoped<IUserService, UserService>();
 }
 
 //Setup HTTP request/response pipeline: (Gets used when the application is running ie APIs)

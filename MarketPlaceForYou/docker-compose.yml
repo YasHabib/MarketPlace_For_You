@@ -15,7 +15,7 @@ services:
 
   marketplaceforyou.db:
     restart: on-failure
-    image: "docker pull postgres:14.3-alpine3.16"
+    image: "postgis/postgis:14-3.2-alpine"
     container_name: "marketplaceforyou.db"
     environment:
     - POSTGRES_USER=dbuseryasin
@@ -24,7 +24,7 @@ services:
     volumes:
     - marketplaceforyou-db:/var/lib/postgresql/data
     ports:
-    - "35030:5432"
+    - "35025:5432"
 volumes:
     marketplaceforyou-db:
 

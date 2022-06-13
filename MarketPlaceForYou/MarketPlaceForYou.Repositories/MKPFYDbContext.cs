@@ -14,7 +14,7 @@ namespace MarketPlaceForYou.Repositories
         {
         }
 
-        public DbSet<UserInformation> Users => Set<UserInformation>();
-        public DbSet<ListingInformation> Listings => Set<ListingInformation>();
+        public DbSet<UsersEntity> Users => Set<UsersEntity>();
+        public DbSet<ListingsEntity> Listings => Set<ListingsEntity>();
     }
 }

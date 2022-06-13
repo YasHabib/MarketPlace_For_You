@@ -11,7 +11,7 @@ namespace MarketPlaceForYou.Models.ViewModels
     public class ListingAddVM
     {
         //to view user's address and city as default while creating a new listing
-        public ListingAddVM(UserInformation users)
+        public ListingAddVM(UsersEntity users)
         {
             Address = users.Address;
             City = users.City;
