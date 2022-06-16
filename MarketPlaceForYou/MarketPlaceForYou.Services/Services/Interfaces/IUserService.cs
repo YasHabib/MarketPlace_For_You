@@ -1,5 +1,6 @@
 ﻿using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.ViewModels;
+using MarketPlaceForYou.Models.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,9 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UsersEntity> Update(UserUpdateVM userUpdate);
+        Task<UserVM> Update(UserUpdateVM userUpdate); //Do not use entity as return type
 
-        //Task<UserUpdateVM> GetUser(Guid userId); //to get the user id to update their information into db
+        Task<UserVM> GetById(Guid userId); //to get the user id to update their information into db
+        Task<UserVM> Create(UserAddVM userAdd);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.ViewModels;
+using MarketPlaceForYou.Models.ViewModels.User;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using System;
@@ -14,34 +15,47 @@ namespace MarketPlaceForYou.Services.Services
     {
         private readonly IUnitOfWork _uow;
 
-        public UserService (UnitOfWork uow)
+        public UserService(UnitOfWork uow)
         {
             _uow = uow;
         }
-        
-        //Need clarification on this step to see if this is right
-        public async Task<UsersEntity> Update(UserUpdateVM src)
+
+        public async Task<UserVM> Create(UserAddVM src)
         {
-            UsersEntity user = new UsersEntity();
+            var newEntity = new User(src);
 
-            if (src == null)
-            {
-                user = new UsersEntity(src); //adds the user to the system.
-                _uow.Users.Update(user);
-                await _uow.SaveAsync();
-            }
-            else //updating the user information in the event the user exists.
-            {
-                user.FirstName = src.FirstName;
-                user.LastName = src.LastName;
-                user.Address = src.Address;
-                user.City = src.City;
-                user.Phone = src.Phone;
+            _uow.Users.Create(newEntity);
+            await _uow.SaveAsync();
 
-                _uow.Users.Update(user);
-                await _uow.SaveAsync();
-            }
-            return user;
+            var model = new UserVM(newEntity);
+
+            return model;
+        }
+
+        public async Task<UserVM> GetById(Guid id)
+        {
+            var result = await _uow.Users.GetById(id);
+            var model = new UserVM(result);
+            return model;
+        }
+
+        //Need clarification on this step to see if this is right
+        public async Task<UserVM> Update(UserUpdateVM src)
+        {
+            //read
+            var entity = await _uow.Users.GetById(src.Id);
+            //perform
+            entity.FirstName = src.FirstName;
+            entity.LastName = src.LastName;
+            entity.Address = src.Address;
+            entity.Phone = src.Phone;
+            entity.City = src.City;
+            //write
+            _uow.Users.Update(entity);
+            await _uow.SaveAsync();
+            //return the user to front end
+            var model = new UserVM(entity);
+            return model;
         }
     }
 }

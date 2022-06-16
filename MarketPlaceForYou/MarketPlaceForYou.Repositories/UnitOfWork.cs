@@ -12,11 +12,8 @@ namespace MarketPlaceForYou.Repositories
     {
         private readonly MKPFYDbContext _context;
 
-
         //Note to self: The following codes can be added later during creating endpoint for each entitys (ie. Users,Listing)
-
         private IUserRepository _userRepository;
-
         public IUserRepository Users
         {
             get
@@ -27,11 +24,22 @@ namespace MarketPlaceForYou.Repositories
             }
         }
 
+        private IListingRepository _lisingRepository;
+        public IListingRepository listings
+        {
+            get
+            {
+                if (_lisingRepository == null)
+                    _lisingRepository = new UserRepository(_context);
+                return _lisingRepository;
+            }
+        }
+        //end 
         public UnitOfWork(MKPFYDbContext context)
         {
             _context = context;
         }
-        //End
+        
 
         public async Task SaveAsync()
         {

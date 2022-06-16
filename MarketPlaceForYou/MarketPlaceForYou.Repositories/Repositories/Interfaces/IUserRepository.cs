@@ -9,8 +9,10 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        void Update(UsersEntity entity);
+        void Update(User entity);
+        void Create(User entity);
+        Task<User> GetById(Guid id);
 
-        //void Delete(UserInformation entity); //For super admin to delete users
+        //void Delete(User entity); //For super admin to delete users
     }
 }

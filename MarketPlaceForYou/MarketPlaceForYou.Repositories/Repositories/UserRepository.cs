@@ -1,5 +1,6 @@
 ﻿using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Repositories.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,21 @@ namespace MarketPlaceForYou.Repositories.Repositories
             _context = context;
         }
 
-        public void Update(UserInformation entity)
+        public void Update(User entity)
         {
             _context.Update(entity);
         }
+
+        public void Create(User entity)
+        {
+            _context.Add(entity);
+        }
+
+        public async Task<User> GetById(Guid id)
+        {
+            var result = await _context.Users.FirstAsync(i => i.Id == id);
+            return result;
+        }
+
     }
 }

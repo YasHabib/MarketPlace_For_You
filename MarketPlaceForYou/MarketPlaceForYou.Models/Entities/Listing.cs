@@ -1,4 +1,4 @@
-﻿using MarketPlaceForYou.Models.ViewModels;
+﻿using MarketPlaceForYou.Models.ViewModels.Listing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Models.Entities
 {
-    public class ListingsEntity
+    public class Listing
     {
         //empty constructor
-        public ListingsEntity() { }
+        public Listing() { }
 
         //Creating a listing
-        public ListingsEntity(ListingAddVM addListing)
+        public Listing(ListingAddVM addListing)
         {
             ProdName = addListing.ProdName;
             Description = addListing.Description;
@@ -30,10 +30,7 @@ namespace MarketPlaceForYou.Models.Entities
         public Guid ListingId { get; set; }
 
         //foreign key
-        [ForeignKey("UserId")]
-        public virtual UsersEntity Users { get; set; }
-        [Display(Name = "UserInformation")]
-        public virtual Guid UserId { get; set; }
+        public Guid UserId { get; set; } //naming convention (EntityNameId)
 
         [Required]
         public string? ProdName { get; set; }
@@ -44,7 +41,7 @@ namespace MarketPlaceForYou.Models.Entities
         [Required]
         public string? Condition { get; set; }
         [Required]
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         [Required]
         public string? Address { get; set; }
         [Required]

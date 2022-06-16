@@ -1,20 +1,20 @@
-﻿using MarketPlaceForYou.Models.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MarketPlaceForYou.Models.Entities;
 
-namespace MarketPlaceForYou.Models.ViewModels
+namespace MarketPlaceForYou.Models.ViewModels.Listing
 {
     public class ListingAddVM
     {
         //to view user's address and city as default while creating a new listing
-        public ListingAddVM(UsersEntity users)
+        public ListingAddVM(Entities.User user)
         {
-            Address = users.Address;
-            City = users.City;
+            Address = user.Address;
+            City = user.City;
         }
 
         [Required]
@@ -26,7 +26,7 @@ namespace MarketPlaceForYou.Models.ViewModels
         [Required]
         public string? Condition { get; set; }
         [Required]
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         [Required]
         public string? Address { get; set; }
         [Required]
