@@ -27,7 +27,7 @@ namespace MarketPlaceForYou.Models.Entities
         }
 
         [Key]
-        public Guid ListingId { get; set; }
+        public Guid Id { get; set; }
 
         //foreign key
         public Guid UserId { get; set; } //naming convention (EntityNameId)

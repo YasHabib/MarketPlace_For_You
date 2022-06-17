@@ -1,0 +1,45 @@
+﻿using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Repositories.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MarketPlaceForYou.Repositories.Repositories
+{
+    public class ListingRepository : IListingRepository
+    {
+        private readonly MKPFYDbContext _context;
+
+        public ListingRepository(MKPFYDbContext context)
+        {
+            _context = context;
+        }
+
+        public void Create(Listing entity)
+        {
+            _context.Add(entity);
+        }
+
+        public void Update(Listing entity)
+        {
+            _context.Update(entity);
+        }
+
+        public async Task<Listing> GetById(Guid id)
+        {
+            var result = await _context.Listings.FirstAsync(i => i.ListingId == id);
+            return result;
+        }
+
+        public async Task<List<Listing>> GetAll()
+        {
+            var result = await _context.Listings.ToListAsync();
+            return result;
+        }
+
+
+    }
+}

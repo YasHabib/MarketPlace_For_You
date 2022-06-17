@@ -8,7 +8,7 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
 {
     public class ListingUpdateVM
     {
-        public Guid ListingId { get; set; }
+        public Guid Id { get; set; }
         public string? ProdName { get; set; }
         public string? Description { get; set; }
         public string? Category { get; set; }

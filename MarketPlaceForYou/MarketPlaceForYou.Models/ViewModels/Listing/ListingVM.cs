@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MarketPlaceForYou.Models.Entities;
-namespace MarketPlaceForYou.Models.Entities;
+
+namespace MarketPlaceForYou.Models.ViewModels.Listing;
 
 public class ListingVM
 {
-    public ListingVM(Listing listInfo) //fetching information from entity to display these to front end
+    public ListingVM(Entities.Listing listInfo) //fetching information from entity to display these to front end
     {
-        ListingId = listInfo.ListingId;
+        ListingId = listInfo.Id;
         ProdName = listInfo.ProdName;
         Description = listInfo.Description;
         Category = listInfo.Category;

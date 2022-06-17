@@ -14,6 +14,8 @@ namespace MarketPlaceForYou.Repositories
 
         //Note to self: The following codes can be added later during creating endpoint for each entitys (ie. Users,Listing)
         private IUserRepository _userRepository;
+        private IListingRepository _lisingRepository;
+
         public IUserRepository Users
         {
             get
@@ -24,18 +26,19 @@ namespace MarketPlaceForYou.Repositories
             }
         }
 
-        private IListingRepository _lisingRepository;
-        public IListingRepository listings
+        public IListingRepository Listings
         {
             get
             {
                 if (_lisingRepository == null)
-                    _lisingRepository = new UserRepository(_context);
+                    _lisingRepository = new ListingRepository(_context);
                 return _lisingRepository;
             }
         }
         //end 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public UnitOfWork(MKPFYDbContext context)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             _context = context;
         }

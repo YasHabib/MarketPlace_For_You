@@ -25,6 +25,8 @@ void ConfigureServices(WebApplicationBuilder builder)
     //Setup dependency injection
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddScoped<IListingService, ListingService>();
+
 }
 
 //Setup HTTP request/response pipeline: (Gets used when the application is running ie APIs)
@@ -33,7 +35,7 @@ void ConfigureServices(WebApplicationBuilder builder)
 void ConfigurePipeline(WebApplication app)
 {
 
-    app.UseHttpsRedirection(); //This will redirect to https if the request is from http
+    //app.UseHttpsRedirection(); //This will redirect to https if the request is from http
 
     app.UseAuthorization(); //is the user allowed to use the particular endpoint?
 

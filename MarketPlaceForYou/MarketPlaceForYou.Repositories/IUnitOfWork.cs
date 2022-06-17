@@ -10,6 +10,7 @@ namespace MarketPlaceForYou.Repositories
     public interface IUnitOfWork
     {
         IUserRepository Users { get; }
+        IListingRepository Listings { get; }
 
         Task SaveAsync();
     }

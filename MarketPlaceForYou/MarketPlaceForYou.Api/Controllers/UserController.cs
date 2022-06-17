@@ -41,7 +41,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public async Task<ActionResult<UserVM>> Get([FromRoute] Guid id)
         {
             try
@@ -60,7 +60,7 @@ namespace MarketPlaceForYou.Api.Controllers
 
 
         //Update user
-        [HttpPost("{id}/update")]
+        [HttpPost("{Id}/update")]
         public async Task<ActionResult<User>> Update([FromBody] UserUpdateVM data)
         {
             try
