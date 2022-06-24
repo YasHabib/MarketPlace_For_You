@@ -30,7 +30,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
 
         public async Task<Listing> GetById(Guid id)
         {
-            var result = await _context.Listings.FirstAsync(i => i.ListingId == id);
+            var result = await _context.Listings.FirstAsync(i => i.Id == id);
             return result;
         }
 

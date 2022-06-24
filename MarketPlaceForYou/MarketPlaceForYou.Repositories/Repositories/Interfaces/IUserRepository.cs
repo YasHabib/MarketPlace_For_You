@@ -11,7 +11,7 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
     {
         void Update(User entity);
         void Create(User entity);
-        Task<User> GetById(Guid id);
+        Task<User> GetById(string id);
 
         //void Delete(User entity); //For super admin to delete users
     }

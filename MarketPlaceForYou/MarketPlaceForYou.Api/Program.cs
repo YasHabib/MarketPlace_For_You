@@ -1,11 +1,15 @@
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services;
 using MarketPlaceForYou.Services.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.IdentityModel.Tokens;
 
 void ConfigureHost(ConfigureHostBuilder host)
 {
 }
+
 
 void ConfigureServices(WebApplicationBuilder builder)
 
@@ -20,6 +24,22 @@ void ConfigureServices(WebApplicationBuilder builder)
                 npgsqlOptions.MigrationsAssembly("MarketPlaceForYou.Repositories");
             }
         ));
+
+    //setup authentication
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+        .AddJwtBearer(options =>
+        {
+            options.Authority = builder.Configuration.GetSection("Auth0").GetValue<string>("Domain");
+            options.Audience = builder.Configuration.GetSection("Auth0").GetValue<string>("Audience");
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                RoleClaimType = "http://schemas.marketforyou.com/roles"
+            };
+
+        });
     builder.Services.AddControllers();
 
     //Setup dependency injection
@@ -37,8 +57,15 @@ void ConfigurePipeline(WebApplication app)
 
     //app.UseHttpsRedirection(); //This will redirect to https if the request is from http
 
-    app.UseAuthorization(); //is the user allowed to use the particular endpoint?
-
+    //allow hosting of static web pages
+    if (!app.Environment.IsProduction())
+    {
+        app.UseDefaultFiles();
+        app.UseStaticFiles();
+    }
+    app.UseAuthentication();
+    
+    app.UseAuthorization(); //:is the user allowed to use the particular endpoint?
     app.MapControllers();
 }
 
@@ -64,11 +91,26 @@ ConfigureHost(builder.Host);
 ConfigureServices(builder);
 var app = builder.Build();
 
+// Execute migrations on startup
+ExecuteMigrations(app);
+
 //Setup HTTP Pipeline:
 
 ConfigurePipeline(app);
 app.Run();
 
+
+//Design-time factory
+//public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
+//{
+//    public MKPFYDbContext CreateDbContext(string[] args)
+//    {
+//        var optionsBuilder = new DbContextOptionsBuilder<MKPFYDbContext>();
+//        optionsBuilder.UseNpgsql("Data Source=mkpfydb");
+
+//        return new MKPFYDbContext(optionsBuilder.Options);
+//    }
+//}
 
 
 //var builder = WebApplication.CreateBuilder(args);

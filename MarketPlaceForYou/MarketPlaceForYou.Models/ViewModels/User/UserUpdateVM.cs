@@ -10,7 +10,7 @@ namespace MarketPlaceForYou.Models.ViewModels
     public class UserUpdateVM
     {
         [Key]
-        public Guid Id { get; set; }
+        public string? Id { get; set; }
         [Required]
         public string FirstName { get; set; } = string.Empty;
         [Required]

@@ -28,7 +28,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
             _context.Add(entity);
         }
 
-        public async Task<User> GetById(Guid id)
+        public async Task<User> GetById(string id)
         {
             var result = await _context.Users.FirstAsync(i => i.Id == id);
             return result;

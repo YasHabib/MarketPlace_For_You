@@ -42,7 +42,7 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
         [HttpGet("{Id}")]
-        public async Task<ActionResult<UserVM>> Get([FromRoute] Guid id)
+        public async Task<ActionResult<UserVM>> Get([FromRoute] string id)
         {
             try
             {

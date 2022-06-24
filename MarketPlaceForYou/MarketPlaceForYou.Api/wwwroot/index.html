@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Website</title>
+    <style>
+        div.wrapper {
+            width: 100%;
+            color: blue;
+            overflow-wrap: anywhere;
+            border: 1px solid blue;
+        }
+
+            div.wrapper p {
+                margin: 10px;
+            }
+
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="title"></h1>
+    <div class="wrapper">
+        <p id="result"></p>
+    </div>
+    <button id="copyButton">Copy to Clipboard</button>
+
+    <script>
+        // Get references to the updatable elements
+        const titleElement = document.getElementById("title");
+        const resultElement = document.getElementById("result");
+
+        // Parse the important parameters out of the url
+        const url = window.location.href;
+        let params;
+
+        if (url.includes("access_token")) {
+            const splitUrl = window.location.href.split("#");
+            const urlSearchParams = new URLSearchParams(splitUrl[1]);
+            params = Object.fromEntries(urlSearchParams.entries());
+        } else {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            params = Object.fromEntries(urlSearchParams.entries());
+        }
+
+        // Update the title and result elements with the appropriate information based on the content of the url
+        if (params.access_token) {
+            titleElement.innerHTML = "Access Token";
+            resultElement.innerHTML = params.access_token;
+        } else {
+            titleElement.innerHTML = "Auth Code";
+            resultElement.innerHTML = params.code;
+        }
+
+        // Setup the copy button event to copy the content of the result element to the clipboard
+        document.getElementById("copyButton").addEventListener('click', function copyToClipboard() {
+            var data = [new ClipboardItem({ "text/plain": new Blob([resultElement.innerHTML], { type: "text/plain" }) })];
+            navigator.clipboard.write(data).then(function () {
+                console.log("Copied to clipboard successfully!");
+            }, function () {
+                console.error("Unable to write to clipboard. :-(");
+            });
+        });
+    </script>
+</body>
+</html>

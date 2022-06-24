@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.ViewModels.User;
+﻿using MarketPlaceForYou.Models.ViewModels;
+using MarketPlaceForYou.Models.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,8 +27,19 @@ namespace MarketPlaceForYou.Models.Entities
             Email = src.Email;
         }
 
+        public User(UserUpdateVM src)
+        {
+            Id = src.Id;
+            FirstName = src.FirstName;
+            LastName = src.LastName;
+            Address = src.Address;
+            Phone = src.Phone;
+            City = src.City;
+        }
+
+
         [Key]
-        public Guid Id { get; set; }
+        public string? Id { get; set; }
         [Required]
         public string? FirstName { get; set; } = string.Empty;
         [Required]
@@ -39,7 +51,10 @@ namespace MarketPlaceForYou.Models.Entities
         public string? Phone { get; set; }
         [Required]
         public string? City { get; set; }
-        [Required]
-        public DateTime Created { get; set; }
+
+        //listing user has created
+        public ICollection<Listing> Listings { get; set; }
+
+
     }
 }

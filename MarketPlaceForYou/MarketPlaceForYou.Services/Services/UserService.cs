@@ -15,7 +15,7 @@ namespace MarketPlaceForYou.Services.Services
     {
         private readonly IUnitOfWork _uow;
 
-        public UserService(UnitOfWork uow)
+        public UserService(IUnitOfWork uow)
         {
             _uow = uow;
         }
@@ -32,7 +32,7 @@ namespace MarketPlaceForYou.Services.Services
             return model;
         }
 
-        public async Task<UserVM> GetById(Guid id)
+        public async Task<UserVM> GetById(string id)
         {
             var result = await _uow.Users.GetById(id);
             var model = new UserVM(result);
