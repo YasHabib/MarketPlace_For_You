@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.ViewModels.Listing;
+﻿using MarketPlaceForYou.Api.Helpers;
+using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -24,8 +25,14 @@ namespace MarketPlaceForYou.Api.Controllers
         {
             try
             {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+
                 // Have the service create the new Listing
-                var result = await _listingService.Create(data);
+                var result = await _listingService.Create(data, userId);
 
                 // Return a 200 response with the GameVM
                 return Ok(result);

@@ -10,7 +10,7 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
 {
     public interface IListingService
     {
-        Task<ListingVM> Create(ListingAddVM src);
+        Task<ListingVM> Create(ListingAddVM src, string userId);
         Task<ListingVM> Update(ListingUpdateVM src);
         Task<ListingVM> GetById(Guid id);
         Task<List<ListingVM>> GetAll();

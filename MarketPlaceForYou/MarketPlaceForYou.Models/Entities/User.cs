@@ -19,6 +19,7 @@ namespace MarketPlaceForYou.Models.Entities
         //For updating/Add user informations
         public User(UserAddVM src)
         {
+            Id = src.Id;
             FirstName = src.FirstName;
             LastName = src.LastName;
             Address = src.Address;

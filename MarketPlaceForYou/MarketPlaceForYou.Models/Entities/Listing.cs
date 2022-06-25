@@ -15,7 +15,7 @@ namespace MarketPlaceForYou.Models.Entities
         public Listing() { }
 
         //Creating a listing
-        public Listing(ListingAddVM addListing)
+        public Listing(ListingAddVM addListing, string userId)
         {
             ProdName = addListing.ProdName;
             Description = addListing.Description;
@@ -24,6 +24,7 @@ namespace MarketPlaceForYou.Models.Entities
             Price = addListing.Price;
             Address = addListing.Address;
             City = addListing.City;
+            UserId = userId;
         }
 
         [Key]

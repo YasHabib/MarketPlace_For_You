@@ -10,7 +10,7 @@ public class ListingVM
 {
     public ListingVM(Entities.Listing listInfo) //fetching information from entity to display these to front end
     {
-        ListingId = listInfo.Id;
+        Id = listInfo.Id;
         ProdName = listInfo.ProdName;
         Description = listInfo.Description;
         Category = listInfo.Category;
@@ -18,9 +18,10 @@ public class ListingVM
         Price = listInfo.Price;
         City = listInfo.City;
         Created = listInfo.Created;
+        UserId = listInfo.UserId;
     }
 
-    public Guid ListingId { get; set; }
+    public Guid Id { get; set; }
     public string? ProdName { get; set; }
     public string? Description { get; set; }
     public string? Category { get; set; }
@@ -29,4 +30,7 @@ public class ListingVM
     public string? Address { get; set; }
     public string? City { get; set; }
     public DateTime Created { get; set; }
+
+    public string UserId { get; set; }
+
 }

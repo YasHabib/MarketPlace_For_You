@@ -19,9 +19,9 @@ namespace MarketPlaceForYou.Services.Services
             _uow = uow;
         }
 
-        public async Task<ListingVM> Create(ListingAddVM src)
+        public async Task<ListingVM> Create(ListingAddVM src, string userId)
         {
-            var newEntity = new Listing(src);
+            var newEntity = new Listing(src, userId);
             _uow.Listings.Create(newEntity);
             await _uow.SaveAsync();
 
