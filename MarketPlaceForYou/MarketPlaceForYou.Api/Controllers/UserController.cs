@@ -2,6 +2,7 @@
 using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.User;
 using MarketPlaceForYou.Services.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ namespace MarketPlaceForYou.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -41,7 +43,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<UserVM>> Get([FromRoute] string id)
         {
             try
@@ -60,7 +62,7 @@ namespace MarketPlaceForYou.Api.Controllers
 
 
         //Update user
-        [HttpPost("{Id}/update")]
+        [HttpPut]
         public async Task<ActionResult<User>> Update([FromBody] UserUpdateVM data)
         {
             try

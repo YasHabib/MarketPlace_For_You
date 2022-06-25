@@ -40,8 +40,8 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        // Get all games
-        [HttpGet]
+        
+        [HttpGet("all")]
         public async Task<ActionResult<List<ListingVM>>> GetAll()
         {
             try
@@ -58,7 +58,6 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        // Get a specific game by Id
         [HttpGet("{id}")]
         public async Task<ActionResult<ListingVM>> GetById([FromRoute] Guid id)
         {
@@ -77,7 +76,7 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
 
-        [HttpPut("{id}/update")]
+        [HttpPut]
         public async Task<ActionResult <ListingVM>> Update([FromBody] ListingUpdateVM data)
         {
             try
