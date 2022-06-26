@@ -26,7 +26,7 @@ namespace MarketPlaceForYou.Models.ViewModels
         public string? FirstName { get; set; } = string.Empty;
         [Required]
         public string? LastName { get; set; } = string.Empty;
-        //[Required]
+        [Required]
         public string? Email { get; } = string.Empty;
         public string? Address { get; set; } = string.Empty;
         [Required]

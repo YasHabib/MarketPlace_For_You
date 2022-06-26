@@ -60,5 +60,12 @@ namespace MarketPlaceForYou.Services.Services
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
+
+        public async Task Delete(Guid id)
+        {
+            var entity = await _uow.Listings.GetById(id);
+            _uow.Listings.Delete(entity);
+            await _uow.SaveAsync();
+        }
     }
 }

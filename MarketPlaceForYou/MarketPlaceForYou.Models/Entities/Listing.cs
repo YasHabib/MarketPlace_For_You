@@ -20,7 +20,7 @@ namespace MarketPlaceForYou.Models.Entities
             ProdName = addListing.ProdName;
             Description = addListing.Description;
             Category = addListing.Category;
-            Condition = addListing.Category;
+            Condition = addListing.Condition;
             Price = addListing.Price;
             Address = addListing.Address;
             City = addListing.City;

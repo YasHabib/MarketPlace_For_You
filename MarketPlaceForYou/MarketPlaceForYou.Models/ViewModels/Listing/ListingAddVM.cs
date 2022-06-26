@@ -11,11 +11,11 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
     public class ListingAddVM
     {
         //to view user's address and city as default while creating a new listing
-        public ListingAddVM(Entities.User user)
-        {
-            Address = user.Address;
-            City = user.City;
-        }
+        //public ListingAddVM(Entities.User user)
+        //{
+        //    Address = user.Address;
+        //    City = user.City;
+        //}
 
         [Required]
         public string? ProdName { get; set; }

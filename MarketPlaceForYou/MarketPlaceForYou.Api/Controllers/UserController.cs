@@ -62,7 +62,7 @@ namespace MarketPlaceForYou.Api.Controllers
 
 
         //Update user
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<ActionResult<User>> Update([FromBody] UserUpdateVM data)
         {
             try

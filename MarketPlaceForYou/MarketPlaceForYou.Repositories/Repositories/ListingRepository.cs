@@ -40,6 +40,11 @@ namespace MarketPlaceForYou.Repositories.Repositories
             return result;
         }
 
+        public void Delete(Listing entity)
+        {
+            _context.Remove(entity);
+        }
+
 
     }
 }
