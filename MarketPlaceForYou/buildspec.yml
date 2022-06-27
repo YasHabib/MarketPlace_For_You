@@ -19,4 +19,4 @@ phases:
        - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/marketforyou:api
        - cp Dockerrun.aws.json ../Dockerrun.aws.json
 artifacts:
-  files: Dockerrun.aws.jason
+  files: Dockerrun.aws.json
