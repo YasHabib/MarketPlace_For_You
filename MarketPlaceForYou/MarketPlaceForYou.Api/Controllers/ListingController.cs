@@ -34,7 +34,7 @@ namespace MarketPlaceForYou.Api.Controllers
                 // Have the service create the new Listing
                 var result = await _listingService.Create(data, userId);
 
-                // Return a 200 response with the GameVM
+                // Return a 200 response with the ListingVM
                 return Ok(result);
             }
             catch (DbUpdateException)
@@ -53,10 +53,10 @@ namespace MarketPlaceForYou.Api.Controllers
         {
             try
             {
-                // Get the Game entities from the service
+                // Get the listing entities from the service
                 var results = await _listingService.GetAll();
 
-                // Return a 200 response with the GameVMs
+                // Return a 200 response with the ListingVMs
                 return Ok(results);
             }
             catch (Exception ex)
@@ -70,15 +70,15 @@ namespace MarketPlaceForYou.Api.Controllers
         {
             try
             {
-                // Get the requested Game entity from the service
+                // Get the requested Listing entity from the service
                 var result = await _listingService.GetById(id);
 
-                // Return a 200 response with the GameVM
+                // Return a 200 response with the ListingVM
                 return Ok(result);
             }
             catch
             {
-                return BadRequest(new { message = "Unable to retrieve the requested game" });
+                return BadRequest(new { message = "Unable to retrieve the requested Listing" });
             }
         }
 
@@ -88,10 +88,10 @@ namespace MarketPlaceForYou.Api.Controllers
         {
             try
             {
-                // Update Game entity from the service
+                // Update Listing entity from the service
                 var result = await _listingService.Update(data);
 
-                // Return a 200 response with the GameVM
+                // Return a 200 response with the ListingVM
                 return Ok(result);
             }
             catch (DbUpdateException)
@@ -101,6 +101,25 @@ namespace MarketPlaceForYou.Api.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        //Get all by city
+        [HttpGet("{City}")]
+        public async Task<ActionResult<List<ListingVM>>> GetAllByCity(ListingAddVM src)
+        {
+            try
+            {
+                var city = src.City;
+                // Get the Listing entities from the service
+                var results = await _listingService.GetAllByCity(city);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
 
@@ -120,7 +139,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
             catch
             {
-                return BadRequest(new { message = "Unable to delete the requested game" });
+                return BadRequest(new { message = "Unable to delete the requested Listing" });
             }
         }
     }

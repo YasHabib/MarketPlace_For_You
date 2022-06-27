@@ -13,6 +13,7 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         void Create(Listing entity);
         Task<Listing> GetById(Guid id);
         Task<List<Listing>> GetAll();
+        Task<List<Listing>> GetAllByCity(string city);
 
         void Delete(Listing entity);
     }

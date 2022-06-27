@@ -40,6 +40,12 @@ namespace MarketPlaceForYou.Repositories.Repositories
             return result;
         }
 
+        public async Task<List<Listing>> GetAllByCity(string city)
+        {
+            var result = await _context.Listings.ToListAsync();
+            return result;
+        }
+
         public void Delete(Listing entity)
         {
             _context.Remove(entity);
