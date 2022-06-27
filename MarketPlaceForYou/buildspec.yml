@@ -11,7 +11,7 @@ phases:
        - echo Building the Docker image ...
        - cd MarketPlaceForYou
        - docker build -t marketforyou:api -f ./MarketPlaceForYou.Api/Dockerfile .
-       - docker tag marketforyou:api $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/marketplaceforyou:api
+       - docker tag marketforyou:api $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/marketforyou:api
   post_build:
     commands:
        - echo Build completed on `date`
