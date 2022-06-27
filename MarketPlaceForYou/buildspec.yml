@@ -3,7 +3,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
-       - echo logging in to Amazon ECR ...
+       - echo logging in to Amazon ECR...
        - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
     commands:
@@ -15,7 +15,7 @@ phases:
   post_build:
     commands:
        - echo Build completed on `date`
-       - echo Pushing the Docker image ...
+       - echo Pushing the Docker image...
        - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/marketforyou:api
        - cp Dockerrun.aws.json ../Dockerrun.aws.json
 artifacts:
