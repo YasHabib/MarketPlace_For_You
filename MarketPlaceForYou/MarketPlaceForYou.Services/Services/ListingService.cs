@@ -68,6 +68,14 @@ namespace MarketPlaceForYou.Services.Services
             return models;
         }
 
+
+        public async Task<List<ListingVM>> GetAllByCategory(string category)
+        {
+            var results = await _uow.Listings.GetAllByCategory(category);
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            return models;
+        }
+
         public async Task Delete(Guid id)
         {
             var entity = await _uow.Listings.GetById(id);

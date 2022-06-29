@@ -82,6 +82,24 @@ namespace MarketPlaceForYou.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
+
+        [HttpGet("all/{category}")]
+        public async Task<ActionResult<List<ListingVM>>> GetAllByCategory(string category)
+        {
+            try
+            {
+                // Get the listing entities from the service
+                var results = await _listingService.GetAllByCity(category);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ListingVM>> GetById([FromRoute] Guid id)
         {
