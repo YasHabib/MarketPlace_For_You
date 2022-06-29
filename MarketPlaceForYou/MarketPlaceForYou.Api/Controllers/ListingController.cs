@@ -83,13 +83,13 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        [HttpGet("all/{category}")]
+        [HttpGet("all/category/{category}")]
         public async Task<ActionResult<List<ListingVM>>> GetAllByCategory(string category)
         {
             try
             {
                 // Get the listing entities from the service
-                var results = await _listingService.GetAllByCity(category);
+                var results = await _listingService.GetAllByCategory(category);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
