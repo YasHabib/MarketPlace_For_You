@@ -65,7 +65,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        [HttpGet("{city}")]
+        [HttpGet("all/{city}")]
         public async Task<ActionResult<List<ListingVM>>> GetAllByCity(string city)
         {
             try
