@@ -33,6 +33,12 @@ namespace MarketPlaceForYou.Repositories.Repositories
             var result = await _context.Listings.FirstAsync(i => i.Id == id);
             return result;
         }
+        public async Task<Listing> Search(string searchString)
+        {
+            var result = await _context.Listings.Where(i => i.ProdName && i.Description == searchString);
+            return result;
+        }
+
 
         public async Task<List<Listing>> GetAll()
         {
@@ -44,6 +50,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
         {
             _context.Remove(entity);
         }
+
 
 
     }
