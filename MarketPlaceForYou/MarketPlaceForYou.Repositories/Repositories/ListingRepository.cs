@@ -35,7 +35,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
         public async Task<Listing> Search(string searchString)
         {
-            var result = await _context.Listings.Where(i => i.ProdName && i.Description == searchString);
+            var result = await _context.Listings.Where(i => i.ProdName == searchString && i.Description == searchString).ToListAsync();
             return result;
         }
 
