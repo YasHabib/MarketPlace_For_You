@@ -65,6 +65,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ListingVM>> GetById([FromRoute] Guid id)
         {
