@@ -61,21 +61,12 @@ namespace MarketPlaceForYou.Services.Services
             return models;
         }
 
-<<<<<<< HEAD
-        //public async Task<List<ListingVM>> GetAllByCity(string city)
-        //{
-        //    var results = await _uow.Listings.GetAllByCity(city);
-        //    var models = results.Select(listing => new ListingVM(listing)).ToList();
-        //    return models;
-        //}
-=======
         public async Task<List<ListingVM>> GetAllByCity(string city)
         {
             var results = await _uow.Listings.GetAllByCity(city);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
->>>>>>> filterByCity
 
         public async Task Delete(Guid id)
         {

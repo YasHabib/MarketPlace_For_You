@@ -14,13 +14,8 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
         Task<ListingVM> Update(ListingUpdateVM src);
         Task<ListingVM> GetById(Guid id);
         Task<List<ListingVM>> GetAll();
-<<<<<<< HEAD
-        //Task<List<ListingVM>> GetAllByCity(string city);
-=======
 
         Task<List<ListingVM>> GetAllByCity(string city);
-
->>>>>>> filterByCity
         Task Delete(Guid id);
     }
 }

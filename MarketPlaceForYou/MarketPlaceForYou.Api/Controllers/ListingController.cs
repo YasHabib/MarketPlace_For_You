@@ -66,6 +66,22 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
 
+        [HttpGet("all/{city}")]
+        public async Task<ActionResult<List<ListingVM>>> GetAllByCity(string city)
+        {
+            try
+            {
+                // Get the listing entities from the service
+                var results = await _listingService.GetAllByCity(city);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
         [HttpGet("{id}")]
         public async Task<ActionResult<ListingVM>> GetById([FromRoute] Guid id)
         {
@@ -105,24 +121,6 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        //Get all by city
-        //[HttpGet("{City}")]
-        //public async Task<ActionResult<List<ListingVM>>> GetAllByCity(ListingAddVM src)
-        //{
-        //    try
-        //    {
-        //        var city = src.City;
-        //        // Get the Listing entities from the service
-        //        var results = await _listingService.GetAllByCity(city);
-
-        //        // Return a 200 response with the ListingVMs
-        //        return Ok(results);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
-        //    }
-        //}
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
