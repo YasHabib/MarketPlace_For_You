@@ -14,6 +14,8 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
         Task<ListingVM> Update(ListingUpdateVM src);
         Task<ListingVM> GetById(Guid id);
         Task<List<ListingVM>> GetAll();
+        Task<List<ListingVM>> Search(string searchString);
+
         Task Delete(Guid id);
     }
 }

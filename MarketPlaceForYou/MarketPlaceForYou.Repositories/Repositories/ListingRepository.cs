@@ -33,11 +33,28 @@ namespace MarketPlaceForYou.Repositories.Repositories
             var result = await _context.Listings.FirstAsync(i => i.Id == id);
             return result;
         }
-        public async Task<Listing> Search(string searchString)
+
+        public async Task<List<Listing>> Search(string searchString)
         {
-            var result = await _context.Listings.Where(i => i.ProdName == searchString && i.Description == searchString).ToListAsync();
+            var result = await _context.Listings.Where(i => i.ProdName.Contains(searchString) && i.Description.Contains(searchString)).ToListAsync();
             return result;
         }
+
+        //public async Task<List<Listing>> Search(string searchString)
+        //{
+
+        //    if (!string.IsNullOrEmpty(searchString))
+        //    {
+        //       var result = await _context.Listings.Where(i => i.ProdName.Contains(searchString) && i.Description.Contains(searchString)).ToListAsync();
+        //        return result;
+        //    }
+        //    else
+        //    {
+        //        var result = await _context.Listings.ToListAsync();
+        //        return result;
+        //    }
+
+        //}
 
 
         public async Task<List<Listing>> GetAll()

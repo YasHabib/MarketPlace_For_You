@@ -47,7 +47,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        
+
         [HttpGet("all")]
         public async Task<ActionResult<List<ListingVM>>> GetAll()
         {
@@ -65,6 +65,23 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
+        [HttpGet("search/{searchString}")]
+
+        public async Task<ActionResult<List<ListingVM>>> Search(string searchString)
+        {
+            try
+            {
+                // Get the Game entities from the service
+                var results = await _listingService.Search(searchString);
+
+                // Return a 200 response with the GameVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
         [HttpGet("{id}")]
         public async Task<ActionResult<ListingVM>> GetById([FromRoute] Guid id)
         {
