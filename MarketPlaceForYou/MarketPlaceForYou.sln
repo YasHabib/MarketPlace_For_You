@@ -5,13 +5,19 @@ VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlaceForYou.Api", "MarketPlaceForYou.Api\MarketPlaceForYou.Api.csproj", "{D26C5B95-F8D7-4EEF-A685-D5AD37956641}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPlaceForYou.Models", "MarketPlaceForYou.Models\MarketPlaceForYou.Models.csproj", "{C4BBEA7E-EE20-44B6-9122-670190B770A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlaceForYou.Models", "MarketPlaceForYou.Models\MarketPlaceForYou.Models.csproj", "{C4BBEA7E-EE20-44B6-9122-670190B770A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPlaceForYou.Repositories", "MarketPlaceForYou.Repositories\MarketPlaceForYou.Repositories.csproj", "{8927DFA2-80EA-415C-8E65-BC6300538324}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlaceForYou.Repositories", "MarketPlaceForYou.Repositories\MarketPlaceForYou.Repositories.csproj", "{8927DFA2-80EA-415C-8E65-BC6300538324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPlaceForYou.Services", "MarketPlaceForYou.Services\MarketPlaceForYou.Services.csproj", "{41F6D6C5-EB4E-47E9-9CC3-0F676C673739}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlaceForYou.Services", "MarketPlaceForYou.Services\MarketPlaceForYou.Services.csproj", "{41F6D6C5-EB4E-47E9-9CC3-0F676C673739}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{98B28B5D-9F91-477C-89C3-74FB3ED46AB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA5C728F-F98C-413F-823D-E9CBDE117CE6}"
+	ProjectSection(SolutionItems) = preProject
+		buildspec.yml = buildspec.yml
+		Dockerrun.aws.json = Dockerrun.aws.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

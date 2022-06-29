@@ -60,7 +60,19 @@ namespace MarketPlaceForYou.Services.Services
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
+        public async Task<List<ListingVM>> GetAllByCity(string city)
+        {
+            var results = await _uow.Listings.GetAllByCity(city);
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            return models;
+        }
 
+        public async Task<List<ListingVM>> GetAllByCategory(string category)
+        {
+            var results = await _uow.Listings.GetAllByCategory(category);
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            return models;
+        }
         public async Task<List<ListingVM>> Search(string searchString)
         {
             var results = await _uow.Listings.Search(searchString);

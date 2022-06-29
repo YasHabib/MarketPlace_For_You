@@ -14,7 +14,8 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         Task<Listing> GetById(Guid id);
         Task<List<Listing>> GetAll();
         Task<List<Listing>> Search(string searchString);
-
+        Task<List<Listing>> GetAllByCity(string city);
+        Task<List<Listing>> GetAllByCategory(string category);
         void Delete(Listing entity);
     }
 }
