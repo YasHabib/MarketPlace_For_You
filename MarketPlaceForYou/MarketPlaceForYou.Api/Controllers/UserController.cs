@@ -15,13 +15,23 @@ namespace MarketPlaceForYou.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-
+        /// <summary>
+        /// Controller for user
+        /// </summary>
+        /// <param name="userService"></param>
         public UserController(IUserService userService)
         {
             _userService = userService;
         }
 
-        //Create user
+        /// <summary>
+        /// Creates a user
+        /// </summary>
+        /// <param name="data">User data</param>
+        /// <returns>Creates a user and writes the info in databse</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
         [HttpPost]
         public async Task<ActionResult<UserVM>> Create([FromBody] UserAddVM data)
         {
@@ -43,6 +53,14 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets a user by their Auth id
+        /// </summary>
+        /// <param name="id">User data</param>
+        /// <returns>Returns a user by their id</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<UserVM>> Get([FromRoute] string id)
         {
@@ -60,8 +78,14 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-
-        //Update user
+        /// <summary>
+        /// Updates the user
+        /// </summary>
+        /// <param name="data">User data</param>
+        /// <returns>Updates a user and writes the info in databse</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
         [HttpPut("{id}")]
         public async Task<ActionResult<User>> Update([FromBody] UserUpdateVM data)
         {

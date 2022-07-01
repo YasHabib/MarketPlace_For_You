@@ -14,11 +14,23 @@ namespace MarketPlaceForYou.Api.Controllers
     public class ListingController : ControllerBase
     {
         private readonly IListingService _listingService;
-
+        /// <summary>
+        /// Controller for listing
+        /// </summary>
+        /// <param name="listingService"></param>
         public ListingController(IListingService listingService)
         {
             _listingService = listingService;
         }
+
+        /// <summary>
+        /// Creates a listing
+        /// </summary>
+        /// <param name="data">Listing data</param>
+        /// <returns>Returns the game with an ID</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
 
         [HttpPost]
         public async Task<ActionResult<ListingVM>> Create([FromBody] ListingAddVM data)
@@ -47,7 +59,13 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        
+        /// <summary>
+        /// Returns all the created listings
+        /// </summary>
+        /// <returns>Returns all listings from databse</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
         [HttpGet("all")]
         public async Task<ActionResult<List<ListingVM>>> GetAll()
         {
@@ -65,7 +83,14 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Filters all the listings by city
+        /// </summary>
+        /// <param name="city">Listing data</param>
+        /// <returns>Returns all listings by city</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
         [HttpGet("all/{city}")]
         public async Task<ActionResult<List<ListingVM>>> GetAllByCity(string city)
         {
@@ -83,6 +108,14 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Filters all listings by Category
+        /// </summary>
+        /// <param name="category">Listing data</param>
+        /// <returns>Returns all listings by category</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
         [HttpGet("all/category/{category}")]
         public async Task<ActionResult<List<ListingVM>>> GetAllByCategory(string category)
         {
@@ -100,6 +133,14 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Return a listing by their specific id
+        /// </summary>
+        /// <param name="id">Listing data</param>
+        /// <returns>Return a listing by id</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<ListingVM>> GetById([FromRoute] Guid id)
         {
@@ -118,6 +159,14 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
 
+        /// <summary>
+        /// Updates a listing
+        /// </summary>
+        /// <param name="data">Listing data</param>
+        /// <returns>Returns the updated listing to database</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
         [HttpPut]
         public async Task<ActionResult <ListingVM>> Update([FromBody] ListingUpdateVM data)
         {
@@ -140,6 +189,14 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
 
+        /// <summary>
+        /// Deletes a listing (I do not think we need this, I had to create it as I had to delete some listings)
+        /// </summary>
+        /// <param name="id">Listing data</param>
+        /// <returns>Deletes a listing</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {

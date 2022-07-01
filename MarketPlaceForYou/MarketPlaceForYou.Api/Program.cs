@@ -75,7 +75,13 @@ void ConfigurePipeline(WebApplication app)
     {
         app.UseDefaultFiles();
         app.UseStaticFiles();
-        app.UseSwagger();
+        app.UseSwagger(); //this will make swagger json file available. 
+
+        //make swagger UI available at /swagger
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "MarketForYou V1");
+        });
     }
     app.UseAuthentication();
     
