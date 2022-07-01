@@ -20,6 +20,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
 
         public void Create(Listing entity)
         {
+            entity.Created = DateTime.UtcNow;
             _context.Add(entity);
         }
 

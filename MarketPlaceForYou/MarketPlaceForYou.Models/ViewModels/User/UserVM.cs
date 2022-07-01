@@ -13,6 +13,7 @@ namespace MarketPlaceForYou.Models.ViewModels
 
         public UserVM(Entities.User userInfo)
         {
+            Id = userInfo.Id;
             FirstName = userInfo.FirstName;
             LastName = userInfo.LastName;
             Email = userInfo.Email;
@@ -21,17 +22,12 @@ namespace MarketPlaceForYou.Models.ViewModels
             City = userInfo.City;
         }
 
-
-        [Required]
-        public string? FirstName { get; set; } = string.Empty;
-        [Required]
-        public string? LastName { get; set; } = string.Empty;
-        [Required]
-        public string? Email { get; } = string.Empty;
-        public string? Address { get; set; } = string.Empty;
-        [Required]
+        public string? Id { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Email { get; }
+        public string? Address { get; set; }
         public string? Phone { get; set; }
-        [Required]
         public string? City { get; set; }
     }
 }
