@@ -51,6 +51,14 @@ void ConfigureServices(WebApplicationBuilder builder)
         var modelsXmlFile = Path.Combine(AppContext.BaseDirectory, "MarketPlaceForYou.Models.xml");
         options.IncludeXmlComments(apiXmlFile);
         options.IncludeXmlComments(modelsXmlFile);
+
+        options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Scheme = "bearer"
+        });
     });
 
     builder.Services.AddControllers();
