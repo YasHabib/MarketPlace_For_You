@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 void ConfigureHost(ConfigureHostBuilder host)
 {
@@ -40,6 +41,18 @@ void ConfigureServices(WebApplicationBuilder builder)
             };
 
         });
+
+    //swagger
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo { Title = "MarketForYou API", Version = "V1" });
+
+        var apiXmlFile = Path.Combine(AppContext.BaseDirectory, "MarketPlaceForYou.Api.xml");
+        var modelsXmlFile = Path.Combine(AppContext.BaseDirectory, "MarketPlaceForYou.Models.xml");
+        options.IncludeXmlComments(apiXmlFile);
+        options.IncludeXmlComments(modelsXmlFile);
+    });
+
     builder.Services.AddControllers();
 
     //Setup dependency injection
@@ -62,6 +75,7 @@ void ConfigurePipeline(WebApplication app)
     {
         app.UseDefaultFiles();
         app.UseStaticFiles();
+        app.UseSwagger();
     }
     app.UseAuthentication();
     
