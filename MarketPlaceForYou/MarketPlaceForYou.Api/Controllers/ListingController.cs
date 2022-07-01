@@ -84,7 +84,7 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
         /// <summary>
-        /// Filters all the listings by city
+        /// Filters all the listings by city (works but trying to localize it or encode the city name)
         /// </summary>
         /// <param name="city">Listing data</param>
         /// <returns>Returns all listings by city</returns>
@@ -109,7 +109,7 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
         /// <summary>
-        /// Filters all listings by Category
+        /// Filters all listings by Category (works but trying to localize it or encode the city name)
         /// </summary>
         /// <param name="category">Listing data</param>
         /// <returns>Returns all listings by category</returns>
