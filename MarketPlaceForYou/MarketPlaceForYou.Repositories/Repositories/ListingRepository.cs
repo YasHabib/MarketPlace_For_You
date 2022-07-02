@@ -53,6 +53,12 @@ namespace MarketPlaceForYou.Repositories.Repositories
             return result;
         }
 
+        public async Task<List<Listing>> Deals(decimal price)
+        {
+            var results = await _context.Listings.OrderBy(i => i.Price).ToListAsync();
+            return results;
+        }
+
         public void Delete(Listing entity)
         {
             _context.Remove(entity);

@@ -158,6 +158,27 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Deals for you and More deals for you
+        /// </summary>
+        /// <param name="price"></param>
+        /// <returns></returns>
+        [HttpGet("deals")]
+        public async Task<ActionResult<List<ListingVM>>> Deals(decimal price)
+        {
+            try
+            {
+                // Get the listing entities from the service
+                var results = await _listingService.Deals(price);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
 
         /// <summary>
         /// Updates a listing

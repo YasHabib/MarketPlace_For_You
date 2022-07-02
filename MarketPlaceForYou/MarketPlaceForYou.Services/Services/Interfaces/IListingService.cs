@@ -17,6 +17,8 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
 
         Task<List<ListingVM>> GetAllByCity(string city);
         Task<List<ListingVM>> GetAllByCategory(string category);
+        Task<List<ListingVM>> Deals(decimal price);
+
 
         Task Delete(Guid id);
     }
