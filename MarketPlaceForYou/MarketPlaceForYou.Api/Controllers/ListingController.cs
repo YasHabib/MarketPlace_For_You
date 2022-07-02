@@ -112,7 +112,7 @@ namespace MarketPlaceForYou.Api.Controllers
                 // Return a 200 response with the GameVMs
                 return Ok(results);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest(new { message = "There are no listing associated with {0}",searchString});
             }
