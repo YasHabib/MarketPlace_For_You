@@ -75,7 +75,7 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task<List<ListingVM>> Search(string searchString)
         {
-                var results = await _uow.Listings.Search(searchString.ToLower());
+                var results = await _uow.Listings.Search(searchString);
                 var models = results.Select(listing => new ListingVM(listing)).ToList();
                 return models;
         }

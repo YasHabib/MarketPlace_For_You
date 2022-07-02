@@ -100,7 +100,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        [HttpGet("search/{searchString}")]
+        [HttpGet("search/{searchString}/{category}")]
 
         public async Task<ActionResult<List<ListingVM>>> Search(string searchString)
         {
