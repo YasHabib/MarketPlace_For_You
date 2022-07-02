@@ -43,7 +43,7 @@ public class ListingVM
     /// </summary>
     public string? Category { get; set; }
     /// <summary>
-    /// Listing Condition (My condition is bad from all the commenting
+    /// Listing Condition (My condition is bad from all the commenting)
     /// </summary>
     public string? Condition { get; set; }
     /// <summary>
