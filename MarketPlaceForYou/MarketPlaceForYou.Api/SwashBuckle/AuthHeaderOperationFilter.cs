@@ -7,7 +7,11 @@ namespace MarketPlaceForYou.Api.SwashBuckle
 /// Code knows how to use JSON token....something...
 /// </summary>
     public class AuthHeaderOperationFilter: IOperationFilter
-    {
+    {/// <summary>
+    /// It does something
+    /// </summary>
+    /// <param name="operation"></param>
+    /// <param name="context"></param>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             // Only authorize the endpoint if it has an Authorize attribute
