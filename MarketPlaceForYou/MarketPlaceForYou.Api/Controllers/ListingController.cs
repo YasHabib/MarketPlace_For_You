@@ -4,6 +4,7 @@ using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 
@@ -16,15 +17,18 @@ namespace MarketPlaceForYou.Api.Controllers
     {
         private readonly IListingService _listingService;
         //private readonly IStringLocalizer<ListingController> _localizer;
-        /// <summary>
-        /// Controller for listing
-        /// </summary>
-        /// <param name="listingService"></param>
-        public ListingController(IListingService listingService)
+        private readonly IStringLocalizer<ListingController> _localizer;
+
+/// <summary>
+/// API for listings
+/// </summary>
+/// <param name="listingService"></param>
+/// <param name="localizer"></param>
+        public ListingController(IListingService listingService, IStringLocalizer<ListingController> localizer)
         {
             _listingService = listingService;
+            _localizer = localizer;
         }
-
 
         /// <summary>
         /// Creates a listing
@@ -99,6 +103,7 @@ namespace MarketPlaceForYou.Api.Controllers
         {
             try
             {
+                var data = _localizer["CALGARY", "BROOKS", "CAMROSE"];
                 // Get the listing entities from the service
                 var results = await _listingService.GetAllByCity(city);
 
@@ -124,6 +129,7 @@ namespace MarketPlaceForYou.Api.Controllers
         {
             try
             {
+                var data = _localizer["CALGARY", "BROOKS", "CAMROSE"];
                 // Get the listing entities from the service
                 var results = await _listingService.GetAllByCategory(category);
 

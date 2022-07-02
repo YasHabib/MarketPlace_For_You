@@ -62,7 +62,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     });
 
     builder.Services.AddControllers();
-    builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");//This will put all the localizations in a folder named Resources
+    builder.Services.AddLocalization(options => options.ResourcesPath = "Resource");//This will put all the localizations in a folder named Resources
 
     //Setup dependency injection
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
