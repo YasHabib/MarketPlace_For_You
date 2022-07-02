@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Configuration;
 
 void ConfigureHost(ConfigureHostBuilder host)
 {
@@ -13,7 +14,6 @@ void ConfigureHost(ConfigureHostBuilder host)
 
 
 void ConfigureServices(WebApplicationBuilder builder)
-
 {
     //Setup the database using the ApplicationDbContext
     builder.Services.AddDbContext<MKPFYDbContext>(options =>
@@ -62,6 +62,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     });
 
     builder.Services.AddControllers();
+    builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");//This will put all the localizations in a folder named Resources
 
     //Setup dependency injection
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -69,10 +70,17 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IListingService, ListingService>();
 
 }
+//for Localization
+
+
+//void GetLocalizationOptions(Configuration configuration)
+//{
+//    var cities = configuration.GetSection("Cities");
+//}
+
+
 
 //Setup HTTP request/response pipeline: (Gets used when the application is running ie APIs)
-
-
 void ConfigurePipeline(WebApplication app)
 {
 

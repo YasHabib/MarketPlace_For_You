@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace MarketPlaceForYou.Api.Controllers
 {
@@ -14,6 +15,7 @@ namespace MarketPlaceForYou.Api.Controllers
     public class ListingController : ControllerBase
     {
         private readonly IListingService _listingService;
+        //private readonly IStringLocalizer<ListingController> _localizer;
         /// <summary>
         /// Controller for listing
         /// </summary>
@@ -22,6 +24,7 @@ namespace MarketPlaceForYou.Api.Controllers
         {
             _listingService = listingService;
         }
+
 
         /// <summary>
         /// Creates a listing
