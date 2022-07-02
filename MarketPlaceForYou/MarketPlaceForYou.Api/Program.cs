@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Configuration;
 
 void ConfigureHost(ConfigureHostBuilder host)
 {
@@ -13,7 +14,6 @@ void ConfigureHost(ConfigureHostBuilder host)
 
 
 void ConfigureServices(WebApplicationBuilder builder)
-
 {
     //Setup the database using the ApplicationDbContext
     builder.Services.AddDbContext<MKPFYDbContext>(options =>
@@ -70,12 +70,11 @@ void ConfigureServices(WebApplicationBuilder builder)
 
 }
 
+
+
 //Setup HTTP request/response pipeline: (Gets used when the application is running ie APIs)
-
-
 void ConfigurePipeline(WebApplication app)
 {
-
     //app.UseHttpsRedirection(); //This will redirect to https if the request is from http
 
     //allow hosting of static web pages
