@@ -83,7 +83,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        [HttpGet("all/category/{category}")]
+        [HttpGet("all/category{category}")]
         public async Task<ActionResult<List<ListingVM>>> GetAllByCategory(string category)
         {
             try
@@ -100,8 +100,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
-        [HttpGet("search/{searchString}/{category}")]
-
+        [HttpGet("search/{searchString}")]
         public async Task<ActionResult<List<ListingVM>>> Search(string searchString)
         {
             try
@@ -117,6 +116,24 @@ namespace MarketPlaceForYou.Api.Controllers
                 return BadRequest(new { message = "There are no listing associated with {0}",searchString});
             }
         }
+
+        [HttpGet("all/{searchString}/{city}/{category}")]
+        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters(string searchString, string city, string category)
+        {
+            try
+            {
+                // Get the Game entities from the service
+                var results = await _listingService.SearchWithFilters(searchString, city, category);
+
+                // Return a 200 response with the GameVMs
+                return Ok(results);
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "There are no listing associated with {0}", searchString });
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ListingVM>> GetById([FromRoute] Guid id)
         {

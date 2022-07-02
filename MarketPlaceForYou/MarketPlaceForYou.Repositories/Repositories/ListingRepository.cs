@@ -48,9 +48,20 @@ namespace MarketPlaceForYou.Repositories.Repositories
 
         public async Task<List<Listing>> Search(string searchString)
         {
-            var result = await _context.Listings.Where(i =>
+            var results = await _context.Listings.Where(i =>
                 i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())).ToListAsync();
-            return result;
+            return results;
+        }
+
+        public async Task<List<Listing>> SearchWithFilters(string searchString, string city, string category)
+        {
+            var results = await _context.Listings.Where(i => 
+                                                        i.City == city &&
+                                                        i.Category == category &&
+                                                        (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())
+                                                        )).ToListAsync();
+
+            return results;
         }
 
         //public async Task<List<Listing>> Search(string searchString, string category)
