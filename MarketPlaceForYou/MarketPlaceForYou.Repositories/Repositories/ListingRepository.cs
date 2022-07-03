@@ -53,9 +53,10 @@ namespace MarketPlaceForYou.Repositories.Repositories
             return result;
         }
 
-        public async Task<List<Listing>> Deals(decimal price)
+        public async Task<List<Listing>> Deals(string userid)
         {
-            var results = await _context.Listings.Take(16).OrderBy(i => i.Price).ToListAsync();
+            var results = await _context.Listings.Take(16).OrderBy(i => i.Price).Where(i=> i.UserId != userid)
+                .ToListAsync();
             return results;
         }
 

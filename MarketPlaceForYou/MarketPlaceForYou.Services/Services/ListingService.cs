@@ -76,9 +76,9 @@ namespace MarketPlaceForYou.Services.Services
             return models;
         }
 
-        public async Task<List<ListingVM>> Deals(decimal price)
+        public async Task<List<ListingVM>> Deals(string userid)
         {
-            var results = await _uow.Listings.Deals(price);
+            var results = await _uow.Listings.Deals(userid);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
 

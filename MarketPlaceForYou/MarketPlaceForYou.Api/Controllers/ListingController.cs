@@ -111,7 +111,9 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <summary>
         /// Filters all listings by Category (works but trying to localize it or encode the city name)
         /// </summary>
-        /// <param name="category">Listing data</param>
+        /// <param name="category">Encoded: 
+        /// Cars & Vehicle: Cars%20%26%20Vehicle
+        /// Real Estate: Real%20Estate</param>
         /// <returns>Returns all listings by category</returns>
         /// <response code = "200">Successfull</response>
         /// <response code = "401">User not logged in or token has expired</response>
@@ -161,15 +163,15 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <summary>
         /// Deals for you and More deals for you
         /// </summary>
-        /// <param name="price"></param>
+        /// <param name="userid"> This user ID will be the id of the logged in user, so their created listing will not be displayed on Deals for you and More Deals for you</param>
         /// <returns></returns>
-        [HttpGet("deals")]
-        public async Task<ActionResult<List<ListingVM>>> Deals(decimal price)
+        [HttpGet("deals/{userid}")]
+        public async Task<ActionResult<List<ListingVM>>> Deals(string userid)
         {
             try
             {
                 // Get the listing entities from the service
-                var results = await _listingService.Deals(price);
+                var results = await _listingService.Deals(userid);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
