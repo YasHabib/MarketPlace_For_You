@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlaceForYou.Api.Controllers
 {
+    /// <summary>
+    /// Controller for listing apis
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -58,7 +61,6 @@ namespace MarketPlaceForYou.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
         /// <summary>
         /// Returns all the created listings
         /// </summary>
@@ -134,15 +136,59 @@ namespace MarketPlaceForYou.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
-
         /// <summary>
-        /// Return a listing by their specific id
+        /// Seach function
         /// </summary>
-        /// <param name="id">Listing data</param>
+        /// <param name="searchString">Listing data</param>
         /// <returns>Return a listing by id</returns>
         /// <response code = "200">Successfull</response>
         /// <response code = "401">User not logged in or token has expired</response>
         /// <response code = "500">Internal server issue</response>
+        [HttpGet("search/{searchString}")]
+        public async Task<ActionResult<List<ListingVM>>> Search(string searchString)
+        {
+            try
+            {
+                // Get the Game entities from the service
+                var results = await _listingService.Search(searchString);
+
+                // Return a 200 response with the GameVMs
+                return Ok(results);
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "There are no listing associated with {0}",searchString});
+            }
+        }
+        /// <summary>
+        /// API for searching while both city and category filter is active. This will not work if one of the filters are null
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <param name="city"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        [HttpGet("all/{searchString}/{city}/{category}")]
+        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters(string searchString, string city, string category)
+        {
+            try
+            {
+                // Get the Game entities from the service
+                var results = await _listingService.SearchWithFilters(searchString, city, category);
+
+                // Return a 200 response with the GameVMs
+                return Ok(results);
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "There are no listing associated with {0}", searchString });
+            }
+        }
+
+        /// <summary>
+        /// Get a listing by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ListingVM>> GetById([FromRoute] Guid id)
         {

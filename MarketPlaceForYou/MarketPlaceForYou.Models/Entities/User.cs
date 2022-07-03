@@ -56,21 +56,21 @@ namespace MarketPlaceForYou.Models.Entities
         /// User's first name
         /// </summary>
         [Required]
-        public string? FirstName { get; set; } = string.Empty;
+        public string? FirstName { get; set; }
         /// <summary>
         /// User's last name
         /// </summary>
         [Required]
-        public string? LastName { get; set; } = string.Empty;
+        public string? LastName { get; set; }
         /// <summary>
         /// User's email
         /// </summary>
         [Required]
-        public string? Email { get; } = string.Empty;
+        public string? Email { get; }
         /// <summary>
         /// user's address
         /// </summary>
-        public string? Address { get; set; } = string.Empty;
+        public string? Address { get; set; }
         /// <summary>
         /// User's phone
         /// </summary>

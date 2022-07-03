@@ -60,7 +60,6 @@ namespace MarketPlaceForYou.Services.Services
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
-
         public async Task<List<ListingVM>> GetAllByCity(string city)
         {
             var results = await _uow.Listings.GetAllByCity(city);
@@ -68,13 +67,26 @@ namespace MarketPlaceForYou.Services.Services
             return models;
         }
 
-
         public async Task<List<ListingVM>> GetAllByCategory(string category)
         {
             var results = await _uow.Listings.GetAllByCategory(category);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
+        public async Task<List<ListingVM>> Search(string searchString)
+        {
+                var results = await _uow.Listings.Search(searchString);
+                var models = results.Select(listing => new ListingVM(listing)).ToList();
+                return models;
+        }
+
+        public async Task<List<ListingVM>> SearchWithFilters(string searchString, string city, string category)
+        {
+            var results = await _uow.Listings.SearchWithFilters(searchString, city, category);
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            return models;
+        }
+
 
         public async Task<List<ListingVM>> Deals(string userid)
         {

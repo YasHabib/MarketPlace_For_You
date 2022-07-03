@@ -47,6 +47,48 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
 
 
+        public async Task<List<Listing>> Search(string searchString)
+        {
+            var results = await _context.Listings.Where(i =>
+                i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())).ToListAsync();
+            return results;
+        }
+
+        public async Task<List<Listing>> SearchWithFilters(string searchString, string city, string category)
+        {
+            var results = await _context.Listings.Where(i => 
+                                                        i.City == city &&
+                                                        i.Category == category &&
+                                                        (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())
+                                                        )).ToListAsync();
+
+            return results;
+        }
+
+        //public async Task<List<Listing>> Search(string searchString, string category)
+        //{
+        //    var result = await _context.Listings.Where(i => i.Category == category &&
+        //        i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())).ToListAsync();
+        //    return result;
+        //}
+
+        //public async Task<List<Listing>> Search(string searchString)
+        //{
+
+        //    if (!string.IsNullOrEmpty(searchString))
+        //    {
+        //        var result = await _context.Listings.Where(i => i.ProdName.Contains(searchString) || i.Description.Contains(searchString)).ToListAsync();
+        //        return result;
+        //    }
+        //    else
+        //    {
+        //        var result = await _context.Listings.ToListAsync();
+        //        return result;
+        //    }
+
+        //}
+
+
         public async Task<List<Listing>> GetAll()
         {
             var result = await _context.Listings.ToListAsync();

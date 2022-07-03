@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlaceForYou.Api.Controllers
-{
+{/// <summary>
+/// Controller for user related APIs
+/// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
