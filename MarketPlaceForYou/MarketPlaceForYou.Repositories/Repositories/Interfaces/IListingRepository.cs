@@ -18,6 +18,7 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         Task<List<Listing>> GetAllByCity(string city);
         Task<List<Listing>> GetAllByCategory(string category);
         Task<List<Listing>> Deals(string userid);
+        void Purchase(Listing entity);   
         void Delete(Listing entity);
     }
 }
