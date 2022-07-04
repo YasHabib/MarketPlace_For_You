@@ -97,7 +97,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
 
         public async Task<List<Listing>> Deals(string userid)
         {
-            var results = await _context.Listings.Take(16).OrderBy(i => i.Price).Where(i=> i.UserId != userid)
+            var results = await _context.Listings.Where(i => i.UserId != userid).OrderBy(i => i.Price).Take(16)
                 .ToListAsync();
             return results;
         }
