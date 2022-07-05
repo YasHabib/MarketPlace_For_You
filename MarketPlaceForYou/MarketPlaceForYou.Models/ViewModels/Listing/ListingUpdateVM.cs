@@ -53,5 +53,9 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         /// </summary>
         [Required]
         public string? City { get; set; }
+        ///// <summary>
+        ///// Id of the user whom have purchased the item
+        ///// </summary>
+        //public string? BuyerID { get; set; }
     }
 }

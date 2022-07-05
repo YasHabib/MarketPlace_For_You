@@ -18,7 +18,7 @@ namespace MarketPlaceForYou.Services.Services
         {
             _uow = uow;
         }
-
+        //CRUD
         public async Task<ListingVM> Create(ListingAddVM src, string userId)
         {
             var newEntity = new Listing(src, userId);
@@ -28,15 +28,6 @@ namespace MarketPlaceForYou.Services.Services
             var model = new ListingVM(newEntity);
             return model;
         }
-
-        public async Task<ListingVM> GetById(Guid id)
-        {
-            var result = await _uow.Listings.GetById(id);
-
-            var model = new ListingVM(result);
-            return model;
-        }
-
         public async Task<ListingVM> Update(ListingUpdateVM src)
         {
             //grab entity from database
@@ -50,8 +41,26 @@ namespace MarketPlaceForYou.Services.Services
             entity.Address = src.Address;
             entity.City = src.City;
 
+            _uow.Listings.Update(entity);
+            await _uow.SaveAsync();
+
             var model = new ListingVM(entity);
             return model;            
+        }
+        public async Task Delete(Guid id)
+        {
+            var entity = await _uow.Listings.GetById(id);
+            _uow.Listings.Delete(entity);
+            await _uow.SaveAsync();
+        }
+
+        //retrieving listings
+        public async Task<ListingVM> GetById(Guid id)
+        {
+            var result = await _uow.Listings.GetById(id);
+
+            var model = new ListingVM(result);
+            return model;
         }
 
         public async Task<List<ListingVM>> GetAll(string userid)
@@ -60,6 +69,15 @@ namespace MarketPlaceForYou.Services.Services
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
+
+        public async Task<List<ListingVM>> Deals(string userid)
+        {
+            var results = await _uow.Listings.Deals(userid);
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            return models;
+        }
+
+        //Search and filter
         public async Task<List<ListingVM>> GetAllByCity(string city, string userid)
         {
             var results = await _uow.Listings.GetAllByCity(city, userid);
@@ -87,19 +105,18 @@ namespace MarketPlaceForYou.Services.Services
             return models;
         }
 
-
-        public async Task<List<ListingVM>> Deals(string userid)
+        public async Task<ListingVM> Purchase(ListingPurchaseVM src, string buyerId)
         {
-            var results = await _uow.Listings.Deals(userid);
-            var models = results.Select(listing => new ListingVM(listing)).ToList();
-            return models;
-        }
+            var entity = await _uow.Listings.GetById(src.Id);
 
-        public async Task Delete(Guid id)
-        {
-            var entity = await _uow.Listings.GetById(id);
-            _uow.Listings.Delete(entity);
+            entity.BuyerID = buyerId;
+
+            _uow.Listings.Purchase(entity);
             await _uow.SaveAsync();
+
+            var model = new ListingVM(entity);
+            return model;
         }
+
     }
 }

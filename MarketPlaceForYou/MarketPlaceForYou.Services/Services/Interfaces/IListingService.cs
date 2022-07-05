@@ -12,13 +12,14 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
     {
         Task<ListingVM> Create(ListingAddVM src, string userId);
         Task<ListingVM> Update(ListingUpdateVM src);
-        Task<ListingVM> GetById(Guid id);
+        Task<ListingVM> GetById(Guid id, string userid);
         Task<List<ListingVM>> GetAll(string userid);
         Task<List<ListingVM>> Search(string searchString, string userid);
         Task<List<ListingVM>> SearchWithFilters(string searchString, string city, string category, string userid);
         Task<List<ListingVM>> GetAllByCity(string city, string userid);
         Task<List<ListingVM>> GetAllByCategory(string category, string userid);
         Task<List<ListingVM>> Deals(string userid);
+        Task<ListingVM> Purchase(ListingPurchaseVM src, string buyerId);
         Task Delete(Guid id);
     }
 }

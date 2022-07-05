@@ -25,6 +25,8 @@ public class ListingVM
         City = listInfo.City;
         Created = listInfo.Created;
         UserId = listInfo.UserId;
+        Purchased = listInfo.Purchased;
+        BuyerID = listInfo.BuyerID;
     }
     /// <summary>
     /// Listing id
@@ -66,5 +68,14 @@ public class ListingVM
     /// User id of the person who created it
     /// </summary>
     public string? UserId { get; set; }
+
+    /// <summary>
+    /// Purchased date
+    /// </summary>
+    public DateTime Purchased { get; set; }
+    /// <summary>
+    /// Buyer's id for purchasing
+    /// </summary> 
+    public string? BuyerID { get; set; }
 
 }

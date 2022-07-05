@@ -62,201 +62,6 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
         /// <summary>
-        /// Returns all the created listings
-        /// </summary>
-        /// <returns>Returns all listings from databse</returns>
-        /// <response code = "200">Successfull</response>
-        /// <response code = "401">User not logged in or token has expired</response>
-        /// <response code = "500">Internal server issue</response>
-        [HttpGet("all")]
-        public async Task<ActionResult<List<ListingVM>>> GetAll()
-        {
-            var userId = User.GetId();
-            if (userId == null)
-            {
-                return BadRequest("Invalid Request");
-            }
-            try
-            {
-                // Get the listing entities from the service
-                var results = await _listingService.GetAll(userId);
-
-                // Return a 200 response with the ListingVMs
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
-            }
-        }
-
-        /// <summary>
-        /// Filters all the listings by city
-        /// </summary>
-        /// <param name="city">Listing data</param>
-        /// <returns>Returns all listings by city</returns>
-        /// <response code = "200">Successfull</response>
-        /// <response code = "401">User not logged in or token has expired</response>
-        /// <response code = "500">Internal server issue</response>
-        [HttpGet("all/{city}")]
-        public async Task<ActionResult<List<ListingVM>>> GetAllByCity(string city)
-        {
-            var userId = User.GetId();
-            if (userId == null)
-            {
-                return BadRequest("Invalid Request");
-            }
-            try
-            {
-                // Get the listing entities from the service
-                var results = await _listingService.GetAllByCity(city, userId);
-
-                // Return a 200 response with the ListingVMs
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
-            }
-        }
-
-        /// <summary>
-        /// Filters all listings by Category (works but trying to localize it or encode the city name)
-        /// </summary>
-        /// <param name="category">Encoded: 
-        /// Cars & Vehicle: Cars%20%26%20Vehicle
-        /// Real Estate: Real%20Estate</param>
-        /// <returns>Returns all listings by category</returns>
-        /// <response code = "200">Successfull</response>
-        /// <response code = "401">User not logged in or token has expired</response>
-        /// <response code = "500">Internal server issue</response>
-        [HttpGet("all/category/{category}")]
-        public async Task<ActionResult<List<ListingVM>>> GetAllByCategory(string category)
-        {
-            var userId = User.GetId();
-            if (userId == null)
-            {
-                return BadRequest("Invalid Request");
-            }
-            try
-            {
-                // Get the listing entities from the service
-                var results = await _listingService.GetAllByCategory(category, userId);
-
-                // Return a 200 response with the ListingVMs
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
-            }
-        }
-        /// <summary>
-        /// Seach function
-        /// </summary>
-        /// <param name="searchString">Listing data</param>
-        /// <returns>Return a listing by id</returns>
-        /// <response code = "200">Successfull</response>
-        /// <response code = "401">User not logged in or token has expired</response>
-        /// <response code = "500">Internal server issue</response>
-        [HttpGet("search/{searchString}")]
-        public async Task<ActionResult<List<ListingVM>>> Search(string searchString)
-        {
-            var userId = User.GetId();
-            if (userId == null)
-            {
-                return BadRequest("Invalid Request");
-            }
-            try
-            {
-                // Get the Game entities from the service
-                var results = await _listingService.Search(searchString, userId);
-
-                // Return a 200 response with the GameVMs
-                return Ok(results);
-            }
-            catch (Exception)
-            {
-                return BadRequest(new { message = "There are no listing associated with {0}",searchString});
-            }
-        }
-        /// <summary>
-        /// API for searching while both city and category filter is active. This will not work if one of the filters are null
-        /// </summary>
-        /// <param name="searchString"></param>
-        /// <param name="city"></param>
-        /// <param name="category"></param>
-        /// <returns></returns>
-        [HttpGet("all/{searchString}/{city}/{category}")]
-        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters(string searchString, string city, string category)
-        {
-            var userId = User.GetId();
-            if (userId == null)
-            {
-                return BadRequest("Invalid Request");
-            }
-            try
-            {
-                // Get the Game entities from the service
-                var results = await _listingService.SearchWithFilters(searchString, city, category, userId);
-
-                // Return a 200 response with the GameVMs
-                return Ok(results);
-            }
-            catch (Exception)
-            {
-                return BadRequest(new { message = "There are no listing associated with {0}", searchString });
-            }
-        }
-
-        /// <summary>
-        /// Get a listing by ID
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ListingVM>> GetById([FromRoute] Guid id)
-        {
-            try
-            {
-                // Get the requested Listing entity from the service
-                var result = await _listingService.GetById(id);
-
-                // Return a 200 response with the ListingVM
-                return Ok(result);
-            }
-            catch
-            {
-                return BadRequest(new { message = "Unable to retrieve the requested Listing" });
-            }
-        }
-
-        /// <summary>
-        /// Deals for you and More deals for you
-        /// </summary>
-        [HttpGet("deals")]
-        public async Task<ActionResult<List<ListingVM>>> Deals()
-        {
-            var userId = User.GetId();
-            if (userId == null)
-            {
-                return BadRequest("Invalid Request");
-            }
-            try
-            {
-                // Get the listing entities from the service
-                var results = await _listingService.Deals(userId);
-
-                // Return a 200 response with the ListingVMs
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
-            }
-        }
-
-        /// <summary>
         /// Updates a listing
         /// </summary>
         /// <param name="data">Listing data</param>
@@ -265,7 +70,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <response code = "401">User not logged in or token has expired</response>
         /// <response code = "500">Internal server issue</response>
         [HttpPut]
-        public async Task<ActionResult <ListingVM>> Update([FromBody] ListingUpdateVM data)
+        public async Task<ActionResult<ListingVM>> Update([FromBody] ListingUpdateVM data)
         {
             try
             {
@@ -284,8 +89,6 @@ namespace MarketPlaceForYou.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
         /// <summary>
         /// Deletes a listing (I do not think we need this, I had to create it as I had to delete some listings)
         /// </summary>
@@ -313,5 +116,243 @@ namespace MarketPlaceForYou.Api.Controllers
                 return BadRequest(new { message = "Unable to delete the requested Listing" });
             }
         }
+        /// <summary>
+        /// Returns all the created listings
+        /// </summary>
+        /// <returns>Returns all listings from databse</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
+        [HttpGet("all")]
+        public async Task<ActionResult<List<ListingVM>>> GetAll()
+        {
+
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the listing entities from the service
+                var results = await _listingService.GetAll(userId);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Filters all the listings by city
+        /// </summary>
+        /// <param name="city">Listing data</param>
+        /// <returns>Returns all listings by city</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
+        [HttpGet("all/{city}")]
+        public async Task<ActionResult<List<ListingVM>>> GetAllByCity(string city)
+        {
+
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the listing entities from the service
+                var results = await _listingService.GetAllByCity(city, userId);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Filters all listings by Category (works but trying to localize it or encode the city name)
+        /// </summary>
+        /// <param name="category">Encoded: 
+        /// Cars & Vehicle: Cars%20%26%20Vehicle
+        /// Real Estate: Real%20Estate</param>
+        /// <returns>Returns all listings by category</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
+        [HttpGet("all/category/{category}")]
+        public async Task<ActionResult<List<ListingVM>>> GetAllByCategory(string category)
+        {
+
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the listing entities from the service
+                var results = await _listingService.GetAllByCategory(category, userId);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+        /// <summary>
+        /// Seach function
+        /// </summary>
+        /// <param name="searchString">Listing data</param>
+        /// <returns>Return a listing by id</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
+        [HttpGet("search/{searchString}")]
+        public async Task<ActionResult<List<ListingVM>>> Search(string searchString)
+        {
+
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the Game entities from the service
+                var results = await _listingService.Search(searchString, userId);
+
+                // Return a 200 response with the GameVMs
+                return Ok(results);
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "There are no listing associated with {0}",searchString});
+            }
+        }
+        /// <summary>
+        /// API for searching while both city and category filter is active. This will not work if one of the filters are null
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <param name="city"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        [HttpGet("all/{searchString}/{city}/{category}")]
+        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters(string searchString, string city, string category)
+        {
+
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the Game entities from the service
+                var results = await _listingService.SearchWithFilters(searchString, city, category, userId);
+
+                // Return a 200 response with the GameVMs
+                return Ok(results);
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "There are no listing associated with {0}", searchString });
+            }
+        }
+
+        /// <summary>
+        /// Get a listing by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ListingVM>> GetById([FromRoute] Guid id)
+        {
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the requested Listing entity from the service
+                var result = await _listingService.GetById(id, userId);
+
+                // Return a 200 response with the ListingVM
+                return Ok(result);
+            }
+            catch
+            {
+                return BadRequest(new { message = "Unable to retrieve the requested Listing" });
+            }
+        }
+
+        /// <summary>
+        /// Deals for you and More deals for you
+        /// </summary>
+        [HttpGet("deals")]
+        public async Task<ActionResult<List<ListingVM>>> Deals()
+        {
+
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the listing entities from the service
+                var results = await _listingService.Deals(userId);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+        /// <summary>
+        /// Making a purchase
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPut("purchase")]
+        public async Task<ActionResult<ListingVM>> Purchase([FromBody] ListingPurchaseVM data)
+        {
+
+            try
+            {
+                var buyerId = User.GetId();
+                if (buyerId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Update Listing entity from the service
+                var result = await _listingService.Purchase(data, buyerId);
+
+                // Return a 200 response with the ListingVM
+                return Ok(result);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+ 
     }
 }

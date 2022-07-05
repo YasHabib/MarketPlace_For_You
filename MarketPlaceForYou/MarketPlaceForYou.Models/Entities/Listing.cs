@@ -36,6 +36,7 @@ namespace MarketPlaceForYou.Models.Entities
             City = addListing.City;
             UserId = userId;
         }
+
         /// <summary>
         /// Listing ID (UUid)
         /// </summary>
@@ -44,13 +45,15 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Foreign key (user id)
         /// </summary>
+        //relationships
         [Required]
         //foreign key
         public string? UserId { get; set; } //naming convention (EntityNameId)
         /// <summary>
-        /// User
+        /// Settings relationship with user table
         /// </summary>
-        public User? User;
+        public User? User { get; set; }
+
 
         /// <summary>
         /// Listing name
@@ -92,5 +95,13 @@ namespace MarketPlaceForYou.Models.Entities
         /// </summary>
         [Required]
         public DateTime Created { get; set; }
+        /// <summary>
+        /// Purchased date
+        /// </summary>
+        public DateTime Purchased { get; set; }
+        /// <summary>
+        /// Buyer's id for purchasing
+        /// </summary> 
+        public string? BuyerID { get; set; }
     }
 }
