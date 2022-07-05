@@ -41,6 +41,9 @@ namespace MarketPlaceForYou.Services.Services
             entity.Address = src.Address;
             entity.City = src.City;
 
+            _uow.Listings.Update(entity);
+            await _uow.SaveAsync();
+
             var model = new ListingVM(entity);
             return model;            
         }
@@ -106,12 +109,12 @@ namespace MarketPlaceForYou.Services.Services
 
             entity.BuyerID = buyerId;
 
+            _uow.Listings.Purchase(entity);
+            await _uow.SaveAsync();
+
             var model = new ListingVM(entity);
             return model;
         }
-
-
-
 
     }
 }

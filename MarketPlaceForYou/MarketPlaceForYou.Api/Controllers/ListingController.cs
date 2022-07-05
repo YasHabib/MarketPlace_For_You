@@ -290,13 +290,14 @@ namespace MarketPlaceForYou.Api.Controllers
         [HttpPut("purchase")]
         public async Task<ActionResult<ListingVM>> Purchase([FromBody] ListingPurchaseVM data)
         {
-            var buyerId = User.GetId();
-            if (buyerId == null)
-            {
-                return BadRequest("Invalid Request");
-            }
+
             try
             {
+                var buyerId = User.GetId();
+                if (buyerId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
                 // Update Listing entity from the service
                 var result = await _listingService.Purchase(data, buyerId);
 

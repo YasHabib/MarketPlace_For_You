@@ -25,13 +25,9 @@ public class ListingVM
         City = listInfo.City;
         Created = listInfo.Created;
         UserId = listInfo.UserId;
+        Purchased = listInfo.Purchased;
+        BuyerID = listInfo.BuyerID;
     }
-
-    //public ListingVM(Entities.Listing purchase)
-    //{
-    //    Purchased = purchase.Purchased;
-    //    BuyerID = purchase.BuyerID;
-    //}
     /// <summary>
     /// Listing id
     /// </summary>

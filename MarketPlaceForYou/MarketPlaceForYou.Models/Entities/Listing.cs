@@ -37,12 +37,6 @@ namespace MarketPlaceForYou.Models.Entities
             UserId = userId;
         }
 
-        //public Listing(ListingPurchaseVM purchase, string buyerId)
-        //{
-        //    BuyerID = buyerId;
-
-            
-        //}
         /// <summary>
         /// Listing ID (UUid)
         /// </summary>
