@@ -71,10 +71,15 @@ namespace MarketPlaceForYou.Api.Controllers
         [HttpGet("all")]
         public async Task<ActionResult<List<ListingVM>>> GetAll()
         {
+            var userId = User.GetId();
+            if (userId == null)
+            {
+                return BadRequest("Invalid Request");
+            }
             try
             {
                 // Get the listing entities from the service
-                var results = await _listingService.GetAll();
+                var results = await _listingService.GetAll(userId);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
@@ -96,10 +101,15 @@ namespace MarketPlaceForYou.Api.Controllers
         [HttpGet("all/{city}")]
         public async Task<ActionResult<List<ListingVM>>> GetAllByCity(string city)
         {
+            var userId = User.GetId();
+            if (userId == null)
+            {
+                return BadRequest("Invalid Request");
+            }
             try
             {
                 // Get the listing entities from the service
-                var results = await _listingService.GetAllByCity(city);
+                var results = await _listingService.GetAllByCity(city, userId);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
@@ -123,10 +133,15 @@ namespace MarketPlaceForYou.Api.Controllers
         [HttpGet("all/category/{category}")]
         public async Task<ActionResult<List<ListingVM>>> GetAllByCategory(string category)
         {
+            var userId = User.GetId();
+            if (userId == null)
+            {
+                return BadRequest("Invalid Request");
+            }
             try
             {
                 // Get the listing entities from the service
-                var results = await _listingService.GetAllByCategory(category);
+                var results = await _listingService.GetAllByCategory(category, userId);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
@@ -147,10 +162,15 @@ namespace MarketPlaceForYou.Api.Controllers
         [HttpGet("search/{searchString}")]
         public async Task<ActionResult<List<ListingVM>>> Search(string searchString)
         {
+            var userId = User.GetId();
+            if (userId == null)
+            {
+                return BadRequest("Invalid Request");
+            }
             try
             {
                 // Get the Game entities from the service
-                var results = await _listingService.Search(searchString);
+                var results = await _listingService.Search(searchString, userId);
 
                 // Return a 200 response with the GameVMs
                 return Ok(results);
@@ -170,10 +190,15 @@ namespace MarketPlaceForYou.Api.Controllers
         [HttpGet("all/{searchString}/{city}/{category}")]
         public async Task<ActionResult<List<ListingVM>>> SearchWithFilters(string searchString, string city, string category)
         {
+            var userId = User.GetId();
+            if (userId == null)
+            {
+                return BadRequest("Invalid Request");
+            }
             try
             {
                 // Get the Game entities from the service
-                var results = await _listingService.SearchWithFilters(searchString, city, category);
+                var results = await _listingService.SearchWithFilters(searchString, city, category, userId);
 
                 // Return a 200 response with the GameVMs
                 return Ok(results);
@@ -209,15 +234,18 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <summary>
         /// Deals for you and More deals for you
         /// </summary>
-        /// <param name="userid"> This user ID will be the id of the logged in user, so their created listing will not be displayed on Deals for you and More Deals for you</param>
-        /// <returns></returns>
-        [HttpGet("deals/{userid}")]
-        public async Task<ActionResult<List<ListingVM>>> Deals(string userid)
+        [HttpGet("deals")]
+        public async Task<ActionResult<List<ListingVM>>> Deals()
         {
+            var userId = User.GetId();
+            if (userId == null)
+            {
+                return BadRequest("Invalid Request");
+            }
             try
             {
                 // Get the listing entities from the service
-                var results = await _listingService.Deals(userid);
+                var results = await _listingService.Deals(userId);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);

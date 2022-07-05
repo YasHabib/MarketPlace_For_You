@@ -34,29 +34,30 @@ namespace MarketPlaceForYou.Repositories.Repositories
             var result = await _context.Listings.FirstAsync(i => i.Id == id);
             return result;
         }
-        public async Task<List<Listing>> GetAllByCity(string city)
+        public async Task<List<Listing>> GetAllByCity(string city, string userid)
         {
-            var result = await _context.Listings.Where(i => i.City == city).ToListAsync();
+            var result = await _context.Listings.Where(i => i.UserId != userid && i.City == city).ToListAsync();
             return result;
         }
 
-        public async Task<List<Listing>> GetAllByCategory(string category)
+        public async Task<List<Listing>> GetAllByCategory(string category, string userid)
         {
-            var result = await _context.Listings.Where(i => i.Category == category).ToListAsync();
+            var result = await _context.Listings.Where(i => i.UserId != userid && i.Category == category).ToListAsync();
             return result;
         }
 
 
-        public async Task<List<Listing>> Search(string searchString)
+        public async Task<List<Listing>> Search(string searchString, string userid)
         {
-            var results = await _context.Listings.Where(i =>
-                i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())).ToListAsync();
+            var results = await _context.Listings.Where(i => i.UserId != userid && (
+                i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower()))).ToListAsync();
             return results;
         }
 
-        public async Task<List<Listing>> SearchWithFilters(string searchString, string city, string category)
+        public async Task<List<Listing>> SearchWithFilters(string searchString, string city, string category, string userid)
         {
             var results = await _context.Listings.Where(i => 
+                                                        i.UserId != userid &&
                                                         i.City == city &&
                                                         i.Category == category &&
                                                         (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())
@@ -64,34 +65,9 @@ namespace MarketPlaceForYou.Repositories.Repositories
 
             return results;
         }
-
-        //public async Task<List<Listing>> Search(string searchString, string category)
-        //{
-        //    var result = await _context.Listings.Where(i => i.Category == category &&
-        //        i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())).ToListAsync();
-        //    return result;
-        //}
-
-        //public async Task<List<Listing>> Search(string searchString)
-        //{
-
-        //    if (!string.IsNullOrEmpty(searchString))
-        //    {
-        //        var result = await _context.Listings.Where(i => i.ProdName.Contains(searchString) || i.Description.Contains(searchString)).ToListAsync();
-        //        return result;
-        //    }
-        //    else
-        //    {
-        //        var result = await _context.Listings.ToListAsync();
-        //        return result;
-        //    }
-
-        //}
-
-
-        public async Task<List<Listing>> GetAll()
+        public async Task<List<Listing>> GetAll(string userid)
         {
-            var result = await _context.Listings.ToListAsync();
+            var result = await _context.Listings.Where(i => i.UserId != userid).ToListAsync();
             return result;
         }
 

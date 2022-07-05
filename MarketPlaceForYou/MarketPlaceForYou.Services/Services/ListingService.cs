@@ -54,35 +54,35 @@ namespace MarketPlaceForYou.Services.Services
             return model;            
         }
 
-        public async Task<List<ListingVM>> GetAll()
+        public async Task<List<ListingVM>> GetAll(string userid)
         {
-            var results = await _uow.Listings.GetAll();
+            var results = await _uow.Listings.GetAll(userid);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
-        public async Task<List<ListingVM>> GetAllByCity(string city)
+        public async Task<List<ListingVM>> GetAllByCity(string city, string userid)
         {
-            var results = await _uow.Listings.GetAllByCity(city);
+            var results = await _uow.Listings.GetAllByCity(city, userid);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
 
-        public async Task<List<ListingVM>> GetAllByCategory(string category)
+        public async Task<List<ListingVM>> GetAllByCategory(string category, string userid)
         {
-            var results = await _uow.Listings.GetAllByCategory(category);
+            var results = await _uow.Listings.GetAllByCategory(category, userid);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
-        public async Task<List<ListingVM>> Search(string searchString)
+        public async Task<List<ListingVM>> Search(string searchString, string userid)
         {
-                var results = await _uow.Listings.Search(searchString);
+                var results = await _uow.Listings.Search(searchString, userid);
                 var models = results.Select(listing => new ListingVM(listing)).ToList();
                 return models;
         }
 
-        public async Task<List<ListingVM>> SearchWithFilters(string searchString, string city, string category)
+        public async Task<List<ListingVM>> SearchWithFilters(string searchString, string city, string category, string userid)
         {
-            var results = await _uow.Listings.SearchWithFilters(searchString, city, category);
+            var results = await _uow.Listings.SearchWithFilters(searchString, city, category, userid);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
@@ -93,15 +93,6 @@ namespace MarketPlaceForYou.Services.Services
             var results = await _uow.Listings.Deals(userid);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
-
-            //Listing results = new Listing();
-            //var models = results.Select(listing => new ListingVM(listing)).ToList();
-
-            //for (int i = 1; i <= 16; i++)
-            //{
-            //    results = await _uow.Listings.Deals(price);
-            //}
-            //return models;
         }
 
         public async Task Delete(Guid id)
