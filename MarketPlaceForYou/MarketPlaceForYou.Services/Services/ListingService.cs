@@ -55,7 +55,7 @@ namespace MarketPlaceForYou.Services.Services
         }
 
         //retrieving listings
-        public async Task<ListingVM> GetById(Guid id)
+        public async Task<ListingVM> GetById(Guid id, string userId)
         {
             var result = await _uow.Listings.GetById(id);
 

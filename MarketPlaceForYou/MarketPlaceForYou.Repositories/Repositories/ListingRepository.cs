@@ -26,9 +26,9 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
 
         //R
-        public async Task<Listing> GetById(Guid id, string userId)
+        public async Task<Listing> GetById(Guid id)
         {
-            var result = await _context.Listings.FirstAsync(i => i.Id == id && i.UserId != userId && i.BuyerID == null);
+            var result = await _context.Listings.FirstAsync(i => i.Id == id && i.BuyerID == null);
             return result;
         }
         public async Task<List<Listing>> GetAll(string userid)
