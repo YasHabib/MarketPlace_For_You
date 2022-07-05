@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Web.Http.Cors;
 
 namespace MarketPlaceForYou.Api.Controllers
 {
     /// <summary>
     /// Controller for listing apis
     /// </summary>
+    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -246,8 +248,8 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <param name="city"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        [HttpGet("all/{searchString}/{city}/{category}")]
-        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters(string searchString, string city, string category)
+        [HttpGet("search")]
+        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters([FromQuery]string searchString, [FromQuery]string city, [FromQuery] string category)
         {
 
             try

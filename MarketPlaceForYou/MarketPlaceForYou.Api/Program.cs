@@ -62,6 +62,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     });
 
     builder.Services.AddControllers();
+    builder.Services.AddCors();
 
     //Setup dependency injection
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
