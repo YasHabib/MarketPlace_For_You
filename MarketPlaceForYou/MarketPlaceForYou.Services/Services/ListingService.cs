@@ -98,9 +98,9 @@ namespace MarketPlaceForYou.Services.Services
                 return models;
         }
 
-        public async Task<List<ListingVM>> SearchWithFilters(string searchString, string city, string category, string userid)
+        public async Task<List<ListingVM>> SearchWithFilters(string searchString, string userid, string? city=null , string? category =null)
         {
-            var results = await _uow.Listings.SearchWithFilters(searchString, city, category, userid);
+            var results = await _uow.Listings.SearchWithFilters(searchString, userid, city, category);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }

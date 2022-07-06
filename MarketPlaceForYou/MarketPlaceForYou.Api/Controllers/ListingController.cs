@@ -2,7 +2,7 @@
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Web.Http.Cors;
@@ -10,7 +10,7 @@ using System.Web.Http.Cors;
 namespace MarketPlaceForYou.Api.Controllers
 {
     /// <summary>
-    /// Controller for listing apis
+    /// Controller for listing APIs
     /// </summary>
     [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     [Route("api/[controller]")]
@@ -119,7 +119,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
         /// <summary>
-        /// Returns all the created listings
+        /// Returns all the created listings which have not created by the logged in user and have not been purchased. 
         /// </summary>
         /// <returns>Returns all listings from databse</returns>
         /// <response code = "200">Successfull</response>
@@ -149,7 +149,7 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
         /// <summary>
-        /// Filters all the listings by city
+        /// Filters all the listings by city only (non-purchased and listings were not created by the user)
         /// </summary>
         /// <param name="city">Listing data</param>
         /// <returns>Returns all listings by city</returns>
@@ -180,7 +180,7 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
         /// <summary>
-        /// Filters all listings by Category (works but trying to localize it or encode the city name)
+        /// Filters all listings by Category only (non-purchased and listings were not created by the user)
         /// </summary>
         /// <param name="category">Encoded: 
         /// Cars & Vehicle: Cars%20%26%20Vehicle
@@ -212,7 +212,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
         /// <summary>
-        /// Seach function
+        /// Standalone search function (non-purchased and listings were not created by the user)
         /// </summary>
         /// <param name="searchString">Listing data</param>
         /// <returns>Return a listing by id</returns>
@@ -238,18 +238,18 @@ namespace MarketPlaceForYou.Api.Controllers
             }
             catch (Exception)
             {
-                return BadRequest(new { message = "There are no listing associated with {0}",searchString});
+                return BadRequest(new { message = "There are no listing associated with {0}", searchString });
             }
         }
         /// <summary>
-        /// API for searching while both city and category filter is active. This will not work if one of the filters are null
+        /// API for searching while city and/or category filter is active, or search without any filter.
         /// </summary>
         /// <param name="searchString"></param>
         /// <param name="city"></param>
         /// <param name="category"></param>
         /// <returns></returns>
-        [HttpGet("search")]
-        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters([FromQuery]string searchString, [FromQuery]string city, [FromQuery] string category)
+        [HttpGet("filter")]
+        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters([FromQuery] string searchString, [FromQuery] string? city = null, [FromQuery] string? category = null)
         {
 
             try
@@ -260,7 +260,7 @@ namespace MarketPlaceForYou.Api.Controllers
                     return BadRequest("Invalid Request");
                 }
                 // Get the Game entities from the service
-                var results = await _listingService.SearchWithFilters(searchString, city, category, userId);
+                var results = await _listingService.SearchWithFilters(searchString, userId, city, category);
 
                 // Return a 200 response with the GameVMs
                 return Ok(results);
@@ -299,7 +299,7 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
         /// <summary>
-        /// Deals for you and More deals for you
+        /// Deals for you and More deals for you (this will retrieve 16 listings based on low/high price)
         /// </summary>
         [HttpGet("deals")]
         public async Task<ActionResult<List<ListingVM>>> Deals()
@@ -324,7 +324,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
         /// <summary>
-        /// Making a purchase
+        /// Making a purchase (this will set the logged in user's id as a buyer id and update it in DB)
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -355,6 +355,6 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
 
- 
+
     }
 }

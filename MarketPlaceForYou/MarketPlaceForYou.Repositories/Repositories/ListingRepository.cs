@@ -56,18 +56,50 @@ namespace MarketPlaceForYou.Repositories.Repositories
             return results;
         }
 
-        public async Task<List<Listing>> SearchWithFilters(string searchString, string city, string category, string userid)
+        public async Task<List<Listing>> SearchWithFilters(string searchString, string userid, string? city=null, string? category=null)
         {
-            var results = await _context.Listings.Where(i => 
-                                                        (i.UserId != userid && i.BuyerID == null) && 
-                                                        (
-                                                        i.City == city &&
-                                                        i.Category == category &&
-                                                        (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())
-                                                        ))
-                                                        ).ToListAsync();
+            var results = await _context.Listings.Where(i => i.UserId != userid && i.BuyerID == null).ToListAsync();
+            
+            if (!string.IsNullOrEmpty(searchString) && !string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category)) //filter by everything
+            {
+                results = await _context.Listings.Where(i =>
+                                            (i.UserId != userid && i.BuyerID == null) &&  
+                                            (
+                                                i.City == city &&
+                                                i.Category == category &&
+                                                (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())                                                     
+                                            ))).ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(searchString) && string.IsNullOrEmpty(city) && string.IsNullOrEmpty(category)) //search only
+            {
+                results = await _context.Listings.Where(i =>
+                                            (i.UserId != userid && i.BuyerID == null) &&
+                                            (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())
+                                            )
+                                            ).ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(searchString) && !string.IsNullOrEmpty(city) && string.IsNullOrEmpty(category)) //filter by city
+            {
+                results = await _context.Listings.Where(i =>
+                                            (i.UserId != userid && i.BuyerID == null) &&
+                                            (
+                                                i.City == city &&
+                                                (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())
 
-            return results;
+                                            ))).ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(searchString) && string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category)) //filter by category
+            {
+                results = await _context.Listings.Where(i =>
+                                            (i.UserId != userid && i.BuyerID == null) &&
+                                            (
+                                                i.Category == category &&
+                                                (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())
+
+                                            ))).ToListAsync();
+            }
+
+                return results;
         }
 
         public async Task<List<Listing>> Deals(string userid)
