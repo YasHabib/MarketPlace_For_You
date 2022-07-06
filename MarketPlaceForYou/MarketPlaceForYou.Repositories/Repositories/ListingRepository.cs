@@ -108,6 +108,21 @@ namespace MarketPlaceForYou.Repositories.Repositories
                 .ToListAsync();
             return results;
         }
+        public async Task<List<Listing>> MyActiveListings(string userId)
+        {
+            var results = await _context.Listings.Where(i => i.UserId == userId && i.BuyerID == null).ToListAsync();
+            return results;
+        }
+        public async Task<List<Listing>> MySoldListings(string userId)
+        {
+            var results = await _context.Listings.Where(i => i.UserId == userId && i.BuyerID != null).ToListAsync();
+            return results;
+        }
+        public async Task<List<Listing>> MyPurchases(string userId)
+        {
+            var results = await _context.Listings.Where(i => i.BuyerID == userId).ToListAsync();
+            return results;
+        }
 
         //U
         public void Purchase(Listing entity)

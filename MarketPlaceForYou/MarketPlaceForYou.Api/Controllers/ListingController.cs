@@ -324,6 +324,86 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
         /// <summary>
+        /// Gets the active listings user has added
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("mylistings/active")]
+        public async Task<ActionResult<List<ListingVM>>> MyActiveListings()
+        {
+
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the listing entities from the service
+                var results = await _listingService.MyActiveListings(userId);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+        /// <summary>
+        /// Listings the user has sold
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("mylistings/sold")]
+        public async Task<ActionResult<List<ListingVM>>> MySoldListings()
+        {
+
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the listing entities from the service
+                var results = await _listingService.MySoldListings(userId);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of purchases the user has made
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("mypurchases")]
+        public async Task<ActionResult<List<ListingVM>>> MyPurchases()
+        {
+
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the listing entities from the service
+                var results = await _listingService.MyPurchases(userId);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
         /// Making a purchase (this will set the logged in user's id as a buyer id and update it in DB)
         /// </summary>
         /// <param name="data"></param>

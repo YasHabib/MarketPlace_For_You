@@ -104,6 +104,24 @@ namespace MarketPlaceForYou.Services.Services
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
+        public async Task<List<ListingVM>> MyActiveListings(string userid)
+        {
+            var results = await _uow.Listings.MyActiveListings(userid);
+            var model = results.Select(listings => new ListingVM(listings)).ToList();
+            return model;
+        }
+        public async Task<List<ListingVM>> MySoldListings(string userid)
+        {
+            var results = await _uow.Listings.MyActiveListings(userid);
+            var model = results.Select(listings => new ListingVM(listings)).ToList();
+            return model;
+        }
+        public async Task<List<ListingVM>> MyPurchases(string userId)
+        {
+            var results = await _uow.Listings.MyPurchases(userId);
+            var model = results.Select(listings => new ListingVM(listings)).ToList();
+            return model;
+        }
 
         public async Task<ListingVM> Purchase(ListingPurchaseVM src, string buyerId)
         {
