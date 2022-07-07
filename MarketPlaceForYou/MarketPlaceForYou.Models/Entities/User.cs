@@ -66,7 +66,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// User's email
         /// </summary>
         [Required]
-        public string? Email { get; }
+        public string? Email { get; set; }
         /// <summary>
         /// user's address
         /// </summary>

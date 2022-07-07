@@ -17,8 +17,8 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         [Key]
         public Guid Id { get; set; }
         ///// <summary>
-        ///// Id of the user whom have purchased the item
+        ///// status of the listing
         ///// </summary>
-        //public string? BuyerID { get; set; }
+        //public string? Status { get; set; }
     }
 }

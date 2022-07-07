@@ -14,14 +14,17 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         Task<Listing> GetById(Guid id);
         Task<List<Listing>> GetAll(string userId);
         Task<List<Listing>> Search(string searchString, string userid);
-        Task<List<Listing>> SearchWithFilters(string searchString, string userid, string? city=null, string? category=null);
+        Task<List<Listing>> SearchWithFilters(string userid, string? searchString=null,  string? city=null, string? category=null, string? condition=null, decimal minPrice=0, decimal maxPrice=0);
         Task<List<Listing>> GetAllByCity(string city, string userid);
         Task<List<Listing>> GetAllByCategory(string category, string userid);
         Task<List<Listing>> Deals(string userid);
         Task<List<Listing>> MyActiveListings(string userId);
         Task<List<Listing>> MySoldListings(string userId);
         Task<List<Listing>> MyPurchases(string userId);
-        void Purchase(Listing entity);   
+        Task<List<Listing>> PendingListings(string userId);
+        void RequestPurchase(Listing entity);
+        void ConfirmPurchase(Listing entity);   
+        void CancelPurchase(Listing entity);
         void Delete(Listing entity);
     }
 }

@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Authorization;
 //using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Web.Http.Cors;
+///using System.Web.Http.Cors;
 
 namespace MarketPlaceForYou.Api.Controllers
 {
     /// <summary>
     /// Controller for listing APIs
     /// </summary>
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    //[EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -32,7 +32,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// Creates a listing
         /// </summary>
         /// <param name="data">Listing data</param>
-        /// <returns>Returns the game with an ID</returns>
+        /// <returns>Returns the listing with an ID</returns>
         /// <response code = "200">Successfull</response>
         /// <response code = "401">User not logged in or token has expired</response>
         /// <response code = "500">Internal server issue</response>
@@ -230,10 +230,10 @@ namespace MarketPlaceForYou.Api.Controllers
                 {
                     return BadRequest("Invalid Request");
                 }
-                // Get the Game entities from the service
+                // Get the listing entities from the service
                 var results = await _listingService.Search(searchString, userId);
 
-                // Return a 200 response with the GameVMs
+                // Return a 200 response with the listingVMs
                 return Ok(results);
             }
             catch (Exception)
@@ -247,9 +247,12 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <param name="searchString"></param>
         /// <param name="city"></param>
         /// <param name="category"></param>
+        /// <param name="condition"></param>
+        /// <param name="minPrice"></param>
+        /// <param name="maxPrice"></param>
         /// <returns></returns>
         [HttpGet("filter")]
-        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters([FromQuery] string searchString, [FromQuery] string? city = null, [FromQuery] string? category = null)
+        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters([FromQuery] string? searchString=null, [FromQuery] string? city = null, [FromQuery] string? category = null, [FromQuery] string? condition = null, [FromQuery] decimal minPrice=0, decimal maxPrice=0)
         {
 
             try
@@ -259,10 +262,14 @@ namespace MarketPlaceForYou.Api.Controllers
                 {
                     return BadRequest("Invalid Request");
                 }
-                // Get the Game entities from the service
-                var results = await _listingService.SearchWithFilters(searchString, userId, city, category);
+                else if (minPrice > maxPrice)
+                {
+                    return BadRequest("Invalid Price input");
+                }
+                // Get the listing entities from the service
+                var results = await _listingService.SearchWithFilters(userId, searchString, city, category, condition, minPrice, maxPrice);
 
-                // Return a 200 response with the GameVMs
+                // Return a 200 response with the listingVMs
                 return Ok(results);
             }
             catch (Exception)
@@ -323,6 +330,7 @@ namespace MarketPlaceForYou.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
+        //User Listings
         /// <summary>
         /// Gets the active listings user has added
         /// </summary>
@@ -402,14 +410,68 @@ namespace MarketPlaceForYou.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
-
         /// <summary>
-        /// Making a purchase (this will set the logged in user's id as a buyer id and update it in DB)
+        /// List of pending purchase requests coming from a buyers to the lister
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("mylistings/pendings")]
+        public async Task<ActionResult<List<ListingVM>>> PendingListings()
+        {
+
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
+                // Get the listing entities from the service
+                var results = await _listingService.PendingListings(userId);
+
+                // Return a 200 response with the ListingVMs
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+
+        //Purchases
+        /// <summary>
+        /// Confirming the purchase from pending purchase by the lister.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        [HttpPut("purchase")]
-        public async Task<ActionResult<ListingVM>> Purchase([FromBody] ListingPurchaseVM data)
+        [HttpPut("confirmpurchase")]
+        public async Task<ActionResult<ListingVM>> ConfirmPurchase([FromBody] ListingPurchaseVM data)
+        {
+
+            try
+            {
+
+                // Update Listing entity from the service
+                var result = await _listingService.ConfirmPurchase(data);
+
+                // Return a 200 response with the ListingVM
+                return Ok(result);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Buyer sents a request for the lister to confirm their purchase
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPut("requestpurchase")]
+        public async Task<ActionResult<ListingVM>> RequestPurchase([FromBody] ListingPurchaseVM data)
         {
 
             try
@@ -420,7 +482,33 @@ namespace MarketPlaceForYou.Api.Controllers
                     return BadRequest("Invalid Request");
                 }
                 // Update Listing entity from the service
-                var result = await _listingService.Purchase(data, buyerId);
+                var result = await _listingService.RequestPurchase(data, buyerId);
+
+                // Return a 200 response with the ListingVM
+                return Ok(result);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Lister cancelling a purchase after a buyer has requested (pending purchase) a listing to purchase
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPut("cancelpurchase")]
+        public async Task<ActionResult<ListingVM>> CancelPurchase([FromBody] ListingPurchaseVM data)
+        {
+
+            try
+            {
+                // Update Listing entity from the service
+                var result = await _listingService.CancelPurchase(data);
 
                 // Return a 200 response with the ListingVM
                 return Ok(result);

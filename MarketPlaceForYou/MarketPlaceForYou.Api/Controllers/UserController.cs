@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Web.Http.Cors;
+//using System.Web.Http.Cors;
 
 namespace MarketPlaceForYou.Api.Controllers
 {/// <summary>
  /// Controller for user related APIs
  /// </summary>
 
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    //[EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -45,7 +45,7 @@ namespace MarketPlaceForYou.Api.Controllers
                 // Have the service create the new user
                 var result = await _userService.Create(data);
 
-                // Return a 200 response with the GameVM
+                // Return a 200 response with the userVM
                 return Ok(result);
             }
             catch (DbUpdateException)
@@ -71,15 +71,15 @@ namespace MarketPlaceForYou.Api.Controllers
         {
             try
             {
-                // Get the requested Game entity from the service
+                // Get the requested user entity from the service
                 var result = await _userService.GetById(id);
 
-                // Return a 200 response with the GameVM
+                // Return a 200 response with the userVM
                 return Ok(result);
             }
             catch
             {
-                return BadRequest(new { message = "Unable to retrieve the requested game" });
+                return BadRequest(new { message = "Unable to retrieve the requested user" });
             }
         }
 

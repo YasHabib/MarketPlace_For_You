@@ -96,6 +96,10 @@ namespace MarketPlaceForYou.Models.Entities
         [Required]
         public DateTime Created { get; set; }
         /// <summary>
+        /// Status of a listing. Actual status (ie. Active, Pending, Sold) are written in DB during repository layer and are not hardcoded.
+        /// </summary>
+        public string? Status { get; set; }
+        /// <summary>
         /// Purchased date
         /// </summary>
         public DateTime Purchased { get; set; }

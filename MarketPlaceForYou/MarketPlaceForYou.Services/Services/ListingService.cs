@@ -98,12 +98,13 @@ namespace MarketPlaceForYou.Services.Services
                 return models;
         }
 
-        public async Task<List<ListingVM>> SearchWithFilters(string searchString, string userid, string? city=null , string? category =null)
+        public async Task<List<ListingVM>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0)
         {
-            var results = await _uow.Listings.SearchWithFilters(searchString, userid, city, category);
+            var results = await _uow.Listings.SearchWithFilters(userid, searchString, city, category, condition, minPrice, maxPrice);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
+        //User's listings
         public async Task<List<ListingVM>> MyActiveListings(string userid)
         {
             var results = await _uow.Listings.MyActiveListings(userid);
@@ -112,7 +113,7 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task<List<ListingVM>> MySoldListings(string userid)
         {
-            var results = await _uow.Listings.MyActiveListings(userid);
+            var results = await _uow.Listings.MySoldListings(userid);
             var model = results.Select(listings => new ListingVM(listings)).ToList();
             return model;
         }
@@ -122,14 +123,45 @@ namespace MarketPlaceForYou.Services.Services
             var model = results.Select(listings => new ListingVM(listings)).ToList();
             return model;
         }
+        public async Task<List<ListingVM>> PendingListings(string userId)
+        {
+            var results = await _uow.Listings.PendingListings(userId);
+            var model = results.Select(listings => new ListingVM(listings)).ToList();
+            return model;
+        }
 
-        public async Task<ListingVM> Purchase(ListingPurchaseVM src, string buyerId)
+        public async Task<ListingVM> RequestPurchase(ListingPurchaseVM src, string buyerId)
         {
             var entity = await _uow.Listings.GetById(src.Id);
 
             entity.BuyerID = buyerId;
 
-            _uow.Listings.Purchase(entity);
+            _uow.Listings.RequestPurchase(entity);
+            await _uow.SaveAsync();
+
+            var model = new ListingVM(entity);
+            return model;
+        }
+        public async Task<ListingVM> ConfirmPurchase(ListingPurchaseVM src)
+        {
+            var entity = await _uow.Listings.GetById(src.Id);
+
+            entity.Status = "Sold";
+
+            _uow.Listings.ConfirmPurchase(entity);
+            await _uow.SaveAsync();
+
+            var model = new ListingVM(entity);
+            return model;
+        }
+        public async Task<ListingVM> CancelPurchase(ListingPurchaseVM src)
+        {
+            var entity = await _uow.Listings.GetById(src.Id);
+
+            entity.BuyerID = null;
+            entity.Status = "Active";
+
+            _uow.Listings.CancelPurchase(entity);
             await _uow.SaveAsync();
 
             var model = new ListingVM(entity);
