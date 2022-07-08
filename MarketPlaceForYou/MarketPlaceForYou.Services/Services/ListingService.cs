@@ -91,6 +91,13 @@ namespace MarketPlaceForYou.Services.Services
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
+        //test
+        public async Task<List<ListingVM>> GetAllByCond(string condition, string userid)
+        {
+            var results = await _uow.Listings.GetAllCond(condition, userid);
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            return models;
+        }
         public async Task<List<ListingVM>> Search(string searchString, string userid)
         {
             var results = await _uow.Listings.Search(searchString, userid);
@@ -101,6 +108,12 @@ namespace MarketPlaceForYou.Services.Services
         public async Task<List<ListingVM>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0)
         {
             var results = await _uow.Listings.SearchWithFilters(userid, searchString, city, category, condition, minPrice, maxPrice);
+
+            if (string.IsNullOrEmpty(searchString) && string.IsNullOrEmpty(city) && string.IsNullOrEmpty(category) && string.IsNullOrEmpty(condition) && minPrice.Equals(null) && maxPrice.Equals(null))
+            {
+                results = await _uow.Listings.GetAll(userid);
+            }
+            
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }

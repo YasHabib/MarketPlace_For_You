@@ -16,9 +16,5 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         /// </summary>
         [Key]
         public Guid Id { get; set; }
-        ///// <summary>
-        ///// status of the listing
-        ///// </summary>
-        //public string? Status { get; set; }
     }
 }

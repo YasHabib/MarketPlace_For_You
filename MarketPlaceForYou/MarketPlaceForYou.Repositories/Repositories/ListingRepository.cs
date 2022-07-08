@@ -56,11 +56,17 @@ namespace MarketPlaceForYou.Repositories.Repositories
                 i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower()))).ToListAsync();
             return results;
         }
+        //Test Condition API
+        public async Task<List<Listing>> GetAllCond(string condition, string userid)
+        {
+            var result = await _context.Listings.Where(i => i.UserId != userid && i.BuyerID == null && i.Condition == condition).OrderByDescending(i => i.Created).ToListAsync();
+            return result;
+        }
 
         //Start of searching with filters
         public async Task<List<Listing>> SearchWithFilters(string userid, string? searchString=null, string? city=null, string? category=null, string? condition =null, decimal minPrice =0, decimal maxPrice =0)
         {
-            var results = await _context.Listings.Where(i => i.UserId != userid && i.BuyerID == null).OrderByDescending(i => i.Created).ToListAsync();
+            var results = await _context.Listings.ToListAsync();
 
             ////no fields has been set (not working)
             //if (string.IsNullOrEmpty(searchString) && string.IsNullOrEmpty(city) && string.IsNullOrEmpty(category) && string.IsNullOrEmpty(condition) && minPrice.Equals(null) && maxPrice.Equals(null))
@@ -68,7 +74,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
             //    return results;
             //}
             //Search + all filters (Works)
-/*            else */if (!string.IsNullOrEmpty(searchString) && !string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition) && !minPrice.Equals(null) && !maxPrice.Equals(null)) 
+             if (!string.IsNullOrEmpty(searchString) && !string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition) && !minPrice.Equals(null) && !maxPrice.Equals(null)) 
             {
                 results = await _context.Listings.Where(i =>    (i.UserId != userid && i.BuyerID == null) &&
                                                                 (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())) &&
@@ -82,6 +88,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
             else if (!string.IsNullOrEmpty(searchString) && !string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition))
             {
                 results = await _context.Listings.Where(i =>    (i.UserId != userid && i.BuyerID == null) &&
+
                                                                 (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())) &&
                                                                 i.City == city &&
                                                                 i.Category == category &&
@@ -194,10 +201,10 @@ namespace MarketPlaceForYou.Repositories.Repositories
                                                                 (minPrice <= i.Price && i.Price <= maxPrice)
                                                         ).OrderByDescending(i => i.Created).ToListAsync();
             }
-            else
-            {
-                return results; // doesn't work?
-            }
+            //else
+            //{
+            //    return results; // doesn't work?
+            //}
 
 
             return results;

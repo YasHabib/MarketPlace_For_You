@@ -17,6 +17,7 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         Task<List<Listing>> SearchWithFilters(string userid, string? searchString=null,  string? city=null, string? category=null, string? condition=null, decimal minPrice=0, decimal maxPrice=0);
         Task<List<Listing>> GetAllByCity(string city, string userid);
         Task<List<Listing>> GetAllByCategory(string category, string userid);
+        Task<List<Listing>> GetAllCond(string condition, string userid); //test
         Task<List<Listing>> Deals(string userid);
         Task<List<Listing>> MyActiveListings(string userId);
         Task<List<Listing>> MySoldListings(string userId);
