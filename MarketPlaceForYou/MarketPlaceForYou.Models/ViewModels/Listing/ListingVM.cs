@@ -20,7 +20,7 @@ public class ListingVM
         ProdName = listInfo.ProdName;
         Description = listInfo.Description;
         Category = listInfo.Category;
-        Condition = listInfo.Category;
+        Condition = listInfo.Condition;
         Price = listInfo.Price;
         Address = listInfo.Address;
         City = listInfo.City;

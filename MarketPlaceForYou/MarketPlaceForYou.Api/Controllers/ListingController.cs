@@ -252,7 +252,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <param name="maxPrice"></param>
         /// <returns></returns>
         [HttpGet("filter")]
-        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters([FromQuery] string? searchString=null, [FromQuery] string? city = null, [FromQuery] string? category = null, [FromQuery] string? condition = null, [FromQuery] decimal minPrice=0, decimal maxPrice=0)
+        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters([FromQuery] string? searchString=null, [FromQuery] string? city = null, [FromQuery] string? category = null, [FromQuery] string? condition = null, [FromQuery] decimal minPrice=0, [FromQuery]decimal maxPrice=0)
         {
 
             try
@@ -262,10 +262,10 @@ namespace MarketPlaceForYou.Api.Controllers
                 {
                     return BadRequest("Invalid Request");
                 }
-                else if (minPrice > maxPrice)
-                {
-                    return BadRequest("Invalid Price input");
-                }
+                //else if (minPrice > maxPrice)
+                //{
+                //    return BadRequest("Invalid Price input");
+                //}
                 // Get the listing entities from the service
                 var results = await _listingService.SearchWithFilters(userId, searchString, city, category, condition, minPrice, maxPrice);
 
@@ -274,7 +274,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
             catch (Exception)
             {
-                return BadRequest(new { message = "There are no listing associated with {0}", searchString });
+                return BadRequest(new { message = "No results found"});
             }
         }
 
@@ -294,7 +294,7 @@ namespace MarketPlaceForYou.Api.Controllers
                     return BadRequest("Invalid Request");
                 }
                 // Get the requested Listing entity from the service
-                var result = await _listingService.GetById(id, userId);
+                var result = await _listingService.GetById(id);
 
                 // Return a 200 response with the ListingVM
                 return Ok(result);

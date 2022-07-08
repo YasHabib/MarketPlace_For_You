@@ -45,7 +45,7 @@ namespace MarketPlaceForYou.Services.Services
             await _uow.SaveAsync();
 
             var model = new ListingVM(entity);
-            return model;            
+            return model;
         }
         public async Task Delete(Guid id)
         {
@@ -55,7 +55,7 @@ namespace MarketPlaceForYou.Services.Services
         }
 
         //retrieving listings
-        public async Task<ListingVM> GetById(Guid id, string userId)
+        public async Task<ListingVM> GetById(Guid id)
         {
             var result = await _uow.Listings.GetById(id);
 
@@ -93,9 +93,9 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task<List<ListingVM>> Search(string searchString, string userid)
         {
-                var results = await _uow.Listings.Search(searchString, userid);
-                var models = results.Select(listing => new ListingVM(listing)).ToList();
-                return models;
+            var results = await _uow.Listings.Search(searchString, userid);
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            return models;
         }
 
         public async Task<List<ListingVM>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0)
@@ -146,8 +146,6 @@ namespace MarketPlaceForYou.Services.Services
         {
             var entity = await _uow.Listings.GetById(src.Id);
 
-            entity.Status = "Sold";
-
             _uow.Listings.ConfirmPurchase(entity);
             await _uow.SaveAsync();
 
@@ -159,14 +157,12 @@ namespace MarketPlaceForYou.Services.Services
             var entity = await _uow.Listings.GetById(src.Id);
 
             entity.BuyerID = null;
-            entity.Status = "Active";
 
             _uow.Listings.CancelPurchase(entity);
             await _uow.SaveAsync();
 
             var model = new ListingVM(entity);
-            return model;
+            return model;          
         }
-
     }
 }

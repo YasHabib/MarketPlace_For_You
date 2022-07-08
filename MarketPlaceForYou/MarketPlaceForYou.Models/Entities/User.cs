@@ -56,16 +56,19 @@ namespace MarketPlaceForYou.Models.Entities
         /// User's first name
         /// </summary>
         [Required]
+        [MaxLength(255)]    
         public string? FirstName { get; set; }
         /// <summary>
         /// User's last name
         /// </summary>
         [Required]
+        [MaxLength(255)]
         public string? LastName { get; set; }
         /// <summary>
         /// User's email
         /// </summary>
         [Required]
+        [MaxLength(255)]
         public string? Email { get; set; }
         /// <summary>
         /// user's address
