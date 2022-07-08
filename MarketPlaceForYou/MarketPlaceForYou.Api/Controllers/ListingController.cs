@@ -2,17 +2,14 @@
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-///using System.Web.Http.Cors;
 
 namespace MarketPlaceForYou.Api.Controllers
 {
     /// <summary>
     /// Controller for listing APIs
     /// </summary>
-    //[EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]

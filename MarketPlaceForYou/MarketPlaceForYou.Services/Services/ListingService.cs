@@ -109,7 +109,7 @@ namespace MarketPlaceForYou.Services.Services
         {
             var results = await _uow.Listings.SearchWithFilters(userid, searchString, city, category, condition, minPrice, maxPrice);
 
-            if (string.IsNullOrEmpty(searchString) && string.IsNullOrEmpty(city) && string.IsNullOrEmpty(category) && string.IsNullOrEmpty(condition) && minPrice.Equals(null) && maxPrice.Equals(null))
+            if (string.IsNullOrEmpty(searchString) && string.IsNullOrEmpty(city) && string.IsNullOrEmpty(category) && string.IsNullOrEmpty(condition) && minPrice ==0 && maxPrice ==0)
             {
                 results = await _uow.Listings.GetAll(userid);
             }

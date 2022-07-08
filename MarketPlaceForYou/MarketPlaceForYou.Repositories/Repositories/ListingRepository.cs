@@ -74,7 +74,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
             //    return results;
             //}
             //Search + all filters (Works)
-             if (!string.IsNullOrEmpty(searchString) && !string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition) && !minPrice.Equals(null) && !maxPrice.Equals(null)) 
+             if (!string.IsNullOrEmpty(searchString) && !string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition) && minPrice != 0 && maxPrice != 0) 
             {
                 results = await _context.Listings.Where(i =>    (i.UserId != userid && i.BuyerID == null) &&
                                                                 (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())) &&
@@ -85,10 +85,9 @@ namespace MarketPlaceForYou.Repositories.Repositories
                                                         ).OrderByDescending(i => i.Created).ToListAsync();
             }
             //Search +  city, category and conditon (not working, condition)
-            else if (!string.IsNullOrEmpty(searchString) && !string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition))
+            else if (!string.IsNullOrEmpty(searchString) && !string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition) && minPrice == 0 && maxPrice == 0)
             {
                 results = await _context.Listings.Where(i =>    (i.UserId != userid && i.BuyerID == null) &&
-
                                                                 (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())) &&
                                                                 i.City == city &&
                                                                 i.Category == category &&
@@ -122,7 +121,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
                                                         ).ToListAsync();
             }
             //City + Category + Condition + Price (Works)
-            else if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition) && !minPrice.Equals(null) && !maxPrice.Equals(null))
+            else if (!string.IsNullOrEmpty(city) && !string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition) && minPrice != 0 && maxPrice != 0)
             {
                 results = await _context.Listings.Where(i =>    (i.UserId != userid && i.BuyerID == null) &&                                      
                                                                 i.City == city &&
@@ -156,7 +155,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
                                                        ).OrderByDescending(i => i.Created).ToListAsync();
             }
             //Category + Condition + Price (Works)
-            else if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition) && !minPrice.Equals(null) && !maxPrice.Equals(null))
+            else if (!string.IsNullOrEmpty(category) && !string.IsNullOrEmpty(condition) && minPrice != 0 && maxPrice != 0)
             {
                 results = await _context.Listings.Where(i =>    (i.UserId != userid && i.BuyerID == null) &&
                                                                 i.Category == category &&
