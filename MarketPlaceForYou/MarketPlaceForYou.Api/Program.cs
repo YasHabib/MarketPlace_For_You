@@ -71,7 +71,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     });
 
     builder.Services.AddControllers();
-    builder.Services.AddCors();
+    //builder.Services.AddCors();
 
     //Setup dependency injection
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -86,6 +86,7 @@ void ConfigureServices(WebApplicationBuilder builder)
 void ConfigurePipeline(WebApplication app)
 {
     //app.UseHttpsRedirection(); //This will redirect to https if the request is from http
+    app.UseCors();
 
     //allow hosting of static web pages
     if (!app.Environment.IsProduction())
