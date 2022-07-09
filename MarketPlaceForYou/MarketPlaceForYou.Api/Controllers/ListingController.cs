@@ -211,7 +211,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <summary>
         /// TEST
         /// </summary>
-        /// <param name="category"></param>
+        /// <param name="condition"></param>
         /// <returns></returns>
         /// 
         [HttpGet("condition/{condition}")]

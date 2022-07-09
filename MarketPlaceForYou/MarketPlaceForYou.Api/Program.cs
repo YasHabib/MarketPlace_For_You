@@ -16,14 +16,19 @@ void ConfigureHost(ConfigureHostBuilder host)
 void ConfigureServices(WebApplicationBuilder builder)
 {
     //Setup CORs
-    builder.Services.AddCors(options =>
+    //builder.Services.AddCors(options =>
+    //{
+    //    options.AddDefaultPolicy(
+    //        policy =>
+    //        {
+    //            policy.WithOrigins("http://localhost:3000");
+    //        });
+    //});
+    builder.Services.AddCors(option => option.AddPolicy("allowCORs", build =>
     {
-        options.AddDefaultPolicy(
-            policy =>
-            {
-                policy.WithOrigins("http://localhost:3000");
-            });
-    });
+        build.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+    }));
+
     //Setup the database using the ApplicationDbContext
     builder.Services.AddDbContext<MKPFYDbContext>(options =>
         options.UseNpgsql( //connect to postgres db
@@ -71,7 +76,6 @@ void ConfigureServices(WebApplicationBuilder builder)
     });
 
     builder.Services.AddControllers();
-    //builder.Services.AddCors();
 
     //Setup dependency injection
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -86,7 +90,7 @@ void ConfigureServices(WebApplicationBuilder builder)
 void ConfigurePipeline(WebApplication app)
 {
     //app.UseHttpsRedirection(); //This will redirect to https if the request is from http
-    app.UseCors();
+    app.UseCors("allowCORs");
 
     //allow hosting of static web pages
     if (!app.Environment.IsProduction())
