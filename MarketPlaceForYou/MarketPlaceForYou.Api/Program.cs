@@ -15,6 +15,15 @@ void ConfigureHost(ConfigureHostBuilder host)
 
 void ConfigureServices(WebApplicationBuilder builder)
 {
+    //Setup CORs
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(
+            policy =>
+            {
+                policy.WithOrigins("http://localhost:3000");
+            });
+    });
     //Setup the database using the ApplicationDbContext
     builder.Services.AddDbContext<MKPFYDbContext>(options =>
         options.UseNpgsql( //connect to postgres db
