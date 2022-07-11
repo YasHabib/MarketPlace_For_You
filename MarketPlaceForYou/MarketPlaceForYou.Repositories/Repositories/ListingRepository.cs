@@ -18,7 +18,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
             _context = context;
         }
 
-        //C
+        //------------------------------------------------------------CREATE------------------------------------------------
         public void Create(Listing entity)
         {
             entity.Created = DateTime.UtcNow;
@@ -26,7 +26,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
             _context.Add(entity);
         }
 
-        //R
+        //------------------------------------------------------------READ------------------------------------------------
         public async Task<Listing> GetById(Guid id)
         {
             var result = await _context.Listings.FirstAsync(i => i.Id == id);
@@ -365,7 +365,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
             var results = await _context.Listings.Where(i => i.Status == "Pending" && i.UserId == userId).OrderByDescending(i => i.Created).ToListAsync();
             return results;
         }
-        //U
+        //------------------------------------------------------------UPDATE------------------------------------------------
         public void RequestPurchase(Listing entity)
         {
             entity.Status = "Pending";
@@ -387,7 +387,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
         {
             _context.Update(entity);
         }
-        //D
+        //------------------------------------------------------------DELETE------------------------------------------------
         public void Delete(Listing entity)
         {
             _context.Remove(entity);

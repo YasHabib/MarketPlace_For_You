@@ -33,6 +33,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <response code = "200">Successfull</response>
         /// <response code = "401">User not logged in or token has expired</response>
         /// <response code = "500">Internal server issue</response>
+        //------------------------------------------------------------CREATE------------------------------------------------
 
         [HttpPost]
         public async Task<ActionResult<ListingVM>> Create([FromBody] ListingAddVM data)
@@ -60,61 +61,8 @@ namespace MarketPlaceForYou.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        /// <summary>
-        /// Updates a listing
-        /// </summary>
-        /// <param name="data">Listing data</param>
-        /// <returns>Returns the updated listing to database</returns>
-        /// <response code = "200">Successfull</response>
-        /// <response code = "401">User not logged in or token has expired</response>
-        /// <response code = "500">Internal server issue</response>
-        [HttpPut]
-        public async Task<ActionResult<ListingVM>> Update([FromBody] ListingUpdateVM data)
-        {
-            try
-            {
-                // Update Listing entity from the service
-                var result = await _listingService.Update(data);
+        //------------------------------------------------------------UPDATE------------------------------------------------
 
-                // Return a 200 response with the ListingVM
-                return Ok(result);
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        /// <summary>
-        /// Deletes a listing (I do not think we need this, I had to create it as I had to delete some listings)
-        /// </summary>
-        /// <param name="id">Listing data</param>
-        /// <returns>Deletes a listing</returns>
-        /// <response code = "200">Successfull</response>
-        /// <response code = "401">User not logged in or token has expired</response>
-        /// <response code = "500">Internal server issue</response>
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete([FromRoute] Guid id)
-        {
-            try
-            {
-                await _listingService.Delete(id);
-
-                // Return a 200 response
-                return Ok();
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
-            }
-            catch
-            {
-                return BadRequest(new { message = "Unable to delete the requested Listing" });
-            }
-        }
         /// <summary>
         /// Returns all the created listings which have not created by the logged in user and have not been purchased. 
         /// </summary>
@@ -462,6 +410,7 @@ namespace MarketPlaceForYou.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
+        //------------------------------------------------------------UPDATE------------------------------------------------
 
         //Purchases
         /// <summary>
@@ -546,6 +495,63 @@ namespace MarketPlaceForYou.Api.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Updates a listing
+        /// </summary>
+        /// <param name="data">Listing data</param>
+        /// <returns>Returns the updated listing to database</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
+        [HttpPut]
+        public async Task<ActionResult<ListingVM>> Update([FromBody] ListingUpdateVM data)
+        {
+            try
+            {
+                // Update Listing entity from the service
+                var result = await _listingService.Update(data);
+
+                // Return a 200 response with the ListingVM
+                return Ok(result);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        //------------------------------------------------------------DELETE------------------------------------------------
+
+        /// <summary>
+        /// Deletes a listing (I do not think we need this, I had to create it as I had to delete some listings)
+        /// </summary>
+        /// <param name="id">Listing data</param>
+        /// <returns>Deletes a listing</returns>
+        /// <response code = "200">Successfull</response>
+        /// <response code = "401">User not logged in or token has expired</response>
+        /// <response code = "500">Internal server issue</response>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete([FromRoute] Guid id)
+        {
+            try
+            {
+                await _listingService.Delete(id);
+
+                // Return a 200 response
+                return Ok();
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            }
+            catch
+            {
+                return BadRequest(new { message = "Unable to delete the requested Listing" });
             }
         }
 
