@@ -38,8 +38,13 @@ namespace MarketPlaceForYou.Services.Services
             var model = new UserVM(result);
             return model;
         }
+        public async Task<List<UserVM>> GetAll()
+        {
+            var results = await _uow.Users.GetAll();
+            var models = results.Select(users => new UserVM(users)).ToList();
+            return models;
+        }
 
-        //Need clarification on this step to see if this is right
         public async Task<UserVM> Update(UserUpdateVM src)
         {
             //read
@@ -56,6 +61,12 @@ namespace MarketPlaceForYou.Services.Services
             //return the user to front end
             var model = new UserVM(entity);
             return model;
+        }
+        public async Task Delete(string id)
+        {
+            var entity = await _uow.Users.GetById(id);
+            _uow.Users.Delete(entity);
+            await _uow.SaveAsync();
         }
     }
 }

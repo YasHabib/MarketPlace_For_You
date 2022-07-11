@@ -91,7 +91,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <response code = "200">Successfull</response>
         /// <response code = "401">User not logged in or token has expired</response>
         /// <response code = "500">Internal server issue</response>
-        [HttpPut("{id}")]
+        [HttpPut()]
         public async Task<ActionResult<User>> Update([FromBody] UserUpdateVM data)
         {
             try

@@ -15,6 +15,7 @@ namespace MarketPlaceForYou.Repositories
         //Note to self: The following codes can be added later during creating endpoint for each entitys (ie. Users,Listing)
         private IUserRepository _userRepository;
         private IListingRepository _lisingRepository;
+        private IFAQRepository _faqRepository;
 
         public IUserRepository Users
         {
@@ -33,6 +34,15 @@ namespace MarketPlaceForYou.Repositories
                 if (_lisingRepository == null)
                     _lisingRepository = new ListingRepository(_context);
                 return _lisingRepository;
+            }
+        }
+        public IFAQRepository FAQs
+        {
+            get
+            {
+                if (_faqRepository == null)
+                    _faqRepository = new FAQRepository(_context);
+                return _faqRepository;
             }
         }
         //end 

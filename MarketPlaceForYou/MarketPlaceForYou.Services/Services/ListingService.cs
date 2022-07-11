@@ -47,12 +47,6 @@ namespace MarketPlaceForYou.Services.Services
             var model = new ListingVM(entity);
             return model;
         }
-        public async Task Delete(Guid id)
-        {
-            var entity = await _uow.Listings.GetById(id);
-            _uow.Listings.Delete(entity);
-            await _uow.SaveAsync();
-        }
 
         //retrieving listings
         public async Task<ListingVM> GetById(Guid id)
@@ -176,6 +170,12 @@ namespace MarketPlaceForYou.Services.Services
 
             var model = new ListingVM(entity);
             return model;          
+        }
+        public async Task Delete(Guid id)
+        {
+            var entity = await _uow.Listings.GetById(id);
+            _uow.Listings.Delete(entity);
+            await _uow.SaveAsync();
         }
     }
 }

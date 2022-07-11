@@ -81,6 +81,8 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<IListingService, ListingService>();
+    builder.Services.AddScoped<IFAQService, FAQService>();
+
 
 }
 

@@ -9,37 +9,36 @@ using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Repositories.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class FAQRepository : IFAQRepository
     {
-        private readonly MKPFYDbContext _context;
 
-        public UserRepository(MKPFYDbContext context)
+        private readonly MKPFYDbContext _context;
+        public FAQRepository(MKPFYDbContext context)
         {
             _context = context;
         }
-        public void Create(User entity)
+        public void Create(FAQ entity)
         {
             _context.Add(entity);
         }
-        public async Task<User> GetById(string id)
+        public async Task<FAQ> GetById(Guid id)
         {
-            var result = await _context.Users.FirstAsync(i => i.Id == id);
+            var result = await _context.FAQs.FirstAsync(i => i.Id == id);
             return result;
         }
-        public async Task<List<User>> GetAll()
+        public async Task<List<FAQ>> GetAll()
         {
-            var results = await _context.Users.ToListAsync();
+            var results = await _context.FAQs.ToListAsync();
             return results;
         }
-        public void Update(User entity)
+        public void Update(FAQ entity)
         {
             _context.Update(entity);
         }
-        public void Delete(User entity)
+        public void Delete(FAQ entity)
         {
             _context.Remove(entity);
         }
-
 
     }
 }
