@@ -28,7 +28,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        [Authorize("Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<FAQVM>> Create([FromBody] FAQaddVM data)
         {
@@ -105,7 +105,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        [Authorize("Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<ActionResult<FAQVM>> Update([FromBody] FAQupdateVM data)
         {
@@ -131,7 +131,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Authorize("Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete([FromRoute] Guid id)
         {
