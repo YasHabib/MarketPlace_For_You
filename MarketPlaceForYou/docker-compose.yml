@@ -17,7 +17,7 @@ services:
       - AWS__ImageBucket=marketforyou-yh
       - AWS__Region=ca-central-1
     volumes:
-      - .aws/root/.aws
+      - .aws:/root/.aws
     depends_on:
         - marketplaceforyou.db
 

@@ -78,9 +78,7 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
                     return BadRequest("Invalid Request");
-                }
                 // Get the listing entities from the service
                 var results = await _listingService.GetAll(userId);
 
@@ -317,9 +315,7 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
                     return BadRequest("Invalid Request");
-                }
                 // Get the listing entities from the service
                 var results = await _listingService.MyActiveListings(userId);
 

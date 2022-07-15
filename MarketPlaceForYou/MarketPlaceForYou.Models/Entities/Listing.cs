@@ -53,7 +53,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Settings relationship with user table
         /// </summary>
-        public User User { get; set; }
+        public User? User { get; set; }
 
 
         /// <summary>
@@ -107,6 +107,6 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Buyer's id for purchasing
         /// </summary> 
-        public string BuyerID { get; set; } = String.Empty;
+        public string? BuyerID { get; set; }
     }
 }

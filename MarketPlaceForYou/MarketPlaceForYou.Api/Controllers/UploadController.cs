@@ -27,6 +27,8 @@ namespace MarketPlaceForYou.Api.Controllers
         /// API for uploading images
         /// </summary>
         /// <returns></returns>
+        /// 
+        [HttpPost]
         public async Task<ActionResult<List<UploadResultVM>>> UploadImages()
         {
             //file validation
