@@ -42,39 +42,40 @@ namespace MarketPlaceForYou.Models.Entities
         /// </summary>
         [Key]
         public Guid Id { get; set; }
+
         /// <summary>
         /// Foreign key (user id)
         /// </summary>
         //relationships
         [Required]
         //foreign key
-        public string? UserId { get; set; } //naming convention (EntityNameId)
+        public string UserId { get; set; } //naming convention (EntityNameId)
         /// <summary>
         /// Settings relationship with user table
         /// </summary>
-        public User? User { get; set; }
+        public User User { get; set; }
 
 
         /// <summary>
         /// Listing name
         /// </summary>
         [Required]
-        public string? ProdName { get; set; }
+        public string ProdName { get; set; } = String.Empty;
         /// <summary>
         /// Description
         /// </summary>
         [Required]
-        public string? Description { get; set; }
+        public string Description { get; set; } =String.Empty;
         /// <summary>
         /// Category
         /// </summary>
         [Required]
-        public string? Category { get; set; }
+        public string Category { get; set; } = String.Empty;
         /// <summary>
         /// COndition
         /// </summary>
         [Required]
-        public string? Condition { get; set; }
+        public string Condition { get; set; } = String.Empty ;
         /// <summary>
         /// Price
         /// </summary>
@@ -84,12 +85,12 @@ namespace MarketPlaceForYou.Models.Entities
         /// Address
         /// </summary>
         [Required]
-        public string? Address { get; set; }
+        public string Address { get; set; } = String.Empty;
         /// <summary>
         /// City
         /// </summary>
         [Required]
-        public string? City { get; set; }
+        public string City { get; set; } = String.Empty;
         /// <summary>
         /// Created date
         /// </summary>
@@ -98,7 +99,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Status of a listing. Actual status (ie. Active, Pending, Sold) are written in DB during repository layer and are not hardcoded.
         /// </summary>
-        public string? Status { get; set; }
+        public string Status { get; set; } = String.Empty;
         /// <summary>
         /// Purchased date
         /// </summary>
@@ -106,6 +107,6 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Buyer's id for purchasing
         /// </summary> 
-        public string? BuyerID { get; set; }
+        public string BuyerID { get; set; } = String.Empty;
     }
 }

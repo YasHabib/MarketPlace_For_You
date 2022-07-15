@@ -12,6 +12,7 @@ namespace MarketPlaceForYou.Repositories
         IUserRepository Users { get; }
         IListingRepository Listings { get; }
         IFAQRepository FAQs { get; }
+        IUploadRepository Uploads { get; }
 
         Task SaveAsync();
     }

@@ -82,6 +82,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<IListingService, ListingService>();
     builder.Services.AddScoped<IFAQService, FAQService>();
+    builder.Services.AddScoped<IUploadService, UploadService>();
 
 
 }

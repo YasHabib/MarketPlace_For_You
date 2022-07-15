@@ -51,39 +51,39 @@ namespace MarketPlaceForYou.Models.Entities
         /// User id
         /// </summary>
         [Key]
-        public string? Id { get; set; }
+        public string Id { get; set; } = string.Empty;
         /// <summary>
         /// User's first name
         /// </summary>
         [Required]
         [MaxLength(255)]    
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
         /// <summary>
         /// User's last name
         /// </summary>
         [Required]
         [MaxLength(255)]
-        public string? LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
         /// <summary>
         /// User's email
         /// </summary>
         [Required]
         [MaxLength(255)]
-        public string? Email { get; set; }
+        public string Email { get; set; } = string.Empty;
         /// <summary>
         /// user's address
         /// </summary>
-        public string? Address { get; set; }
+        public string Address { get; set; } = string.Empty;
         /// <summary>
         /// User's phone
         /// </summary>
         [Required]
-        public string? Phone { get; set; }
+        public string Phone { get; set; } = string.Empty;
         /// <summary>
         /// User's city
         /// </summary>
         [Required]
-        public string? City { get; set; }
+        public string City { get; set; } = string.Empty;
 
         //listing user has created
         /// <summary>

@@ -15,31 +15,36 @@ namespace MarketPlaceForYou.Models.ViewModels
         /// User's id to be used to retriving the user
         /// </summary>
         [Key]
-        public string? Id { get; set; }
+        public string Id { get; set; } = string.Empty;
+
         /// <summary>
         /// User's firstname
         /// </summary>
         [Required]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
+
         /// <summary>
         /// User's lastname
         /// </summary>
         [Required]
-        public string? LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
+
         /// <summary>
         /// User's address
         /// </summary>
-        public string? Address { get; set; }
+        public string Address { get; set; } = string.Empty;
+
         /// <summary>
         /// user's phone
         /// </summary>
         [Required]
-        public string? Phone { get; set; }
+        public string Phone { get; set; } = string.Empty;
+
         /// <summary>
         /// user's city
         /// </summary>
         [Required]
-        public string? City { get; set; }
+        public string City { get; set; } = string.Empty;
 
     }
 }

@@ -23,13 +23,15 @@ namespace MarketPlaceForYou.Models.ViewModels.FAQ
         /// Id of the FAQ
         /// </summary>
         public Guid Id { get; set; }
+
         /// <summary>
         /// Title of the FAQ
         /// </summary>
-        public string? Title { get; set; }
+        public string Title { get; set; } = string.Empty;
+
         /// <summary>
         /// Description of the FAQ
         /// </summary>
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
     }
 }

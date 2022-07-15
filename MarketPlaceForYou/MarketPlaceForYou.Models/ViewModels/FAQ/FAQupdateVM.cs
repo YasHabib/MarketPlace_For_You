@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Models.ViewModels.FAQ
-{
+{/// <summary>
+/// Updating FAQ
+/// </summary>
     public class FAQupdateVM
     {/// <summary>
     /// ID which will be called to Update the corrosposnding FAQ
@@ -17,11 +19,11 @@ namespace MarketPlaceForYou.Models.ViewModels.FAQ
         /// Update the title of the FAQ
         /// </summary>
         [Required]
-        public string? Title { get; set; }
+        public string Title { get; set; } = string.Empty;
         /// <summary>
         /// Update the description of FAQ
         /// </summary>
         [Required]
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
     }
 }

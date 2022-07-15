@@ -457,3 +457,8 @@ $RECYCLE.BIN/
 ## Docker Compose
 ##
 docker-compose.override.yml
+
+##
+##AWS Cred
+##
+.aws

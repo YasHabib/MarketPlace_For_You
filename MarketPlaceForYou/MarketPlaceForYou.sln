@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA5C728F-F98C-413F-823D-E9CBDE117CE6}"
 	ProjectSection(SolutionItems) = preProject
 		buildspec.yml = buildspec.yml
+		.aws\credentials = .aws\credentials
 		Dockerrun.aws.json = Dockerrun.aws.json
 	EndProjectSection
 EndProject

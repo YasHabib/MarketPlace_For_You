@@ -17,22 +17,22 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         /// Name of the listing
         /// </summary>
         [Required]
-        public string? ProdName { get; set; }
+        public string ProdName { get; set; } = string.Empty;
         /// <summary>
         /// Description of the listing
         /// </summary>
         [Required]
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty ;
         /// <summary>
         /// Category of the listing
         /// </summary>
         [Required]
-        public string? Category { get; set; }
+        public string Category { get; set; } = string.Empty;
         /// <summary>
         /// Condition of the listing
         /// </summary>
         [Required]
-        public string? Condition { get; set; }
+        public string Condition { get; set; } = string.Empty;
         /// <summary>
         /// Price of the listing
         /// </summary>
@@ -42,11 +42,11 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         /// Address of the lister
         /// </summary>
         [Required]
-        public string? Address { get; set; }
+        public string Address { get; set; } = string.Empty;
         /// <summary>
         /// City of the lister
         /// </summary>
         [Required]
-        public string? City { get; set; }
+        public string City { get; set; } = string.Empty;
     }
 }

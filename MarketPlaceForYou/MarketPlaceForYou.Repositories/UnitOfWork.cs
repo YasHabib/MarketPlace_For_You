@@ -16,6 +16,7 @@ namespace MarketPlaceForYou.Repositories
         private IUserRepository _userRepository;
         private IListingRepository _lisingRepository;
         private IFAQRepository _faqRepository;
+        private IUploadRepository _uploadRepository;
 
         public IUserRepository Users
         {
@@ -43,6 +44,15 @@ namespace MarketPlaceForYou.Repositories
                 if (_faqRepository == null)
                     _faqRepository = new FAQRepository(_context);
                 return _faqRepository;
+            }
+        }
+        public IUploadRepository Uploads
+        {
+            get
+            {
+                if (_uploadRepository == null)
+                    _uploadRepository = new UploadRepository(_context);
+                return _uploadRepository;
             }
         }
         //end 

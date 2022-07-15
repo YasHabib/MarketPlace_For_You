@@ -15,11 +15,11 @@ namespace MarketPlaceForYou.Models.ViewModels.FAQ
         /// Title textbox will be viewed by the super admin
         /// </summary>
         [Required]
-        public string? Title { get; set; }
+        public string Title { get; set; } = string.Empty;
         /// <summary>
         /// Description texbox viewed by the super admin
         /// </summary>
         [Required]
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
     }
 }

@@ -30,54 +30,67 @@ public class ListingVM
         //BuyerID = listInfo.BuyerID;
         //Status = listInfo.Status;
     }
+
     /// <summary>
     /// Listing id
     /// </summary>
     public Guid Id { get; set; }
+
     /// <summary>
     /// Listing name
     /// </summary>
-    public string? ProdName { get; set; }
+    public string ProdName { get; set; } = string.Empty;
+
     /// <summary>
     /// Listing description
     /// </summary>
-    public string? Description { get; set; }
+    public string Description { get; set; } = string.Empty;
+
     /// <summary>
     /// Listing Category
     /// </summary>
-    public string? Category { get; set; }
+    public string Category { get; set; } = string.Empty;
+
     /// <summary>
     /// Listing Condition (My condition is bad from all the commenting)
     /// </summary>
-    public string? Condition { get; set; }
+    public string Condition { get; set; } = string.Empty;
+
     /// <summary>
     /// Price of listing
     /// </summary>
     public decimal Price { get; set; }
+
     /// <summary>
     /// Address of the lister
     /// </summary>
-    public string? Address { get; set; }
+    public string Address { get; set; } = string.Empty;
+
     /// <summary>
     /// City of the lister
     /// </summary>
-    public string? City { get; set; }
+    public string City { get; set; } = string.Empty;
+
     /// <summary>
     /// Created date
     /// </summary>
     public DateTime Created { get; set; }
+
     /// <summary>
     /// User id of the person who created it
     /// </summary>
-    public string? UserId { get; set; }
+    public string UserId { get; set; }
+
     ///// <summary>
     ///// Purchased date
     ///// </summary>
     //public DateTime Purchased { get; set; }
+
     ///// <summary>
     ///// Buyer's id for purchasing
     ///// </summary> 
     //public string? BuyerID { get; set; }
+
     ///// <summary>
     ///// Listing status
     ///// </summary>
