@@ -1,4 +1,5 @@
 ﻿using MarketPlaceForYou.Api.Helpers;
+using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -42,9 +43,7 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
                     return BadRequest("Invalid Request");
-                }
 
                 // Have the service create the new Listing
                 var result = await _listingService.Create(data, userId);
@@ -231,13 +230,9 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
                     return BadRequest("Invalid Request");
-                }
-                //else if (minPrice > maxPrice)
-                //{
-                //    return BadRequest("Invalid Price input");
-                //}
+                if (minPrice > maxPrice)
+                    return BadRequest("Invalid Price");
                 // Get the listing entities from the service
                 var results = await _listingService.SearchWithFilters(userId, searchString, city, category, condition, minPrice, maxPrice);
 

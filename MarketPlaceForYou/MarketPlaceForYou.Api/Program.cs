@@ -16,14 +16,6 @@ void ConfigureHost(ConfigureHostBuilder host)
 void ConfigureServices(WebApplicationBuilder builder)
 {
     //Setup CORs
-    //builder.Services.AddCors(options =>
-    //{
-    //    options.AddDefaultPolicy(
-    //        policy =>
-    //        {
-    //            policy.WithOrigins("http://localhost:3000");
-    //        });
-    //});
     builder.Services.AddCors(option => option.AddPolicy("allowCORs", build =>
     {
         build.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
@@ -83,8 +75,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IListingService, ListingService>();
     builder.Services.AddScoped<IFAQService, FAQService>();
     builder.Services.AddScoped<IUploadService, UploadService>();
-
-
+    builder.Services.AddScoped<ISearchInputService, SearchInputService>();
 }
 
 
