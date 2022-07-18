@@ -282,7 +282,7 @@ namespace MarketPlaceForYou.Api.Controllers
                 var userId = User.GetId();
                 if (userId == null)
                     return BadRequest("Invalid Request");
-                string searchString = "a";
+                string searchString = "";
 
                 // Get the listing entities from the service
                 var results = await _listingService.Deals(userId, searchString);
