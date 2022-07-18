@@ -25,7 +25,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
 
         public async Task<List<SearchInput>> GetAll(string userId)
         {
-            var result = await _context.SearchInputs.Where(i => i.UserId == userId).Take(3).OrderByDescending(i => i.SearchedDate).ToListAsync();
+            var result = await _context.SearchInputs.Where(i => i.UserId == userId).OrderByDescending(i => i.SearchedDate).Take(3).ToListAsync();
             return result;
         }
     }

@@ -65,10 +65,31 @@ namespace MarketPlaceForYou.Services.Services
             return models;
         }
 
-        public async Task<List<ListingVM>> Deals(string userid)
+        public async Task<List<ListingVM>> Deals(string searchString, string userid)
         {
-            var results = await _uow.Listings.Deals(userid);
-            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            //Grabbing the last # search
+            var search = _uow.SearchInputs.GetAll(userid).ToString();
+            //Passing the above search strings into search method
+            var searchResults = await _uow.Listings.Deals(searchString, userid);
+            //var results = await _uow.Listings.Deals(userid);
+
+
+            //looping through each of the search string to get the search results
+            if (search != null)
+            {
+                foreach(char s in search)
+                {
+                    //Grabbing all the search results based on the # of searchStrings
+                    searchResults = await _uow.Listings.Deals(s.ToString(), userid);
+
+                    //foreach(Listing L in searchResults)
+                    //{
+                    //    results = await _uow.Listings.Deals(userid);
+                    //}
+                }
+            }
+            //to view model for displaying to end user as a list
+            var models = searchResults.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
 

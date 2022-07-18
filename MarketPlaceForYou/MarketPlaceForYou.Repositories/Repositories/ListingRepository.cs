@@ -52,7 +52,8 @@ namespace MarketPlaceForYou.Repositories.Repositories
 
         public async Task<List<Listing>> Search(string searchString, string userid)
         {
-            var results = await _context.Listings.Where(i => i.UserId != userid && i.BuyerID == null &&  (
+            //var results = await _context.SearchInputs.Where(i => i.SearchString == searchString).ToListAsync();
+            var results = await _context.Listings.Where(i => i.UserId != userid && i.BuyerID == null && (
                 i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower()))).ToListAsync();
             return results;
         }
@@ -357,11 +358,23 @@ namespace MarketPlaceForYou.Repositories.Repositories
             return results;
         }//End of searching with filters
 
-        public async Task<List<Listing>> Deals(string userid)
+        public async Task<List<Listing>> Deals(string searchString, string userid)
         {
-            var results = await _context.Listings.Where(i => i.UserId != userid && i.BuyerID == null).OrderBy(i => i.Price).Take(16).OrderByDescending(i => i.Created)
-                .ToListAsync();
-            return results;
+            //var search = await _context.SearchInputs.Where(i => i.SearchString == searchString && i.UserId == userid).ToListAsync();
+
+            var search = await _context.Listings.Where(i => i.UserId != userid && i.BuyerID == null && (
+                                                            i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())))
+                                                            .OrderBy(i => i.Price).Take(16).OrderByDescending(i => i.Created).ToListAsync();
+
+            //var results = await _context.Listings.Where(i => i.UserId != userid && i.BuyerID == null).OrderBy(i => i.Price).Take(16).OrderByDescending(i => i.Created)
+            //    .ToListAsync();
+
+            //foreach(string s in search)
+            //{
+            //    results = await _context.Listings.Where(i => i.UserId != userid && i.BuyerID == null && (
+            //    i.ProdName.ToLower().Contains(s.ToLower()) || i.Description.ToLower().Contains(s.ToLower()))).ToListAsync();
+            //}
+            return search;
         }
         public async Task<List<Listing>> MyActiveListings(string userId)
         {

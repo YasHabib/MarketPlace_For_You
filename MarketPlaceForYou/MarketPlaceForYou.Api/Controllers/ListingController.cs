@@ -139,9 +139,8 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
-                    return BadRequest("Invalid Request");
-                }
+                     return BadRequest("Invalid Request");
+
                 // Get the listing entities from the service
                 var results = await _listingService.GetAllByCategory(category, userId);
 
@@ -198,9 +197,7 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
                     return BadRequest("Invalid Request");
-                }
                 // Get the listing entities from the service
                 var results = await _listingService.Search(searchString, userId);
 
@@ -278,16 +275,17 @@ namespace MarketPlaceForYou.Api.Controllers
         [HttpGet("deals")]
         public async Task<ActionResult<List<ListingVM>>> Deals()
         {
-
+            //    "message": "An exception was thrown while attempting to evaluate a LINQ query parameter expression.
+            //    See the inner exception for more information. To show additional information call 'DbContextOptionsBuilder.EnableSensitiveDataLogging'."
             try
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
                     return BadRequest("Invalid Request");
-                }
+                string searchString = "a";
+
                 // Get the listing entities from the service
-                var results = await _listingService.Deals(userId);
+                var results = await _listingService.Deals(userId, searchString);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
