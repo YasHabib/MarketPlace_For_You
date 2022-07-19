@@ -12,8 +12,10 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
     public interface IUserService
     {
         Task<UserVM> Create(UserAddVM userAdd);
-        Task<UserVM> GetById(string userId); //to get the user id to update their information into db
-        Task<List<UserVM>> GetAll();
+        Task<UserVM> GetById(string userId); //to get the user by their Id
+        Task<List<APUserListVM>> GetAll(string userId);
+        //Task UserSales(string userId);
+        //Task UserPurchases(string userId); 
         Task<UserVM> Update(UserUpdateVM userUpdate); //Do not use entity as return type
         Task Delete(string Id);
 

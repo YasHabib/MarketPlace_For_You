@@ -38,10 +38,20 @@ namespace MarketPlaceForYou.Services.Services
             var model = new UserVM(result);
             return model;
         }
-        public async Task<List<UserVM>> GetAll()
+        //public async Task UserSales(string userId)
+        //{
+        //    var result = await _uow.Users.GetById(userId);
+        //    return result;
+        //}
+        //public async Task UserPurchases(string userId)
+        //{
+        //    var result = await _uow.Users.GetById(userId);
+        //    return result; 
+        //}
+        public async Task<List<APUserListVM>> GetAll(string userId)
         {
-            var results = await _uow.Users.GetAll();
-            var models = results.Select(users => new UserVM(users)).ToList();
+            var results = await _uow.Users.GetAll(userId);
+            var models = results.Select(users => new APUserListVM(users)).ToList();
             return models;
         }
 

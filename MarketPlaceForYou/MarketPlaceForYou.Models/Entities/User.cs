@@ -3,6 +3,7 @@ using MarketPlaceForYou.Models.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,8 +85,26 @@ namespace MarketPlaceForYou.Models.Entities
         /// </summary>
         [Required]
         public string City { get; set; } = string.Empty;
+        /// <summary>
+        /// # of the user's active listings
+        /// </summary>
+        public int ActiveListings { get; set; }
+        /// <summary>
+        /// # of the user's purchases
+        /// </summary>
+        public int Purchases { get; set; }
+        /// <summary>
+        /// $ value of total sold
+        /// </summary>
+        [Column(TypeName = "money")]
+        public decimal TotalSold { get; set; }
+        /// <summary>
+        /// $ value of total purchase
+        /// </summary>
+        [Column(TypeName = "money")]
+        public decimal TotalPurchase { get; set; }
 
-        //listing user has created
+        //listing the user has created
         /// <summary>
         ///A collection of listing
         /// </summary>

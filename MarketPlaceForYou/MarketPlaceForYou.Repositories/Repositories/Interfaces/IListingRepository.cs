@@ -10,7 +10,7 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
     public interface IListingRepository
     {
         void Update(Listing entity);
-        void Create(Listing entity);
+        void Create(Listing entityL, User entityU);
         Task<Listing> GetById(Guid id);
         Task<List<Listing>> GetAll(string userId);
         Task<List<Listing>> Search(string searchString, string userid);
@@ -24,7 +24,7 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         Task<List<Listing>> MyPurchases(string userId);
         Task<List<Listing>> PendingListings(string userId);
         void RequestPurchase(Listing entity);
-        void ConfirmPurchase(Listing entity);   
+        void ConfirmPurchase(Listing entityL, User entityU);   
         void CancelPurchase(Listing entity);
         void Delete(Listing entity);
     }

@@ -79,6 +79,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Price
         /// </summary>
+        [Column(TypeName = "money")]
         [Required]
         public decimal Price { get; set; }
         /// <summary>

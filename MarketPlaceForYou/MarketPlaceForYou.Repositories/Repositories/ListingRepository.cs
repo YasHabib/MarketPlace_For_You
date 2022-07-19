@@ -19,11 +19,12 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
 
         //------------------------------------------------------------CREATE------------------------------------------------
-        public void Create(Listing entity)
+        public void Create(Listing entityL, User entityU)
         {
-            entity.Created = DateTime.UtcNow;
-            entity.Status = "Active";
-            _context.Add(entity);
+            entityL.Created = DateTime.UtcNow;
+            entityL.Status = "Active";
+            _context.Add(entityL);
+            _context.Update(entityU);
         }
 
         //------------------------------------------------------------READ------------------------------------------------
@@ -371,12 +372,24 @@ namespace MarketPlaceForYou.Repositories.Repositories
             entity.Status = "Pending";
             _context.Update(entity);
         }
-        public void ConfirmPurchase(Listing entity)
+        public void ConfirmPurchase(Listing entityL, User entityU)
         {
-            entity.Purchased = DateTime.UtcNow;
-            entity.Status = "Sold";
-            _context.Update(entity);
+            //Updating the listing
+            entityL.Purchased = DateTime.UtcNow;
+            entityL.Status = "Sold";
+            _context.Update(entityL);
+            //Updating the user who created the listing
+            decimal price = entityL.Price;
+            entityU.TotalSold +=price;
+            entityU.ActiveListings--;
+            _context.Update(entityU);
 
+            //Updating the user who purchased the item
+            string UserWhoPurchasedListing = entityL.BuyerID;
+            entityU.Equals(UserWhoPurchasedListing);
+            entityU.TotalPurchase += price;
+            entityU.Purchases++;
+            _context.Update(entityU);
         }
         public void CancelPurchase(Listing entity)
         {

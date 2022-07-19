@@ -420,9 +420,12 @@ namespace MarketPlaceForYou.Api.Controllers
 
             try
             {
+                var userId = User.GetId();
+                if (userId == null)
+                    return BadRequest("Invalid Request");
 
                 // Update Listing entity from the service
-                var result = await _listingService.ConfirmPurchase(data);
+                var result = await _listingService.ConfirmPurchase(data,userId);
 
                 // Return a 200 response with the ListingVM
                 return Ok(result);
