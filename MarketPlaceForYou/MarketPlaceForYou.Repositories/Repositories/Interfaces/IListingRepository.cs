@@ -24,8 +24,11 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         Task<List<Listing>> MyPurchases(string userId);
         Task<List<Listing>> PendingListings(string userId);
         void RequestPurchase(Listing entity);
-        void ConfirmPurchase(Listing entityL, User entityU);   
+        void ConfirmPurchase(Listing entityL, User entitySeller, User entityBuyer);   
         void CancelPurchase(Listing entity);
         void Delete(Listing entity);
+
+        //Admin Panel
+
     }
 }

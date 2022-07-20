@@ -151,9 +151,10 @@ namespace MarketPlaceForYou.Services.Services
         public async Task<ListingVM> ConfirmPurchase(ListingPurchaseVM src,string userId)
         {
             var entityL = await _uow.Listings.GetById(src.Id);
-            var entityU = await _uow.Users.GetById(userId);
+            var entitySeller = await _uow.Users.GetById(userId);
+            var entityBuyer = await _uow.Users.GetById(entityL.BuyerID);
 
-            _uow.Listings.ConfirmPurchase(entityL,entityU);
+            _uow.Listings.ConfirmPurchase(entityL,entitySeller, entityBuyer);
             await _uow.SaveAsync();
 
             var model = new ListingVM(entityL);
@@ -177,5 +178,8 @@ namespace MarketPlaceForYou.Services.Services
             _uow.Listings.Delete(entity);
             await _uow.SaveAsync();
         }
+
+        //Admin Panel
+
     }
 }

@@ -38,23 +38,6 @@ namespace MarketPlaceForYou.Services.Services
             var model = new UserVM(result);
             return model;
         }
-        //public async Task UserSales(string userId)
-        //{
-        //    var result = await _uow.Users.GetById(userId);
-        //    return result;
-        //}
-        //public async Task UserPurchases(string userId)
-        //{
-        //    var result = await _uow.Users.GetById(userId);
-        //    return result; 
-        //}
-        public async Task<List<APUserListVM>> GetAll(string userId)
-        {
-            var results = await _uow.Users.GetAll(userId);
-            var models = results.Select(users => new APUserListVM(users)).ToList();
-            return models;
-        }
-
         public async Task<UserVM> Update(UserUpdateVM src)
         {
             //read
@@ -71,6 +54,21 @@ namespace MarketPlaceForYou.Services.Services
             //return the user to front end
             var model = new UserVM(entity);
             return model;
+        }
+
+
+        //Admin panel
+        public async Task<APUserDetailsVM> APGetById(string userId)
+        {
+            var result = await _uow.Users.GetById(userId);
+            var model = new APUserDetailsVM(result);
+            return model;
+        }
+        public async Task<List<APUserListVM>> GetAll(string userId)
+        {
+            var results = await _uow.Users.GetAll(userId);
+            var models = results.Select(users => new APUserListVM(users)).ToList();
+            return models;
         }
         public async Task Delete(string id)
         {

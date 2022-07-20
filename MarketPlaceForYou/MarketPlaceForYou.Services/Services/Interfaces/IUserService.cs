@@ -13,11 +13,13 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
     {
         Task<UserVM> Create(UserAddVM userAdd);
         Task<UserVM> GetById(string userId); //to get the user by their Id
-        Task<List<APUserListVM>> GetAll(string userId);
-        //Task UserSales(string userId);
-        //Task UserPurchases(string userId); 
         Task<UserVM> Update(UserUpdateVM userUpdate); //Do not use entity as return type
+
+        //Admin panel
+        Task<APUserDetailsVM> APGetById(string userId);
+        Task<List<APUserListVM>> GetAll(string userId);
         Task Delete(string Id);
+
 
     }
 }

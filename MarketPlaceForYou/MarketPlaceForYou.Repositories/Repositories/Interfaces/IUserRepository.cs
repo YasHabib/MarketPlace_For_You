@@ -12,8 +12,7 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         void Create(User entity);
         Task<User> GetById(string id);
         Task<List<User>> GetAll(string userId);
-        decimal UserSales(string userId);
-        decimal UserPurchases(string userId, User entity);
+        //Task<User> GetUserDetails(string userId);
         void Update(User entity);
         void Delete(User entity);
     }
