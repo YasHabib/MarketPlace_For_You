@@ -28,7 +28,7 @@ public class ListingVM
         UserId = listInfo.UserId;
         //Purchased = listInfo.Purchased;
         //BuyerID = listInfo.BuyerID;
-        //Status = listInfo.Status;
+        Status = listInfo.Status;
     }
 
     /// <summary>
@@ -81,18 +81,8 @@ public class ListingVM
     /// </summary>
     public string UserId { get; set; }
 
-    ///// <summary>
-    ///// Purchased date
-    ///// </summary>
-    //public DateTime Purchased { get; set; }
-
-    ///// <summary>
-    ///// Buyer's id for purchasing
-    ///// </summary> 
-    //public string? BuyerID { get; set; }
-
-    ///// <summary>
-    ///// Listing status
-    ///// </summary>
-    //public string? Status { get; set; }
+    /// <summary>
+    /// Listing status
+    /// </summary>
+    public string? Status { get; set; } = string.Empty;
 }
