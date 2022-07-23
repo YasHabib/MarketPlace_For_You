@@ -118,16 +118,64 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
         /// <summary>
-        /// Deleting an listing from admin panel
+        /// Soft deleting an user
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete([FromRoute] Guid id)
+        public async Task<ActionResult> SoftDelete([FromRoute] string id)
         {
             try
             {
-                await _listingService.Delete(id);
+                await _userService.SoftDelete(id);
+
+                // Return a 200 response
+                return Ok();
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            }
+            catch
+            {
+                return BadRequest(new { message = "Unable to delete the requested Listing" });
+            }
+        }
+        /// <summary>
+        /// Blocks the user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> BlockUser([FromRoute] string id)
+        {
+            try
+            {
+                await _userService.BlockUser(id);
+
+                // Return a 200 response
+                return Ok();
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            }
+            catch
+            {
+                return BadRequest(new { message = "Unable to delete the requested Listing" });
+            }
+        }
+        /// <summary>
+        /// Unblocks the user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPut("unblock/{id}")]
+        public async Task<ActionResult> UnblockUser([FromRoute] string id)
+        {
+            try
+            {
+                await _userService.UnblockUser(id);
 
                 // Return a 200 response
                 return Ok();

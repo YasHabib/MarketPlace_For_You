@@ -103,7 +103,14 @@ namespace MarketPlaceForYou.Models.Entities
         /// </summary>
         [Column(TypeName = "money")]
         public decimal TotalPurchase { get; set; }
-
+        /// <summary>
+        /// Soft deleting an entity,
+        /// </summary>
+        public bool IsDeleted { get; set; }
+        /// <summary>
+        /// If the user is blocked or not
+        /// </summary>
+        public bool IsBlocked { get; set; }
         //listing the user has created
         /// <summary>
         ///A collection of listing

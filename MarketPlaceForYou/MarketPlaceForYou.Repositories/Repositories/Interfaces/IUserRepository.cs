@@ -15,5 +15,9 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         //Task<User> GetUserDetails(string userId);
         void Update(User entity);
         void Delete(User entity);
+        void SoftDelete(User entity);
+        void BlockUser(User entity);
+        void UnblockUser(User entity);
+
     }
 }

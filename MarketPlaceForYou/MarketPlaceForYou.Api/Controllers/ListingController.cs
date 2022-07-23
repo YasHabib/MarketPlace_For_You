@@ -527,7 +527,7 @@ namespace MarketPlaceForYou.Api.Controllers
         //------------------------------------------------------------DELETE------------------------------------------------
 
         /// <summary>
-        /// Deletes a listing (I do not think we need this, I had to create it as I had to delete some listings)
+        /// Deletes a listing 
         /// </summary>
         /// <param name="id">Listing data</param>
         /// <returns>Deletes a listing</returns>

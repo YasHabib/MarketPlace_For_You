@@ -76,5 +76,24 @@ namespace MarketPlaceForYou.Services.Services
             _uow.Users.Delete(entity);
             await _uow.SaveAsync();
         }
+        public async Task SoftDelete(string id)
+        {
+            var entity = await _uow.Users.GetById(id);
+            _uow.Users.SoftDelete(entity);
+            await _uow.SaveAsync();
+        }
+        public async Task BlockUser(string id)
+        {
+            var entity = await _uow.Users.GetById(id);
+            _uow.Users.BlockUser(entity);
+            await _uow.SaveAsync();
+        }
+        public async Task UnblockUser(string id)
+        {
+            var entity = await _uow.Users.GetById(id);
+            _uow.Users.UnblockUser(entity);
+            await _uow.SaveAsync();
+        }
+
     }
 }

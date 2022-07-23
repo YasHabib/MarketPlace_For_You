@@ -43,6 +43,18 @@ namespace MarketPlaceForYou.Repositories.Repositories
         {
             _context.Remove(entity);
         }
+        public void SoftDelete(User entity)
+        {
+            entity.IsDeleted = true;
+        }
+        public void BlockUser(User entity)
+        {
+            entity.IsBlocked = true;
+        }
+        public void UnblockUser(User entity)
+        {
+            entity.IsBlocked=false;
+        }
 
 
     }
