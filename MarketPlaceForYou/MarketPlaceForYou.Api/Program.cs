@@ -11,20 +11,18 @@ using System.Configuration;
 
 void ConfigureHost(ConfigureHostBuilder host)
 {
+    host.ConfigureAppConfiguration((builder) =>
+    {
+    builder.AddSystemsManager(string.Format("/Live/{0}/",
+            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")))
+            .AddSystemsManager(string.Format("/Live/Common/"));
+    });
 }
 
 
 void ConfigureServices(WebApplicationBuilder builder)
 {
     //Setup CORs
-    //builder.Services.AddCors(options =>
-    //{
-    //    options.AddDefaultPolicy(
-    //        policy =>
-    //        {
-    //            policy.WithOrigins("http://localhost:3000");
-    //        });
-    //});
     builder.Services.AddCors(option => option.AddPolicy("allowCORs", build =>
     {
         build.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
@@ -85,8 +83,6 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IFAQService, FAQService>();
     builder.Services.AddScoped<IUploadService, UploadService>();
     builder.Services.AddScoped<IEmailService, EmailService>();
-
-
 }
 
 

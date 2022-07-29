@@ -28,21 +28,21 @@ namespace MarketPlaceForYou.Api.Controllers
         /// </summary>
         /// <param name="src"></param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> SendEmail([FromBody] string email)
-        {
-            try
-            {
-                var results = await _emailService.SendEmail(email);
-                //"Welcome to MarketForYou", "<p>Now buy stuff" + DateTime.Now + "</p>"
-                // Return a 200 response
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
-            }
-        }
+        //[HttpPost]
+        //public async Task<ActionResult> SendEmail([FromBody] string email)
+        //{
+        //    try
+        //    {
+        //        var results = await _emailService.SendEmail(email);
+        //        //"Welcome to MarketForYou", "<p>Now buy stuff" + DateTime.Now + "</p>"
+        //        // Return a 200 response
+        //        return Ok(results);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+        //    }
+        //}
 
     }
 }
