@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 //using System.Web.Http.Cors;
 
 namespace MarketPlaceForYou.Api.Controllers
@@ -19,15 +21,17 @@ namespace MarketPlaceForYou.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IConfiguration _configuration;
         /// <summary>
         /// Controller for user
         /// </summary>
         /// <param name="userService"></param>
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IConfiguration configuration)
         {
             _userService = userService;
+            _configuration = configuration;
         }
-
+        
         /// <summary>
         /// Creates a user
         /// </summary>
@@ -37,12 +41,25 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <response code = "401">User not logged in or token has expired</response>
         /// <response code = "500">Internal server issue</response>
         [HttpPost]
-        public async Task<ActionResult<UserVM>> Create([FromBody] UserAddVM data)
+        public async Task<ActionResult<UserVM>> Create([FromBody] UserAddVM src)
         {
             try
             {
                 // Have the service create the new user
-                var result = await _userService.Create(data);
+                var result = await _userService.Create(src);
+
+                //Welcome email
+                //var apiKey = Environment.GetEnvironmentVariable("SendGridAPIKey"); //Returns a 400 bad request with Value cannot be null. (Parameter 'apiKey') but adds the user
+                //var apiKey = _configuration.GetValue<string>("SendGridAPIKey"); //gives back a 200 but no welcome email.
+                //var client = new SendGridClient(apiKey);
+                //var from = new EmailAddress("yasin_habib@outlook.com", "Market For You");
+                //var subject = "Welcome to Market For You";
+                //string fullName = src.FirstName + " " + src.LastName;
+                //var to = new EmailAddress(src.Email, fullName);
+                //var plainTextContent = "and easy to do anywhere, even with C#";
+                //var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+                //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                //var response = await client.SendEmailAsync(msg);
 
                 // Return a 200 response with the userVM
                 return Ok(result);

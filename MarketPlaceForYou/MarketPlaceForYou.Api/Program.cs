@@ -11,6 +11,7 @@ using System.Configuration;
 
 void ConfigureHost(ConfigureHostBuilder host)
 {
+    //Retrieving parameters in AWS Parameter Store
     host.ConfigureAppConfiguration((builder) =>
     {
     builder.AddSystemsManager(string.Format("/Live/{0}/",
@@ -109,10 +110,8 @@ void ConfigurePipeline(WebApplication app)
     //if(User.IsDeleted == false && User.IsBlocked == false)
     //{
     app.UseAuthentication();
-
     //}
-
-    app.UseAuthorization(); //:is the user allowed to use the particular endpoint?
+    app.UseAuthorization(); //=is the user allowed to use the particular endpoint?
     app.MapControllers();
 }
 
@@ -147,7 +146,7 @@ ConfigurePipeline(app);
 app.Run();
 
 
-//Design-time factory
+////Design-time factory
 //public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
 //{
 //    public MKPFYDbContext CreateDbContext(string[] args)
@@ -159,29 +158,3 @@ app.Run();
 //    }
 //}
 
-
-//var builder = WebApplication.CreateBuilder(args);
-
-//// Add services to the container.
-
-//builder.Services.AddControllers();
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
-//var app = builder.Build();
-
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
-//app.MapControllers();
-
-//app.Run();
