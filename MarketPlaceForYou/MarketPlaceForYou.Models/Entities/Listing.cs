@@ -46,15 +46,16 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Foreign key (user id)
         /// </summary>
+        
         //relationships
         [Required]
         //foreign key
         public string UserId { get; set; } //naming convention (EntityNameId)
+
         /// <summary>
         /// Settings relationship with user table
         /// </summary>
         public User? User { get; set; }
-
 
         /// <summary>
         /// Listing name
@@ -109,5 +110,13 @@ namespace MarketPlaceForYou.Models.Entities
         /// Buyer's id for purchasing
         /// </summary> 
         public string? BuyerID { get; set; }
+
+        /// <summary>
+        /// Collection of images (max 5)
+        /// </summary>
+        [Required]
+        [MaxLength(5)]
+        public ICollection<Upload> Uploads { get; set; }
+
     }
 }

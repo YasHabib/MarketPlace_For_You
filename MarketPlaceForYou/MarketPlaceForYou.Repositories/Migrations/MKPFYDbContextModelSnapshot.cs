@@ -104,11 +104,16 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("ListingId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ListingId");
 
                     b.ToTable("Uploads");
                 });
@@ -177,6 +182,22 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Upload", b =>
+                {
+                    b.HasOne("MarketPlaceForYou.Models.Entities.Listing", "Listing")
+                        .WithMany("Uploads")
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Listing");
+                });
+
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>
+                {
+                    b.Navigation("Uploads");
                 });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.User", b =>

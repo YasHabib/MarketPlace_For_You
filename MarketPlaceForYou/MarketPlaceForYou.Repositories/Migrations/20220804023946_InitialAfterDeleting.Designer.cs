@@ -12,17 +12,36 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlaceForYou.Repositories.Migrations
 {
     [DbContext(typeof(MKPFYDbContext))]
-    [Migration("20220629063350_UpdatedUserInfo")]
-    partial class UpdatedUserInfo
+    [Migration("20220804023946_InitialAfterDeleting")]
+    partial class InitialAfterDeleting
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.FAQ", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FAQs");
+                });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>
                 {
@@ -32,6 +51,9 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("BuyerID")
                         .HasColumnType("text");
 
                     b.Property<string>("Category")
@@ -54,9 +76,16 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .HasColumnType("text");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                        .HasColumnType("money");
 
                     b.Property<string>("ProdName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Purchased")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -71,29 +100,75 @@ namespace MarketPlaceForYou.Repositories.Migrations
                     b.ToTable("Listings");
                 });
 
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Upload", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ListingId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ListingId");
+
+                    b.ToTable("Uploads");
+                });
+
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
+                    b.Property<int>("ActiveListings")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Purchases")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("TotalPurchase")
+                        .HasColumnType("money");
+
+                    b.Property<decimal>("TotalSold")
+                        .HasColumnType("money");
 
                     b.HasKey("Id");
 
@@ -102,11 +177,29 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>
                 {
-                    b.HasOne("MarketPlaceForYou.Models.Entities.User", null)
+                    b.HasOne("MarketPlaceForYou.Models.Entities.User", "User")
                         .WithMany("Listings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Upload", b =>
+                {
+                    b.HasOne("MarketPlaceForYou.Models.Entities.Listing", "Listing")
+                        .WithMany("Uploads")
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Listing");
+                });
+
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>
+                {
+                    b.Navigation("Uploads");
                 });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.User", b =>
