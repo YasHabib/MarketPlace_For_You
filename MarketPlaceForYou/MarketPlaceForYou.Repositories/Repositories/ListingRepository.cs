@@ -22,9 +22,9 @@ namespace MarketPlaceForYou.Repositories.Repositories
         public void Create(Listing entityL, User entityU)
         {
             entityL.Created = DateTime.UtcNow;
-            entityL.Status = "Active";
             _context.Add(entityL);
             _context.Update(entityU);
+            //_context.Add(image);
         }
 
         //------------------------------------------------------------READ------------------------------------------------

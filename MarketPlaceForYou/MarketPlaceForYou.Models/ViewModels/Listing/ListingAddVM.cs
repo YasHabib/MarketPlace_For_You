@@ -48,5 +48,13 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         /// </summary>
         [Required]
         public string City { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Allowing listing to have max 5 of uploads
+        /// </summary>
+        [Required]
+        [MaxLength(5)]
+        public ICollection<Guid> UploadIds { get; set; }
+
     }
 }

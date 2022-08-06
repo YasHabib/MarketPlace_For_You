@@ -5,19 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Models.ViewModels.Upload
-{/// <summary>
-/// Result of a file upload
-/// </summary>
-    public class UploadResultVM
+{   /// <summary>
+    /// Adding images to listing
+    /// </summary>
+    public class AddImageToListingVM
     {
+        ///// <summary>
+        ///// Id of the uploaded file
+        ///// </summary>
+        //public Guid Id { get; set; }
         /// <summary>
         /// Id of the listing these images belongs to
         /// </summary>
-        //public Guid ListingId { get; set; }
-
-        /// <summary>
-        /// Id of the uploaded file
-        /// </summary>
-        public Guid Id { get; set; }   
+        public Guid ListingId { get; set; }
     }
 }

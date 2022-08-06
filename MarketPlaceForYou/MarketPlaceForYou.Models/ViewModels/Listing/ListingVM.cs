@@ -26,6 +26,7 @@ public class ListingVM
         City = listInfo.City;
         Created = listInfo.Created;
         UserId = listInfo.UserId;
+        Uploads = listInfo.Uploads;
         //Purchased = listInfo.Purchased;
         //BuyerID = listInfo.BuyerID;
         //Status = listInfo.Status;
@@ -80,6 +81,11 @@ public class ListingVM
     /// User id of the person who created it
     /// </summary>
     public string UserId { get; set; }
+
+    /// <summary>
+    /// Allowing listing to have max 5 of images
+    /// </summary>
+    public ICollection<Entities.Upload> Uploads { get; set; }
 
     ///// <summary>
     ///// Purchased date

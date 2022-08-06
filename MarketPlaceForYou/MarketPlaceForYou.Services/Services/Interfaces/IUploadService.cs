@@ -10,6 +10,8 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
 {
     public interface IUploadService
     {
-        Task<List<UploadResultVM>> UploadFiles(List<IFormFile> files);
+        Task<List<UploadResultVM>> UploadImages(List<IFormFile> files);
+        //Task <ListingImageVM> AddImageToListing(AddImageToListingVM src);
+        Task <List<ListingImageVM>> GetAllPerListing(Guid listingId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.ViewModels.Listing;
+using MarketPlaceForYou.Models.ViewModels.Upload;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using System;
@@ -21,10 +22,12 @@ namespace MarketPlaceForYou.Services.Services
         //CRUD
         public async Task<ListingVM> Create(ListingAddVM src, string userId)
         {
+            await _uow.Uploads.GetAll(upload => src.UploadIds.Contains(upload.Id));
             var newEntityL = new Listing(src, userId);
+            newEntityL.Status = "Active";
             var entityU = await _uow.Users.GetById(userId);
             //Adding +1 to the Active listing the user have.
-            entityU.ActiveListings++;
+            entityU.ActiveListings++; //Make changes to this by queriing the DB
             _uow.Listings.Create(newEntityL, entityU);
             await _uow.SaveAsync();
 

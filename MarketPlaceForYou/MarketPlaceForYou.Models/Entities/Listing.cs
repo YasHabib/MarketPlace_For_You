@@ -1,4 +1,5 @@
 ﻿using MarketPlaceForYou.Models.ViewModels.Listing;
+using MarketPlaceForYou.Models.ViewModels.Upload;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,6 +36,7 @@ namespace MarketPlaceForYou.Models.Entities
             Address = addListing.Address;
             City = addListing.City;
             UserId = userId;
+            Uploads = addListing.Uploads;
         }
 
         /// <summary>
@@ -109,5 +111,13 @@ namespace MarketPlaceForYou.Models.Entities
         /// Buyer's id for purchasing
         /// </summary> 
         public string? BuyerID { get; set; }
+
+        /// <summary>
+        /// Allowing listing to have max 5 of uploads
+        /// </summary>
+        [Required]
+        [MaxLength(5)]
+        public ICollection<Upload> Uploads { get; set; }
+
     }
 }

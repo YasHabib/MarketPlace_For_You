@@ -10,9 +10,11 @@ namespace MarketPlaceForYou.Models.Entities
 /// Upload enitty
 /// </summary>
     public class Upload
-    {/// <summary>
-     /// Id of the uploaded file
-     /// </summary>
+    {   
+
+        /// <summary>
+        /// Id of the uploaded file
+        /// </summary>
         [Key]
         public Guid Id { get; set; }
         /// <summary>
@@ -20,6 +22,15 @@ namespace MarketPlaceForYou.Models.Entities
         /// </summary>
         [Required]
         public string Url { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Foreign key
+        /// </summary>
+        public Guid? ListingId { get; set; }
+        /// <summary>
+        /// Setting relationship with listing table
+        /// </summary>
+        public Listing? Listing { get; set; }
 
     }
 }

@@ -23,7 +23,13 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
         public async Task<List<Upload>> GetAll()
         {
-            var results = await _context.Uploads.ToListAsync();
+            var result = await _context.Uploads.ToListAsync();
+            return result;
+        }
+
+        public async Task<List<Upload>> GetAllPerListing(Guid listingId)
+        {
+            var results = await _context.Uploads.Where(i => i.ListingId == listingId).ToListAsync();
             return results;
         }
 

@@ -147,14 +147,14 @@ app.Run();
 
 
 ////Design-time factory
-//public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
-//{
-//    public MKPFYDbContext CreateDbContext(string[] args)
-//    {
-//        var optionsBuilder = new DbContextOptionsBuilder<MKPFYDbContext>();
-//        optionsBuilder.UseNpgsql("Data Source=mkpfydb");
+public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
+{
+    public MKPFYDbContext CreateDbContext(string[] args)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<MKPFYDbContext>();
+        optionsBuilder.UseNpgsql("Data Source=mkpfydb");
 
-//        return new MKPFYDbContext(optionsBuilder.Options);
-//    }
-//}
+        return new MKPFYDbContext(optionsBuilder.Options);
+    }
+}
 
