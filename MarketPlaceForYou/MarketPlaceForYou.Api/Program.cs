@@ -146,7 +146,9 @@ ConfigurePipeline(app);
 app.Run();
 
 
-////Design-time factory
+/// <summary>
+/// Design time for migrations
+/// </summary>
 public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
 {
     public MKPFYDbContext CreateDbContext(string[] args)

@@ -36,7 +36,9 @@ namespace MarketPlaceForYou.Models.Entities
             Address = addListing.Address;
             City = addListing.City;
             UserId = userId;
-            Uploads = addListing.Uploads;
+            //Uploads is set under ListingService/Create
+
+            //Uploads = addListing.UploadIds.Select(id => new Upload { Id = id }).ToList();
         }
 
         /// <summary>

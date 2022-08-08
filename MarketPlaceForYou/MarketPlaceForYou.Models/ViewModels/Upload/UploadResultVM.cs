@@ -11,11 +11,6 @@ namespace MarketPlaceForYou.Models.ViewModels.Upload
     public class UploadResultVM
     {
         /// <summary>
-        /// Id of the listing these images belongs to
-        /// </summary>
-        //public Guid ListingId { get; set; }
-
-        /// <summary>
         /// Id of the uploaded file
         /// </summary>
         public Guid Id { get; set; }   

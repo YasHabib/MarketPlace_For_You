@@ -22,8 +22,9 @@ namespace MarketPlaceForYou.Services.Services
         //CRUD
         public async Task<ListingVM> Create(ListingAddVM src, string userId)
         {
-            await _uow.Uploads.GetAll(upload => src.UploadIds.Contains(upload.Id));
+            var images = await _uow.Uploads.GetAll(uploads => uploads.Where(upload => src.UploadIds.Contains(upload.Id)));
             var newEntityL = new Listing(src, userId);
+            newEntityL.Uploads = images;
             newEntityL.Status = "Active";
             var entityU = await _uow.Users.GetById(userId);
             //Adding +1 to the Active listing the user have.

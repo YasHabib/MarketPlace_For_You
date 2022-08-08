@@ -11,7 +11,7 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
     {
         void Create(Upload entity);
         Task<Upload> GetById(Guid Id);
-        Task<List<Upload>> GetAll();
+        Task<List<Upload>> GetAll(Func<IQueryable<Upload>,IQueryable<Upload>>? queryFunction);
         Task<List<Upload>> GetAllPerListing(Guid listingId);
         void Update(Upload entity);
         void Delete(Upload entity);

@@ -24,7 +24,6 @@ namespace MarketPlaceForYou.Repositories.Repositories
             entityL.Created = DateTime.UtcNow;
             _context.Add(entityL);
             _context.Update(entityU);
-            //_context.Add(image);
         }
 
         //------------------------------------------------------------READ------------------------------------------------

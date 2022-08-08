@@ -21,10 +21,10 @@ namespace MarketPlaceForYou.Repositories.Repositories
         {
             _context.Add(entity);
         }
-        public async Task<List<Upload>> GetAll()
+        public async Task<List<Upload>> GetAll(Func<IQueryable<Upload>, IQueryable<Upload>>? queryFunction)
         {
-            var result = await _context.Uploads.ToListAsync();
-            return result;
+            var results = await _context.Uploads.ToListAsync();
+            return results;
         }
 
         public async Task<List<Upload>> GetAllPerListing(Guid listingId)
