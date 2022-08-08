@@ -9,9 +9,10 @@ namespace MarketPlaceForYou.Models.ViewModels.Upload
 /// Result of a file upload
 /// </summary>
     public class UploadResultVM
-    {/// <summary>
-    /// Id of the uploaded file
-    /// </summary>
+    {
+        /// <summary>
+        /// Id of the uploaded file
+        /// </summary>
         public Guid Id { get; set; }   
     }
 }

@@ -3,6 +3,7 @@ using System;
 using MarketPlaceForYou.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlaceForYou.Repositories.Migrations
 {
     [DbContext(typeof(MKPFYDbContext))]
-    partial class MKPFYDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220804030048_SetRelationBetweenListingAndUpload")]
+    partial class SetRelationBetweenListingAndUpload
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,7 +106,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ListingId")
+                    b.Property<Guid>("ListingId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Url")
@@ -188,7 +190,9 @@ namespace MarketPlaceForYou.Repositories.Migrations
                 {
                     b.HasOne("MarketPlaceForYou.Models.Entities.Listing", "Listing")
                         .WithMany("Uploads")
-                        .HasForeignKey("ListingId");
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Listing");
                 });

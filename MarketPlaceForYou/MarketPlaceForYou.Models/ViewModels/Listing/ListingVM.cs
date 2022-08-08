@@ -26,8 +26,7 @@ public class ListingVM
         City = listInfo.City;
         Created = listInfo.Created;
         UserId = listInfo.UserId;
-        //Purchased = listInfo.Purchased;
-        //BuyerID = listInfo.BuyerID;
+        Uploads = listInfo.Uploads;
         Status = listInfo.Status;
     }
 
@@ -85,4 +84,19 @@ public class ListingVM
     /// Listing status
     /// </summary>
     public string? Status { get; set; } = string.Empty;
+
+    ///<summary>
+    /// Allowing listing to have max 5 of images
+    /// </summary>
+    public ICollection<Entities.Upload> Uploads { get; set; }
+
+    ///// <summary>
+    ///// Purchased date
+    ///// </summary>
+    //public DateTime Purchased { get; set; }
+
+    ///// <summary>
+    ///// Buyer's id for purchasing
+    ///// </summary> 
+    //public string? BuyerID { get; set; }
 }

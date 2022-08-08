@@ -19,6 +19,10 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
         public void Create(User entity)
         {
+            entity.ActiveListings = 0;
+            entity.Purchases = 0;
+            entity.TotalPurchase = 0;
+            entity.TotalSold = 0;
             _context.Add(entity);
         }
         public async Task<User> GetById(string id)
@@ -26,9 +30,9 @@ namespace MarketPlaceForYou.Repositories.Repositories
             var result = await _context.Users.FirstAsync(i => i.Id == id);
             return result;
         }
-        public async Task<List<User>> GetAll()
+        public async Task<List<User>> GetAll(string userId)
         {
-            var results = await _context.Users.ToListAsync();
+            var results = await _context.Users.Where(i=> i.Id != userId).ToListAsync();
             return results;
         }
         public void Update(User entity)
@@ -38,6 +42,18 @@ namespace MarketPlaceForYou.Repositories.Repositories
         public void Delete(User entity)
         {
             _context.Remove(entity);
+        }
+        public void SoftDelete(User entity)
+        {
+            entity.IsDeleted = true;
+        }
+        public void BlockUser(User entity)
+        {
+            entity.IsBlocked = true;
+        }
+        public void UnblockUser(User entity)
+        {
+            entity.IsBlocked=false;
         }
 
 

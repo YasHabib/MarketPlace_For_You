@@ -3,6 +3,7 @@ using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlaceForYou.Api.Controllers
 {
@@ -38,9 +39,58 @@ namespace MarketPlaceForYou.Api.Controllers
             if (mismatchFound)
                 return BadRequest("Uploaded file(s) are not a valid accepted type, please upload a png, jpeg, jpg or gif file");
 
-            var results = await _uploadService.UploadFiles(Request.Form.Files.ToList());
+            var results = await _uploadService.UploadImages(Request.Form.Files.ToList());
 
             return Ok(results);
+        }
+        /// <summary>
+        /// adding image(s) to a listing
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        //[HttpPut]
+        //public async Task<ActionResult<ListingImageVM>> AddImagesToListing([FromBody] AddImageToListingVM data)
+        //{
+        //    try
+        //    {
+        //        var result = await _uploadService.AddImageToListing(data);
+
+        //        // Return a 200 response with the ListingVM
+        //        return Ok(result);
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Image could not be uploaded" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
+        /// <summary>
+        /// Viewing all images per listing
+        /// </summary>
+        /// <param name="listingId"></param>
+        /// <returns></returns>
+        /// 
+        [HttpGet]
+        public async Task<ActionResult<ListingImageVM>> GetAllPerListing([FromBody] Guid listingId)
+        {
+            try
+            {
+                var result = await _uploadService.GetAllPerListing(listingId);
+
+                // Return a 200 response with the ListingVM
+                return Ok(result);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Image could not be uploaded" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

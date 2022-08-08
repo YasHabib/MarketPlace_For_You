@@ -25,7 +25,7 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
         Task<List<ListingVM>> MyPurchases(string userId);
         Task<List<ListingVM>> PendingListings(string userId);
         Task<ListingVM> RequestPurchase(ListingPurchaseVM src, string buyerId);
-        Task<ListingVM> ConfirmPurchase(ListingPurchaseVM src);
+        Task<ListingVM> ConfirmPurchase(ListingPurchaseVM src, string userId);
         Task<ListingVM> CancelPurchase(ListingPurchaseVM src);
         Task Delete(Guid id);
     }

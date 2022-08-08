@@ -420,9 +420,12 @@ namespace MarketPlaceForYou.Api.Controllers
 
             try
             {
+                var userId = User.GetId();
+                if (userId == null)
+                    return BadRequest("Invalid Request");
 
                 // Update Listing entity from the service
-                var result = await _listingService.ConfirmPurchase(data);
+                var result = await _listingService.ConfirmPurchase(data,userId);
 
                 // Return a 200 response with the ListingVM
                 return Ok(result);
@@ -524,7 +527,7 @@ namespace MarketPlaceForYou.Api.Controllers
         //------------------------------------------------------------DELETE------------------------------------------------
 
         /// <summary>
-        /// Deletes a listing (I do not think we need this, I had to create it as I had to delete some listings)
+        /// Deletes a listing 
         /// </summary>
         /// <param name="id">Listing data</param>
         /// <returns>Deletes a listing</returns>
