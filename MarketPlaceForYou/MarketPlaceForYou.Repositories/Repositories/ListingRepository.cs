@@ -66,18 +66,20 @@ namespace MarketPlaceForYou.Repositories.Repositories
         //Start of searching with filters
         public async Task<List<Listing>> SearchWithFilters(string userid, string? searchString=null, string? city=null, string? category=null, string? condition =null, decimal minPrice =0, decimal maxPrice =0)
         {
-            var results = await _context.Listings.ToListAsync();
+            var query= _context.Listings.AsQueryable();
 
             if (!string.IsNullOrEmpty(searchString))
-                results = await _context.Listings.Where(i => (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower()))).ToListAsync();
+                query = query.Where(i => (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())));
             if (city != null)
-                results = await _context.Listings.Where(i => i.City == city).ToListAsync();
-            if(category != null)
-                results = await _context.Listings.Where(i => i.Category == category).ToListAsync();
-            if(condition != null)
-                results = await _context.Listings.Where(i => i.Condition == condition).ToListAsync();
-            if(minPrice != 0 && maxPrice != 0)
-                results = await _context.Listings.Where(i => (minPrice <= i.Price && i.Price <= maxPrice)).ToListAsync();
+                query = query.Where(i => i.City == city);
+            if (category != null)
+                query = query.Where(i => i.Category == category);
+            if (condition != null)
+               query = query.Where(i => i.Condition == condition);
+            if (minPrice != 0 && maxPrice != 0)
+                query = query.Where(i => (minPrice <= i.Price && i.Price <= maxPrice));
+
+            var results = await query.ToListAsync();
             return results;
 
 
