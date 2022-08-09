@@ -126,8 +126,8 @@ namespace MarketPlaceForYou.Api.Controllers
         /// Filters all listings by Category only (non-purchased and listings were not created by the user)
         /// </summary>
         /// <param name="category">Encoded: 
-        /// Cars & Vehicle: Cars%20%26%20Vehicle
-        /// Real Estate: Real%20Estate</param>
+        /// Cars&Vehicle: Cars%20%26%20Vehicle
+        /// RealEstate: Real%20Estate</param>
         /// <returns>Returns all listings by category</returns>
         /// <response code = "200">Successfull</response>
         /// <response code = "401">User not logged in or token has expired</response>
@@ -161,7 +161,6 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <returns></returns>
         /// 
         [HttpGet("condition/{condition}")]
-
         public async Task<ActionResult<List<ListingVM>>> GetAllByCond(string condition)
         {
 

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-//using System.Web.Http.Cors;
 
 namespace MarketPlaceForYou.Api.Controllers
 {/// <summary>
@@ -21,21 +20,21 @@ namespace MarketPlaceForYou.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IConfiguration _configuration;
+        //private readonly IConfiguration _configuration;
         /// <summary>
         /// Controller for user
         /// </summary>
         /// <param name="userService"></param>
-        public UserController(IUserService userService, IConfiguration configuration)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _configuration = configuration;
+            //_configuration = configuration;
         }
         
         /// <summary>
         /// Creates a user
         /// </summary>
-        /// <param name="data">User data</param>
+        /// <param name="src">User data</param>
         /// <returns>Creates a user and writes the info in databse</returns>
         /// <response code = "200">Successfull</response>
         /// <response code = "401">User not logged in or token has expired</response>

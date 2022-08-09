@@ -146,11 +146,15 @@ ConfigurePipeline(app);
 app.Run();
 
 
+
 /// <summary>
 /// Design time for migrations
 /// </summary>
 public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
 {
+    /// <summary>
+    /// Design time for migrations
+    /// </summary>
     public MKPFYDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<MKPFYDbContext>();

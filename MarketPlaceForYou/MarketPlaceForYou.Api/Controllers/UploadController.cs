@@ -43,30 +43,7 @@ namespace MarketPlaceForYou.Api.Controllers
 
             return Ok(results);
         }
-        /// <summary>
-        /// adding image(s) to a listing
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        //[HttpPut]
-        //public async Task<ActionResult<ListingImageVM>> AddImagesToListing([FromBody] AddImageToListingVM data)
-        //{
-        //    try
-        //    {
-        //        var result = await _uploadService.AddImageToListing(data);
 
-        //        // Return a 200 response with the ListingVM
-        //        return Ok(result);
-        //    }
-        //    catch (DbUpdateException)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Image could not be uploaded" });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
         /// <summary>
         /// Viewing all images per listing
         /// </summary>

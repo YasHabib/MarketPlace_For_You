@@ -118,7 +118,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
         /// <summary>
-        /// Soft deleting an user
+        /// Soft deleting an user (not fully implemented)
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -142,11 +142,11 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
         /// <summary>
-        /// Blocks the user
+        /// Blocks the user (not fully implemented)
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/block")]
         public async Task<ActionResult> BlockUser([FromRoute] string id)
         {
             try
@@ -170,7 +170,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPut("unblock/{id}")]
+        [HttpPut("{id}/unblock")]
         public async Task<ActionResult> UnblockUser([FromRoute] string id)
         {
             try
