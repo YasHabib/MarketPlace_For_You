@@ -26,7 +26,8 @@ void ConfigureServices(WebApplicationBuilder builder)
     //Setup CORs
     builder.Services.AddCors(option => option.AddPolicy("allowCORs", build =>
     {
-        build.WithOrigins("http://localhost:3000; http://marketforyouyh-env.eba-fqgiudi2.ca-central-1.elasticbeanstalk.com").AllowAnyMethod().AllowAnyHeader();
+        build.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+        build.WithOrigins("http://marketforyouyh-env.eba-fqgiudi2.ca-central-1.elasticbeanstalk.com").AllowAnyMethod().AllowAnyHeader();
     }));
 
     //Setup the database using the ApplicationDbContext
