@@ -27,10 +27,5 @@ namespace MarketPlaceForYou.Models.Entities
         /// Foreign key
         /// </summary>
         public Guid? ListingId { get; set; }
-        /// <summary>
-        /// Setting relationship with listing table
-        /// </summary>
-        public Listing? Listing { get; set; }
-
     }
 }

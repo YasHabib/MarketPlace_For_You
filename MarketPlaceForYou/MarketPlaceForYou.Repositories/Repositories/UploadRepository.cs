@@ -23,7 +23,11 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
         public async Task<List<Upload>> GetAll(Func<IQueryable<Upload>, IQueryable<Upload>>? queryFunction)
         {
-            var results = await _context.Uploads.ToListAsync();
+            List<Upload> results;
+            if (queryFunction == null)
+                results = await _context.Uploads.ToListAsync();
+            else
+                results = await queryFunction(_context.Uploads).ToListAsync();
             return results;
         }
 
