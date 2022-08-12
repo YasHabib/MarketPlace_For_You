@@ -25,9 +25,10 @@ public class ListingVM
         Address = listInfo.Address;
         City = listInfo.City;
         Created = listInfo.Created;
-        UserId = listInfo.UserId;
-        Uploads = listInfo.Uploads;
+        //UserId = listInfo.UserId;
         Status = listInfo.Status;
+        UserFullName = listInfo.User == null ? null : listInfo.User.FirstName + " " + listInfo.User.LastName;
+        UploadUrls = listInfo.Upload == null ? null : listInfo.Upload.Url;
     }
 
     /// <summary>
@@ -78,7 +79,7 @@ public class ListingVM
     /// <summary>
     /// User id of the person who created it
     /// </summary>
-    public string UserId { get; set; }
+    //public string UserId { get; set; }
 
     /// <summary>
     /// Listing status
@@ -86,9 +87,16 @@ public class ListingVM
     public string? Status { get; set; } = string.Empty;
 
     ///<summary>
-    /// Allowing listing to have max 5 of images
+    /// Viewing images
     /// </summary>
-    public ICollection<Entities.Upload> Uploads { get; set; }
+    //public ICollection<Entities.Upload> Uploads { get; set; }
+
+    //public List<string> ImageUrls { get; set; }
+    public string? UserFullName { get; set; }
+    /// <summary>
+    /// Image URLs
+    /// </summary>
+    public string UploadUrls { get; set; }
 
     ///// <summary>
     ///// Purchased date

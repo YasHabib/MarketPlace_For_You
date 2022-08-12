@@ -34,7 +34,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
         public async Task<List<Listing>> GetAll(string userId)
         {
-            var result = await _context.Listings.Where(i=> i.UserId != userId && i.BuyerID == null).OrderByDescending(i => i.Created).ToListAsync();
+            var result = await _context.Listings.Where(i => i.UserId != userId && i.BuyerID == null).OrderByDescending(i => i.Created).ToListAsync();
             return result;
         }
 

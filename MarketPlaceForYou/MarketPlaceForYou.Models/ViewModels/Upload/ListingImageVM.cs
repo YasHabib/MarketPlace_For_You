@@ -15,17 +15,11 @@ namespace MarketPlaceForYou.Models.ViewModels.Upload
         /// <param name="src"></param>
         public ListingImageVM(Entities.Upload src)
         {
-            ListingId = src.ListingId;
             ImageURL = src.Url;
         }
         /// <summary>
         /// AWS S3 image url
         /// </summary>
         public string ImageURL { get; set; }
-
-        /// <summary>
-        /// Id of the listing these images belongs to
-        /// </summary>
-        public Guid? ListingId { get; set; }
     }
 }

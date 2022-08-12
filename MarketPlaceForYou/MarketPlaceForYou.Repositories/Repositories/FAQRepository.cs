@@ -28,7 +28,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
         public async Task<List<FAQ>> GetAll()
         {
-            var results = await _context.FAQs.ToListAsync();
+            var results = await _context.FAQs.OrderBy(i => i.Title).ToListAsync();
             return results;
         }
         public void Update(FAQ entity)

@@ -50,8 +50,8 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <param name="listingId"></param>
         /// <returns></returns>
         /// 
-        [HttpGet]
-        public async Task<ActionResult<ListingImageVM>> GetAllPerListing([FromBody] Guid listingId)
+        [HttpGet("listingId")]
+        public async Task<ActionResult<ListingImageVM>> GetAllPerListing([FromRoute] Guid listingId)
         {
             try
             {
