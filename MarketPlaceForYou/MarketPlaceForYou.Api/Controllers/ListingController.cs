@@ -155,34 +155,6 @@ namespace MarketPlaceForYou.Api.Controllers
             }
         }
         /// <summary>
-        /// TEST
-        /// </summary>
-        /// <param name="condition"></param>
-        /// <returns></returns>
-        /// 
-        [HttpGet("condition/{condition}")]
-        public async Task<ActionResult<List<ListingVM>>> GetAllByCond(string condition)
-        {
-
-            try
-            {
-                var userId = User.GetId();
-                if (userId == null)
-                {
-                    return BadRequest("Invalid Request");
-                }
-                // Get the listing entities from the service
-                var results = await _listingService.GetAllByCond(condition, userId);
-
-                // Return a 200 response with the ListingVMs
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
-            }
-        }
-        /// <summary>
         /// Standalone search function (non-purchased and listings were not created by the user)
         /// </summary>
         /// <param name="searchString">Listing data</param>
@@ -419,12 +391,12 @@ namespace MarketPlaceForYou.Api.Controllers
 
             try
             {
-                var userId = User.GetId();
-                if (userId == null)
-                    return BadRequest("Invalid Request");
+                //var userId = User.GetId();
+                //if (userId == null)
+                //    return BadRequest("Invalid Request");
 
                 // Update Listing entity from the service
-                var result = await _listingService.ConfirmPurchase(data,userId);
+                var result = await _listingService.ConfirmPurchase(data);
 
                 // Return a 200 response with the ListingVM
                 return Ok(result);

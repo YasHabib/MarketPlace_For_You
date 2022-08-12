@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace MarketPlaceForYou.Services.Services
 {
@@ -80,7 +81,7 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task<List<APUserListVM>> GetAll(string userId)
         {
-            var results = await _uow.Users.GetAll(userId);
+            var results = await _uow.Users.GetAll(users => users.Where(users => users.Id != userId));
             var models = results.Select(users => new APUserListVM(users)).ToList();
             return models;
         }
@@ -93,19 +94,22 @@ namespace MarketPlaceForYou.Services.Services
         public async Task SoftDelete(string id)
         {
             var entity = await _uow.Users.GetById(id);
-            _uow.Users.SoftDelete(entity);
+            entity.IsDeleted = true;
+            _uow.Users.Update(entity);
             await _uow.SaveAsync();
         }
         public async Task BlockUser(string id)
         {
             var entity = await _uow.Users.GetById(id);
-            _uow.Users.BlockUser(entity);
+            entity.IsBlocked = true;
+            _uow.Users.Update(entity);
             await _uow.SaveAsync();
         }
         public async Task UnblockUser(string id)
         {
             var entity = await _uow.Users.GetById(id);
-            _uow.Users.UnblockUser(entity);
+            entity.IsBlocked=false;
+            _uow.Users.Update(entity);
             await _uow.SaveAsync();
         }
 

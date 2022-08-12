@@ -12,6 +12,6 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
     {
         Task<List<UploadResultVM>> UploadImages(List<IFormFile> files);
         //Task <ListingImageVM> AddImageToListing(AddImageToListingVM src);
-        Task <List<ListingImageVM>> GetAllPerListing(Guid listingId);
+        //Task <List<ListingImageVM>> GetAllPerListing(Guid listingId);
     }
 }

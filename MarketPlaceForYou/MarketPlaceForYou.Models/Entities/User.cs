@@ -12,7 +12,7 @@ namespace MarketPlaceForYou.Models.Entities
 {/// <summary>
 /// User entity
 /// </summary>
-    public class User
+    public class User : BaseEntity<string>
     {/// <summary>
     /// Empty constructor
     /// </summary>
@@ -49,11 +49,6 @@ namespace MarketPlaceForYou.Models.Entities
             City = src.City;
         }
         /// <summary>
-        /// User id
-        /// </summary>
-        [Key]
-        public string Id { get; set; } = string.Empty;
-        /// <summary>
         /// User's first name
         /// </summary>
         [Required]
@@ -85,24 +80,26 @@ namespace MarketPlaceForYou.Models.Entities
         /// </summary>
         [Required]
         public string City { get; set; } = string.Empty;
-        /// <summary>
-        /// # of the user's active listings
-        /// </summary>
-        public int ActiveListings { get; set; }
-        /// <summary>
-        /// # of the user's purchases
-        /// </summary>
-        public int Purchases { get; set; }
-        /// <summary>
-        /// $ value of total sold
-        /// </summary>
-        [Column(TypeName = "money")]
-        public decimal TotalSold { get; set; }
-        /// <summary>
-        /// $ value of total purchase
-        /// </summary>
-        [Column(TypeName = "money")]
-        public decimal TotalPurchase { get; set; }
+
+        ///// <summary>
+        ///// # of the user's active listings
+        ///// </summary>
+        //public int ActiveListings { get; set; }
+        ///// <summary>
+        ///// # of the user's purchases
+        ///// </summary>
+        //public int Purchases { get; set; }
+        ///// <summary>
+        ///// $ value of total sold
+        ///// </summary>
+        //[Column(TypeName = "money")]
+        //public decimal TotalSold { get; set; }
+        ///// <summary>
+        ///// $ value of total purchase
+        ///// </summary>
+        //[Column(TypeName = "money")]
+        //public decimal TotalPurchase { get; set; }
+
         /// <summary>
         /// Soft deleting an entity,
         /// </summary>

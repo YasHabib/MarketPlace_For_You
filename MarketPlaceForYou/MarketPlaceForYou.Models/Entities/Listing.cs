@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.ViewModels.Listing;
+﻿using MarketPlaceForYou.Models.Entities.Interfaces;
+using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Models.ViewModels.Upload;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace MarketPlaceForYou.Models.Entities
 {/// <summary>
 /// Listing entity
 /// </summary>
-    public class Listing
+    public class Listing : BaseEntity<Guid>,IDated
     {
         //empty constructor
         /// <summary>
@@ -40,13 +41,6 @@ namespace MarketPlaceForYou.Models.Entities
 
             //Uploads = addListing.UploadIds.Select(id => new Upload { Id = id }).ToList();
         }
-
-        /// <summary>
-        /// Listing ID (UUid)
-        /// </summary>
-        [Key]
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Foreign key (user id)
         /// </summary>

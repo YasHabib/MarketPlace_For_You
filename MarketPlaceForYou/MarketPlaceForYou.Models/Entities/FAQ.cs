@@ -10,7 +10,7 @@ namespace MarketPlaceForYou.Models.Entities
 {/// <summary>
 /// FAQ entity class
 /// </summary>
-    public class FAQ
+    public class FAQ : BaseEntity<Guid>
     {/// <summary>
     /// FAQ empty constructor
     /// </summary>
@@ -26,12 +26,6 @@ namespace MarketPlaceForYou.Models.Entities
             Title = src.Title;
             Description = src.Description;
         }
-
-        /// <summary>
-        /// ID of the FAQ
-        /// </summary>
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Title of the FAQ
         /// </summary>
