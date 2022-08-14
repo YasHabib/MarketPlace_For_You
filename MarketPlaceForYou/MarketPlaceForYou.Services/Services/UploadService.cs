@@ -75,11 +75,11 @@ namespace MarketPlaceForYou.Services.Services
         //    var model = new ListingImageVM(images);
         //    return model;
         //}
-        public async Task<List<ListingImageVM>> GetAllPerListing(Guid listingId)
-        {
-            var results = await _uow.Uploads.GetAllPerListing(listingId);
-            var model = results.Select(images => new ListingImageVM(images)).ToList();
-            return model;
-        }
+        //public async Task<List<ListingImageVM>> GetAllPerListing(Guid listingId)
+        //{
+        //    var results = await _uow.Uploads.GetAllPerListing(listingId);
+        //    var model = results.Select(images => new ListingImageVM(images)).ToList();
+        //    return model;
+        //}
     }
 }

@@ -28,9 +28,9 @@ public class ListingVM
         //UserId = listInfo.UserId;
         Status = listInfo.Status;
         UserFullName = listInfo.User == null ? null : listInfo.User.FirstName + " " + listInfo.User.LastName;
-        UploadUrls = listInfo.Upload == null ? null : listInfo.Upload.Url;
+        //UploadUrls = (ICollection<string>?)(ICollection<Entities.Upload>?)listInfo.Uploads.Where(i => i.ListingId == Id);
     }
-
+    
     /// <summary>
     /// Listing id
     /// </summary>
@@ -96,15 +96,5 @@ public class ListingVM
     /// <summary>
     /// Image URLs
     /// </summary>
-    public string UploadUrls { get; set; }
-
-    ///// <summary>
-    ///// Purchased date
-    ///// </summary>
-    //public DateTime Purchased { get; set; }
-
-    ///// <summary>
-    ///// Buyer's id for purchasing
-    ///// </summary> 
-    //public string? BuyerID { get; set; }
+    public ICollection<string> UploadUrls { get; set; }
 }

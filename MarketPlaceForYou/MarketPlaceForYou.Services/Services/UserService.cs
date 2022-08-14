@@ -3,6 +3,7 @@ using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.User;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -75,13 +76,13 @@ namespace MarketPlaceForYou.Services.Services
         //Admin panel
         public async Task<APUserDetailsVM> APGetById(string userId)
         {
-            var result = await _uow.Users.GetById(userId);
+            var result = await _uow.Users.GetById(userId,i => i.Include(i => i.Listings));
             var model = new APUserDetailsVM(result);
             return model;
         }
-        public async Task<List<APUserListVM>> GetAll(string userId)
+        public async Task<List<APUserListVM>> GetAll()
         {
-            var results = await _uow.Users.GetAll(users => users.Where(users => users.Id != userId));
+            var results = await _uow.Users.GetAll(i => i.Include(i => i.Listings));
             var models = results.Select(users => new APUserListVM(users)).ToList();
             return models;
         }

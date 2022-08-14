@@ -114,9 +114,9 @@ namespace MarketPlaceForYou.Models.Entities
         [Required]
         [MaxLength(5)]
         public ICollection<Upload> Uploads { get; set; }
-        [NotMapped]
+
         //public ICollection<Upload> UploadUrls => Uploads.Where(i => i.ListingId == ).ToList();
-        public Upload? Upload { get; set; }
+        //public Upload? Upload { get; set; }
 
     }
 }

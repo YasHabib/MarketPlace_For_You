@@ -39,11 +39,11 @@ namespace MarketPlaceForYou.Api.Controllers
         {
             try
             {
-                var userId = User.GetId();
-                if (userId == null)
-                    return BadRequest("Invalid Request");
+                //var userId = User.GetId();
+                //if (userId == null)
+                //    return BadRequest("Invalid Request");
 
-                var results = await _userService.GetAll(userId);
+                var results = await _userService.GetAll();
 
                 // Return a 200 response
                 return Ok(results);
@@ -59,7 +59,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<APUserListVM>>> APGetById(string id)
+        public async Task<ActionResult<APUserListVM>> APGetById(string id)
         {
             try
             {

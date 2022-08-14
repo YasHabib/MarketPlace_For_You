@@ -43,31 +43,5 @@ namespace MarketPlaceForYou.Api.Controllers
 
             return Ok(results);
         }
-
-        /// <summary>
-        /// Viewing all images per listing
-        /// </summary>
-        /// <param name="listingId"></param>
-        /// <returns></returns>
-        /// 
-        [HttpGet("listingId")]
-        public async Task<ActionResult<ListingImageVM>> GetAllPerListing([FromRoute] Guid listingId)
-        {
-            try
-            {
-                var result = await _uploadService.GetAllPerListing(listingId);
-
-                // Return a 200 response with the ListingVM
-                return Ok(result);
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Image could not be uploaded" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
     }
 }

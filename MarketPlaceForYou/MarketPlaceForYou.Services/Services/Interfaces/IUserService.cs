@@ -17,7 +17,7 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
 
         //Admin panel
         Task<APUserDetailsVM> APGetById(string userId);
-        Task<List<APUserListVM>> GetAll(string userId);
+        Task<List<APUserListVM>> GetAll();
         Task Delete(string Id);
         Task SoftDelete(string id);
         Task BlockUser(string id);

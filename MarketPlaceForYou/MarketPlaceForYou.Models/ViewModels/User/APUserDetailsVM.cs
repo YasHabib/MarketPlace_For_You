@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketPlaceForYou.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,8 +19,10 @@ namespace MarketPlaceForYou.Models.ViewModels.User
             Id = src.Id;
             FullName = src.FirstName + " " + src.LastName;
             City = src.City;
-            Sold = src.TotalSold;
-            Purchases = src.TotalPurchase;
+            //Total $ value of the items user has sold
+            TotalSales = src.Listings.Where(i => i.UserId == Id && i.Status == "Sold").Sum(i => i.Price);
+            //Total # of items user has bought
+            NumberOfPurchases = src.Listings.Where(i => i.BuyerID == Id && i.Status == "Sold").Count();
         }
         /// <summary>
         /// User id (auth)
@@ -37,13 +40,13 @@ namespace MarketPlaceForYou.Models.ViewModels.User
         public string City { get; set; } = string.Empty;
 
         /// <summary>
-        /// # of active listings
+        /// $ value of active listings
         /// </summary>
-        public decimal Sold { get; set; }
+        public decimal TotalSales { get; set; }
 
         /// <summary>
         /// # of purchased listings
         /// </summary>
-        public decimal Purchases { get; set; }
+        public int NumberOfPurchases { get; set; }
     }
 }

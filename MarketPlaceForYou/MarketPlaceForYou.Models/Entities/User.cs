@@ -81,25 +81,6 @@ namespace MarketPlaceForYou.Models.Entities
         [Required]
         public string City { get; set; } = string.Empty;
 
-        ///// <summary>
-        ///// # of the user's active listings
-        ///// </summary>
-        //public int ActiveListings { get; set; }
-        ///// <summary>
-        ///// # of the user's purchases
-        ///// </summary>
-        //public int Purchases { get; set; }
-        ///// <summary>
-        ///// $ value of total sold
-        ///// </summary>
-        //[Column(TypeName = "money")]
-        //public decimal TotalSold { get; set; }
-        ///// <summary>
-        ///// $ value of total purchase
-        ///// </summary>
-        //[Column(TypeName = "money")]
-        //public decimal TotalPurchase { get; set; }
-
         /// <summary>
         /// Soft deleting an entity,
         /// </summary>
