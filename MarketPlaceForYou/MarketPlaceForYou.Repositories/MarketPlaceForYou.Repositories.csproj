@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MarketPlaceForYou.Models\MarketPlaceForYou.Models.csproj" />
+    <ProjectReference Include="..\MarketPlaceForYou.Shared\MarketPlaceForYou.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

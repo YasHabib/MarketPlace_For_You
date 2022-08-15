@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Dockerrun.aws.json = Dockerrun.aws.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPlaceForYou.Shared", "MarketPlaceForYou.Shared\MarketPlaceForYou.Shared.csproj", "{9A6DB0BD-A3F8-49ED-AB59-87406FBD1667}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{98B28B5D-9F91-477C-89C3-74FB3ED46AB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98B28B5D-9F91-477C-89C3-74FB3ED46AB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98B28B5D-9F91-477C-89C3-74FB3ED46AB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6DB0BD-A3F8-49ED-AB59-87406FBD1667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6DB0BD-A3F8-49ED-AB59-87406FBD1667}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6DB0BD-A3F8-49ED-AB59-87406FBD1667}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6DB0BD-A3F8-49ED-AB59-87406FBD1667}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,7 @@
 ﻿using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.Entities.Interfaces;
 using MarketPlaceForYou.Repositories.Repositories.Interfaces;
+using MarketPlaceForYou.Shared.Excepions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ namespace MarketPlaceForYou.Repositories.Repositories
                 result = await _entityDbSet.FirstOrDefaultAsync(i => i.Id.Equals(id));
             else
                 result = await queryFunction(_entityDbSet).FirstOrDefaultAsync(i => i.Id.Equals(id));
+            if (result == null)
+                throw new NotFoundException("The requested item is not available.");
             return result;
         }
         public async Task<List<TEntity>> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>>? queryFunction = null)

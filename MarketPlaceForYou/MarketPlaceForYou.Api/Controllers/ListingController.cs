@@ -1,6 +1,7 @@
 ﻿using MarketPlaceForYou.Api.Helpers;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Services.Services.Interfaces;
+using MarketPlaceForYou.Shared.Excepions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -61,7 +62,7 @@ namespace MarketPlaceForYou.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        //------------------------------------------------------------UPDATE------------------------------------------------
+        //------------------------------------------------------------READ------------------------------------------------
 
         /// <summary>
         /// Returns all the created listings which have not created by the logged in user and have not been purchased. 
@@ -87,7 +88,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+                return NotFound(new { Message = ex.Message });
             }
         }
 
@@ -242,9 +243,13 @@ namespace MarketPlaceForYou.Api.Controllers
                 // Return a 200 response with the ListingVM
                 return Ok(result);
             }
-            catch
+            catch(NotFoundException ex)
             {
-                return BadRequest(new { message = "Unable to retrieve the requested Listing" });
+                return NotFound(new { Message = ex.Message });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { Message = "Unknown error" });
             }
         }
 
@@ -401,13 +406,13 @@ namespace MarketPlaceForYou.Api.Controllers
                 // Return a 200 response with the ListingVM
                 return Ok(result);
             }
-            catch (DbUpdateException)
+            catch (NotFoundException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+                return NotFound(new { Message = ex.Message });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, new { Message = "Unknown error" });
             }
         }
         /// <summary>
@@ -432,13 +437,13 @@ namespace MarketPlaceForYou.Api.Controllers
                 // Return a 200 response with the ListingVM
                 return Ok(result);
             }
-            catch (DbUpdateException)
+            catch (NotFoundException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+                return NotFound(new { Message = ex.Message });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, new { Message = "Unknown error" });
             }
         }
         /// <summary>
@@ -458,13 +463,13 @@ namespace MarketPlaceForYou.Api.Controllers
                 // Return a 200 response with the ListingVM
                 return Ok(result);
             }
-            catch (DbUpdateException)
+            catch (NotFoundException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+                return NotFound(new { Message = ex.Message });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, new { Message = "Unknown error" });
             }
         }
         /// <summary>
@@ -486,13 +491,13 @@ namespace MarketPlaceForYou.Api.Controllers
                 // Return a 200 response with the ListingVM
                 return Ok(result);
             }
-            catch (DbUpdateException)
+            catch (NotFoundException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+                return NotFound(new { Message = ex.Message });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, new { Message = "Unknown error" });
             }
         }
         //------------------------------------------------------------DELETE------------------------------------------------
@@ -515,13 +520,13 @@ namespace MarketPlaceForYou.Api.Controllers
                 // Return a 200 response
                 return Ok();
             }
-            catch (DbUpdateException)
+            catch (NotFoundException ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+                return NotFound(new { Message = ex.Message });
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest(new { message = "Unable to delete the requested Listing" });
+                return StatusCode(500, new { Message = "Unknown error" });
             }
         }
 
