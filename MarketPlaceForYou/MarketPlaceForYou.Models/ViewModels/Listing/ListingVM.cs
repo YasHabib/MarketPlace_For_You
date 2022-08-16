@@ -28,7 +28,7 @@ public class ListingVM
         //UserId = listInfo.UserId;
         Status = listInfo.Status;
         UserFullName = listInfo.User == null ? null : listInfo.User.FirstName + " " + listInfo.User.LastName;
-        //UploadUrls = (ICollection<string>?)(ICollection<Entities.Upload>?)listInfo.Uploads.Where(i => i.ListingId == Id);
+        UploadUrls = listInfo.Uploads.Select(i => i.Url).ToList();
     }
     
     /// <summary>

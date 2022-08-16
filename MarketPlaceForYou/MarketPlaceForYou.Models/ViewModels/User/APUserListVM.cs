@@ -23,7 +23,7 @@ namespace MarketPlaceForYou.Models.ViewModels.User
             City = src.City;
             //Getting total user's active listing
             TotalActive = src.Listings.Where(i => i.UserId == Id && i.Status == "Active").Count();
-            //Getting all the iteams user has purchased    
+            //Getting all the iteams user has purchased
             TotalPurchases = src.Listings.Where(i => i.BuyerID == Id && i.Status == "Sold").Count();
         }
         /// <summary>

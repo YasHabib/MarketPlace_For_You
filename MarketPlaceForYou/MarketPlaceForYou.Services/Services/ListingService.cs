@@ -28,13 +28,11 @@ namespace MarketPlaceForYou.Services.Services
             var newEntityL = new Listing(src, userId);
             newEntityL.Uploads = images;
             newEntityL.Status = "Active";
-            //var entityU = await _uow.Users.GetById(userId);
-            //Adding +1 to the Active listing the user have.
-            //entityU.ActiveListings++; //Make changes to this by queriing the DB
             _uow.Listings.Create(newEntityL);
             await _uow.SaveAsync();
 
             var model = new ListingVM(newEntityL);
+
             return model;
         }
         public async Task<ListingVM> Update(ListingUpdateVM src)
@@ -60,89 +58,73 @@ namespace MarketPlaceForYou.Services.Services
         //retrieving listings
         public async Task<ListingVM> GetById(Guid id)
         {
-            var result = await _uow.Listings.GetById(id, item => item.Include(items => items.User));
+            var result = await _uow.Listings.GetById(id, item => item.Include(items => items.User).Include(items => items.Uploads));
 
             var model = new ListingVM(result);
             return model;
         }
         public async Task<List<ListingVM>> GetAll(string userId)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userId).Include(items => items.User));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userId).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
         //needs work*************
         public async Task<List<ListingVM>> Deals(string userid)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
         //Search and filter
         public async Task<List<ListingVM>> GetAllByCity(string city, string userid)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.City == city && items.UserId != userid).Include(items => items.User).Include(items => items.User));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.City == city && items.UserId != userid).Include(items => items.User).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
         public async Task<List<ListingVM>> GetAllByCategory(string category, string userid)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.Category == category && items.UserId != userid).Include(items => items.User));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.Category == category && items.UserId != userid).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
         public async Task<List<ListingVM>> Search(string searchString, string userid)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => (items.Description.ToLower().Contains(searchString.ToLower()) || items.ProdName.ToLower().Contains(searchString.ToLower())) && items.UserId != userid).Include(items => items.User));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => (items.Description.ToLower().Contains(searchString.ToLower()) || items.ProdName.ToLower().Contains(searchString.ToLower())) && items.UserId != userid).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
-        //Needs work***********************
+        //Search with filters
         public async Task<List<ListingVM>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0)
         {
-            //var query = _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid));
-            var query = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid).Include(items => items.User));
-
-            if (!string.IsNullOrEmpty(searchString))
-                query = (List<Listing>)query.Where(i => (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())));
-            if (city != null)
-                query = (List<Listing>)query.Where(i => i.City == city);
-            if (category != null)
-                query = (List<Listing>)query.Where(i => i.Category == category);
-            if (condition != null)
-                query = (List<Listing>)query.Where(i => i.Condition == condition);
-            if (minPrice != 0 && maxPrice != 0)
-                query = (List<Listing>)query.Where(i => (minPrice <= i.Price && i.Price <= maxPrice));
-
-            //var results = await query.ToListAsync()
-            //return results;
-
-            var models = query.Select(listing => new ListingVM(listing)).ToList();
+            var results = await _uow.Listings.SearchWithFilters(userid, searchString, city, category, condition, minPrice, maxPrice, items => items.Include(items => items.User).Include(items => items.Uploads));
+            var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
 
         //User's listings
         public async Task<List<ListingVM>> MyActiveListings(string userid)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId == userid && items.Status == "Active").Include(items => items.User));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId == userid && items.Status == "Active").Include(items => items.User).Include(items => items.Uploads));
             var model = results.Select(listings => new ListingVM(listings)).ToList();
             return model;
         }
         public async Task<List<ListingVM>> MySoldListings(string userid)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId == userid && items.Status == "Sold").Include(items => items.User));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId == userid && items.Status == "Sold").Include(items => items.User).Include(items => items.Uploads));
             var model = results.Select(listings => new ListingVM(listings)).ToList();
             return model;
         }
         public async Task<List<ListingVM>> MyPurchases(string userId)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.BuyerID == userId).Include(items => items.User));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.BuyerID == userId).Include(items => items.User).Include(items => items.Uploads).Include(items => items.Uploads));
             var model = results.Select(listings => new ListingVM(listings)).ToList();
             return model;
         }
         public async Task<List<ListingVM>> PendingListings(string userId)
         {
-            var results = await _uow.Listings.GetAll(Items => Items.Where(items => items.UserId == userId && items.Status == "Pending").Include(items => items.User));
+            var results = await _uow.Listings.GetAll(Items => Items.Where(items => items.UserId == userId && items.Status == "Pending").Include(items => items.User).Include(items => items.Uploads));
             var model = results.Select(listings => new ListingVM(listings)).ToList();
             return model;
         }
@@ -190,7 +172,6 @@ namespace MarketPlaceForYou.Services.Services
             _uow.Listings.Delete(entity);
             await _uow.SaveAsync();
         }
-
         //Admin Panel
 
     }

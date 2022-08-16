@@ -18,6 +18,6 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         //void SoftDelete(User entity);
         //void BlockUser(User entity);
         //void UnblockUser(User entity);
-
+        //Task<User> TotalPurchase(string userId);
     }
 }

@@ -14,7 +14,8 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
         //Task<Listing> GetById(Guid id);
         //Task<List<Listing>> GetAll(string userId);
         //Task<List<Listing>> Search(string searchString, string userid);
-        //Task<List<Listing>> SearchWithFilters(string userid, string? searchString=null,  string? city=null, string? category=null, string? condition=null, decimal minPrice=0, decimal maxPrice=0);
+        Task<List<Listing>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0,
+                                               Func<IQueryable<Listing>, IQueryable<Listing>>? queryFunction = null);
         //Task<List<Listing>> GetAllByCity(string city, string userid);
         //Task<List<Listing>> GetAllByCategory(string category, string userid);
         //Task<List<Listing>> GetAllCond(string condition, string userid); //test

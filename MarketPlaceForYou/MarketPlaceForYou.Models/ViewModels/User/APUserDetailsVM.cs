@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,9 +21,11 @@ namespace MarketPlaceForYou.Models.ViewModels.User
             FullName = src.FirstName + " " + src.LastName;
             City = src.City;
             //Total $ value of the items user has sold
-            TotalSales = src.Listings.Where(i => i.UserId == Id && i.Status == "Sold").Sum(i => i.Price);
+            TotalSales = src.Listings != null ? src.Listings.Where(i => i.UserId == Id && i.Status == "Sold").Sum(i => i.Price) : 0;
             //Total # of items user has bought
-            NumberOfPurchases = src.Listings.Where(i => i.BuyerID == Id && i.Status == "Sold").Count();
+            NumberOfPurchases= src.Listings.Where(i => i.BuyerID == Id && i.Status == "Sold").Count();
+
+
         }
         /// <summary>
         /// User id (auth)
@@ -48,5 +51,13 @@ namespace MarketPlaceForYou.Models.ViewModels.User
         /// # of purchased listings
         /// </summary>
         public int NumberOfPurchases { get; set; }
+        ///// <summary>
+        ///// All of user's current active listings
+        ///// </summary>
+        //public List<Entities.Listing> UserListing { get; set; }
+        ///// <summary>
+        ///// All of the listings user has purchased
+        ///// </summary>
+        //public List<Entities.Listing> Purchasedlistings { get; set; }
     }
 }

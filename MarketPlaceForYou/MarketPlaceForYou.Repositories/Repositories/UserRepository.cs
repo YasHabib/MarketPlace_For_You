@@ -11,10 +11,18 @@ namespace MarketPlaceForYou.Repositories.Repositories
 {
     public class UserRepository : BaseRepository<User, string, MKPFYDbContext>, IUserRepository
     {
+        private readonly MKPFYDbContext _context;
         public UserRepository(MKPFYDbContext context)
             : base(context)
         {
+            _context = context;
         }
+
+        //public async Task<User> TotalPurchase(string userId)
+        //{
+        //    int purchase = _context.Listings.Where(i => i.BuyerID == userId && i.Status == "Sold").Count();
+        //    return purchase;
+        //}
         //public void Create(User entity)
         //{
         //    entity.ActiveListings = 0;

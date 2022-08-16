@@ -76,8 +76,10 @@ namespace MarketPlaceForYou.Services.Services
         //Admin panel
         public async Task<APUserDetailsVM> APGetById(string userId)
         {
-            var result = await _uow.Users.GetById(userId,i => i.Include(i => i.Listings));
-            var model = new APUserDetailsVM(result);
+            var user = await _uow.Users.GetById(userId,i => i.Include(i => i.Listings));
+            //var purchased = _uow.Users.TotalPurchase(userId);
+            // purchased = _uow.Listings.GetAll(items => items.Where(items => items.BuyerID == userId && items.Status == "Sold").Count());
+            var model = new APUserDetailsVM(user);
             return model;
         }
         public async Task<List<APUserListVM>> GetAll()

@@ -11,29 +11,38 @@ namespace MarketPlaceForYou.Repositories.Repositories
 {
     public class ListingRepository : BaseRepository<Listing, Guid, MKPFYDbContext>, IListingRepository
     {
+        private readonly MKPFYDbContext _context;
         public ListingRepository(MKPFYDbContext context)
             : base(context)
         {
+            _context = context;
         }
 
-        ////Start of searching with filters
-        //public async Task<List<Listing>> SearchWithFilters(string userid, string? searchString=null, string? city=null, string? category=null, string? condition =null, decimal minPrice =0, decimal maxPrice =0)
-        //{
-        //    var query= _context.Listings.AsQueryable();
+        //Searching with filters
+        public async Task<List<Listing>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0,
+                                                            Func<IQueryable<Listing>, IQueryable<Listing>>? queryFunction = null)
+        {
+            List<Listing> listings;
+            if (queryFunction == null)
+                listings = await _entityDbSet.ToListAsync();
+            else
+                listings = await queryFunction(_entityDbSet).ToListAsync();
 
-        //    if (!string.IsNullOrEmpty(searchString))
-        //        query = query.Where(i => (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())));
-        //    if (city != null)
-        //        query = query.Where(i => i.City == city);
-        //    if (category != null)
-        //        query = query.Where(i => i.Category == category);
-        //    if (condition != null)
-        //       query = query.Where(i => i.Condition == condition);
-        //    if (minPrice != 0 && maxPrice != 0)
-        //        query = query.Where(i => (minPrice <= i.Price && i.Price <= maxPrice));
+            var query = _context.Listings.Where(i => i.UserId != userid).Include(i => i.User).AsQueryable();
 
-        //    var results = await query.ToListAsync();
-        //    return results;
-        //}
+            if (!string.IsNullOrEmpty(searchString))
+                query = query.Where(i => (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())));
+            if (city != null)
+                query = query.Where(i => i.City == city);
+            if (category != null)
+                query = query.Where(i => i.Category == category);
+            if (condition != null)
+                query = query.Where(i => i.Condition == condition);
+            if (minPrice != 0 && maxPrice != 0)
+                query = query.Where(i => (minPrice <= i.Price && i.Price <= maxPrice));
+
+            var results = await query.ToListAsync();
+            return results;
+        }
     }
 }
