@@ -51,7 +51,8 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Settings relationship with user table
         /// </summary>
-        public User? User { get; set; }
+        [InverseProperty("Listings")]
+        public User User { get; set; }
 
 
         /// <summary>
@@ -106,6 +107,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Buyer's id for purchasing
         /// </summary> 
+        [InverseProperty("Purchases")]
         public string? BuyerID { get; set; }
 
         /// <summary>
@@ -113,7 +115,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// </summary>
         [Required]
         [MaxLength(5)]
-        public ICollection<Upload> Uploads { get; set; }
+        public ICollection<Upload>? Uploads { get; set; }
 
         //public ICollection<Upload> UploadUrls => Uploads.Where(i => i.ListingId == ).ToList();
         //public Upload? Upload { get; set; }

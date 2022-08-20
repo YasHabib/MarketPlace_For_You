@@ -3,8 +3,11 @@ using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.User;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -77,15 +80,24 @@ namespace MarketPlaceForYou.Services.Services
         public async Task<APUserDetailsVM> APGetById(string userId)
         {
             var user = await _uow.Users.GetById(userId,i => i.Include(i => i.Listings));
-            //var purchased = _uow.Users.TotalPurchase(userId);
-            // purchased = _uow.Listings.GetAll(items => items.Where(items => items.BuyerID == userId && items.Status == "Sold").Count());
-            var model = new APUserDetailsVM(user);
+            var purchases = await _uow.Listings.GetAll(items => items.Where(items => items.BuyerID == userId && items.Status == "Sold"));
+            var purchaseCount = purchases.Count();
+            var model = new APUserDetailsVM(user, purchaseCount);
             return model;
         }
         public async Task<List<APUserListVM>> GetAll()
         {
-            var results = await _uow.Users.GetAll(i => i.Include(i => i.Listings));
-            var models = results.Select(users => new APUserListVM(users)).ToList();
+            var results = await _uow.Users.GetAll(users => users.Include(users => users.Purchases));
+
+            var models = results.Select(users => new APUserListVM
+            {
+                Id = users.Id,
+                FullName = users.FirstName + " " + users.LastName,
+                City = users.City,
+                Email = users.Email,
+                TotalActive = users.Listings != null ? users.Listings.Where(i => i.UserId == users.Id && i.Status == "Active").Count() : 0,
+                TotalPurchases = users.Purchases != null ? users.Purchases.Where(i => i.BuyerID == users.Id && i.Status == "Sold").Count() : 0
+            }).ToList();
             return models;
         }
         public async Task Delete(string id)
