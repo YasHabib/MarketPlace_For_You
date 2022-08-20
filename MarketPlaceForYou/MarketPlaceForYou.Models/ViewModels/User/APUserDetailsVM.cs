@@ -15,7 +15,8 @@ namespace MarketPlaceForYou.Models.ViewModels.User
     /// User's detailed view
     /// </summary>
     /// <param name="src"></param>
-        public APUserDetailsVM(Entities.User src, int purchases)
+    /// <param name="purchasesCount"></param>
+        public APUserDetailsVM(Entities.User src, int purchasesCount)
         {
             Id = src.Id;
             FullName = src.FirstName + " " + src.LastName;
@@ -23,9 +24,7 @@ namespace MarketPlaceForYou.Models.ViewModels.User
             //Total $ value of the items user has sold
             TotalSales = src.Listings != null ? src.Listings.Where(i => i.UserId == Id && i.Status == "Sold").Sum(i => i.Price) : 0;
             //Total # of items user has bought
-            NumberOfPurchases= purchases;
-
-
+            NumberOfPurchases= purchasesCount;
         }
         /// <summary>
         /// User id (auth)
@@ -51,13 +50,5 @@ namespace MarketPlaceForYou.Models.ViewModels.User
         /// # of purchased listings
         /// </summary>
         public int NumberOfPurchases { get; set; }
-        ///// <summary>
-        ///// All of user's current active listings
-        ///// </summary>
-        //public List<Entities.Listing> UserListing { get; set; }
-        ///// <summary>
-        ///// All of the listings user has purchased
-        ///// </summary>
-        //public List<Entities.Listing> Purchasedlistings { get; set; }
     }
 }
