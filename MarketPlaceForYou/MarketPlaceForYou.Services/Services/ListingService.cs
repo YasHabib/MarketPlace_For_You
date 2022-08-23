@@ -1,17 +1,21 @@
 ﻿using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Models.ViewModels.SearchInput;
 using MarketPlaceForYou.Models.ViewModels.Upload;
 using MarketPlaceForYou.Repositories;
+using MarketPlaceForYou.Repositories.Migrations;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.Replication;
 using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -75,41 +79,35 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task<List<ListingVM>> Deals(string userid)
         {
+            //Listing searchResults;
+            var list = new List<Listing>();
 
-            ////Trial 1
-            ////Gives 200ok but no result, debugged to see the issue, and searchInputs is null
-            //var searchInputs = _uow.SearchInputs.Get3(userid).ToString().ToLower();
-
-            //var results = await _uow.Listings.GetAll(items => items.Where(items => items.Description.ToLower().Contains(searchInputs)
-            //            || items.ProdName.ToLower().Contains(searchInputs) && items.UserId != userid && items.Status == "Active")
-            //            .Include(items => items.User).Include(items => items.Uploads).Take(16));
-
-
-            ////Trial 2
-            ////Grabbing the last 3 search results
-            //var searchInputs = _uow.SearchInputs.Get3(userid).ToString().ToLower().ToList();
-            //////Default view if there's no search inputs
-            //var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid && items.Status == "Active").OrderByDescending(items => items.Price).Take(16));
-            ////List<Listing> results;
-            ////looping through each of the search string to get the search results
-            //if (searchInputs != null)
-            //{
-            //    foreach (var searchInput in searchInputs)
-            //        results = await _uow.Listings.GetAll(items => items.Where(items => items.Description.ToLower().Contains(searchInput)
-            //            || items.ProdName.ToLower().Contains(searchInput) && items.UserId != userid && items.Status == "Active")
-            //            .Include(items => items.User).Include(items => items.Uploads).Take(16));
-            //}
-
-            //Trial 3
             //Grabbing the last 3 searches
-            //var searchInputs = _uow.SearchInputs.Get3(userid);
+            var search = await _uow.SearchInputs.GetAll(items => items.Where(i => i.UserId == userid).OrderByDescending(i => i.SearchedDate).Take(3));
 
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid && items.Status == "Active").OrderByDescending(items => items.Price).Take(16));
+            //Default view if there are no search result stored/saved
+            if (search.Count() == 0)
+            {
+                list = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid && items.Status == "Active")
+                                                                   .Include(items => items.Uploads).Include(items => items.User)
+                                                                   .Take(16));
+            }
+            //Looping through each search strings
+            else if (search.Count() != 0)
+            {
+                foreach (var searchInput in search)
+                {
+                    var searchResults = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid && items.Status == "Active" &&
+                                                                       (items.ProdName.ToLower().Contains(searchInput.SearchString.ToLower()) || items.Description.ToLower().Contains(searchInput.SearchString.ToLower())))
+                                                                       .Include(items => items.Uploads).Include(items => items.User)
+                                                                       .Take(16));
+                    list.AddRange(searchResults);
+                }
+            }
 
-
-            //to view model for displaying to end user as a list
-            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            var models = list.Select(listing => new ListingVM(listing)).DistinctBy(i => i.Id).OrderBy(i => i.Price).ToList();
             return models;
+
         }
         //Search and filter
         public async Task<List<ListingVM>> GetAllByCity(string city, string userid)

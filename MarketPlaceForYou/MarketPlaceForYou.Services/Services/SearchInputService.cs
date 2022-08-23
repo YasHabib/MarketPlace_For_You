@@ -33,12 +33,5 @@ namespace MarketPlaceForYou.Services.Services
             var model = new SearchInputVM(save);
             return model;
         }
-
-        public async Task<List<SearchInputVM>> Get3(string userId)
-        {
-            var results = await _uow.SearchInputs.Get3(userId);
-            var models = results.Select(search => new SearchInputVM(search)).ToList();
-            return models;
-        }
     }
 }

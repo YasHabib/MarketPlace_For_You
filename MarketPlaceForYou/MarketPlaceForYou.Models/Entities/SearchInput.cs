@@ -40,7 +40,6 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Foreign key (user id)
         /// </summary>
-        //relationships
         [Required]
         //foreign key
         public string UserId { get; set; }

@@ -56,27 +56,27 @@ namespace MarketPlaceForYou.Api.Controllers
         /// Retrieving search history and display to user (if needed)
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult<List<SearchInputVM>>> Get3()
-        {
-            try
-            {
-                var userId = User.GetId();
-                if (userId == null)
-                    return BadRequest("Invalid Request");
-                // Have the service to save the search input
-                var result = await _searchInputService.Get3(userId);
+        //[HttpGet]
+        //public async Task<ActionResult<List<SearchInputVM>>> Get3()
+        //{
+        //    try
+        //    {
+        //        var userId = User.GetId();
+        //        if (userId == null)
+        //            return BadRequest("Invalid Request");
+        //        // Have the service to save the search input
+        //        var result = await _searchInputService.Get3(userId);
 
-                return Ok(result);
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //        return Ok(result);
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
     }
 }

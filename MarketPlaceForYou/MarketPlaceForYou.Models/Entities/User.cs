@@ -107,7 +107,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// List of strings user has searched
         /// </summary>
-        public ICollection<SearchInput> SearchInput { get; set; }
+        //public ICollection<SearchInput> SearchInput { get; set; }
 
     }
 }
