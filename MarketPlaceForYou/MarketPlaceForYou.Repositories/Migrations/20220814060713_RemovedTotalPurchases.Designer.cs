@@ -3,6 +3,7 @@ using System;
 using MarketPlaceForYou.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlaceForYou.Repositories.Migrations
 {
     [DbContext(typeof(MKPFYDbContext))]
-    partial class MKPFYDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220814060713_RemovedTotalPurchases")]
+    partial class RemovedTotalPurchases
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,30 +100,6 @@ namespace MarketPlaceForYou.Repositories.Migrations
                     b.ToTable("Listings");
                 });
 
-            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.SearchInput", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("SearchString")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("SearchedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SearchInputs");
-                });
-
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Upload", b =>
                 {
                     b.Property<Guid>("Id")
@@ -196,34 +174,23 @@ namespace MarketPlaceForYou.Repositories.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.SearchInput", b =>
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Upload", b =>
                 {
-                    b.HasOne("MarketPlaceForYou.Models.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                    modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Upload", b =>
-                        {
-                            b.HasOne("MarketPlaceForYou.Models.Entities.Listing", null)
-                                .WithMany("Uploads")
-                                .HasForeignKey("ListingId");
-                        });
-
-                    modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>
-                        {
-                            b.Navigation("Uploads");
-                        });
-
-                    modelBuilder.Entity("MarketPlaceForYou.Models.Entities.User", b =>
-                        {
-                            b.Navigation("Listings");
-                        });
-                    //#pragma warning restore 612, 618
+                    b.HasOne("MarketPlaceForYou.Models.Entities.Listing", null)
+                        .WithMany("Uploads")
+                        .HasForeignKey("ListingId");
                 });
+
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>
+                {
+                    b.Navigation("Uploads");
+                });
+
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.User", b =>
+                {
+                    b.Navigation("Listings");
+                });
+#pragma warning restore 612, 618
         }
     }
 }
-

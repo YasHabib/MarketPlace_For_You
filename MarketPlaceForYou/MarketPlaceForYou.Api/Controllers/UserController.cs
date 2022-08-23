@@ -6,20 +6,21 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-//using System.Web.Http.Cors;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace MarketPlaceForYou.Api.Controllers
 {/// <summary>
  /// Controller for user related APIs
  /// </summary>
 
-    //[EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        //private readonly IConfiguration _configuration;
         /// <summary>
         /// Controller for user
         /// </summary>
@@ -27,23 +28,24 @@ namespace MarketPlaceForYou.Api.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
+            //_configuration = configuration;
         }
-
+        
         /// <summary>
         /// Creates a user
         /// </summary>
-        /// <param name="data">User data</param>
+        /// <param name="src">User data</param>
         /// <returns>Creates a user and writes the info in databse</returns>
         /// <response code = "200">Successfull</response>
         /// <response code = "401">User not logged in or token has expired</response>
         /// <response code = "500">Internal server issue</response>
         [HttpPost]
-        public async Task<ActionResult<UserVM>> Create([FromBody] UserAddVM data)
+        public async Task<ActionResult<UserVM>> Create([FromBody] UserAddVM src)
         {
             try
             {
                 // Have the service create the new user
-                var result = await _userService.Create(data);
+                var result = await _userService.Create(src);
 
                 // Return a 200 response with the userVM
                 return Ok(result);

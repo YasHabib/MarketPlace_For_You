@@ -1,4 +1,6 @@
-﻿using MarketPlaceForYou.Models.ViewModels.Listing;
+﻿using MarketPlaceForYou.Models.Entities.Interfaces;
+using MarketPlaceForYou.Models.ViewModels.Listing;
+using MarketPlaceForYou.Models.ViewModels.Upload;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +13,7 @@ namespace MarketPlaceForYou.Models.Entities
 {/// <summary>
 /// Listing entity
 /// </summary>
-    public class Listing
+    public class Listing : BaseEntity<Guid>,IDated
     {
         //empty constructor
         /// <summary>
@@ -35,14 +37,10 @@ namespace MarketPlaceForYou.Models.Entities
             Address = addListing.Address;
             City = addListing.City;
             UserId = userId;
+            //Uploads is set under ListingService/Create
+
+            //Uploads = addListing.UploadIds.Select(id => new Upload { Id = id }).ToList();
         }
-
-        /// <summary>
-        /// Listing ID (UUid)
-        /// </summary>
-        [Key]
-        public Guid Id { get; set; }
-
         /// <summary>
         /// Foreign key (user id)
         /// </summary>
@@ -53,7 +51,8 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Settings relationship with user table
         /// </summary>
-        public User? User { get; set; }
+        [InverseProperty("Listings")]
+        public User User { get; set; }
 
 
         /// <summary>
@@ -79,6 +78,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Price
         /// </summary>
+        [Column(TypeName = "money")]
         [Required]
         public decimal Price { get; set; }
         /// <summary>
@@ -107,6 +107,14 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Buyer's id for purchasing
         /// </summary> 
+        [InverseProperty("Purchases")]
         public string? BuyerID { get; set; }
+
+        /// <summary>
+        /// Allowing listing to have max 5 of uploads
+        /// </summary>
+        [Required]
+        [MaxLength(5)]
+        public ICollection<Upload>? Uploads { get; set; }
     }
 }

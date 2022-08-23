@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
 {
-    public interface IUploadRepository
+    public interface IUploadRepository : IBaseRepository<Upload, Guid>
     {
-        void Create(Upload entity);
-        Task<Upload> GetById(Guid Id);
-        Task<List<Upload>> GetAll();
-        void Update(Upload entity);
-        void Delete(Upload entity);
+        //void Create(Upload entity);
+        //Task<Upload> GetById(Guid Id);
+        //Task<List<Upload>> GetAll(Func<IQueryable<Upload>,IQueryable<Upload>>? queryFunction);
+        //Task<List<Upload>> GetAllPerListing(Guid listingId);
+        //void Update(Upload entity);
+        //void Delete(Upload entity);
     }
 }

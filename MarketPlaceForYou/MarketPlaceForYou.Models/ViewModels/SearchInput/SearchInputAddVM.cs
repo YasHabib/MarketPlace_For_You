@@ -12,6 +12,6 @@ namespace MarketPlaceForYou.Models.ViewModels.SearchInput
     {/// <summary>
     /// Search string which the user will input in the search box
     /// </summary>
-        public string? SearchString { get; set; }
+        public string SearchString { get; set; } = string.Empty;
     }
 }

@@ -7,25 +7,10 @@ using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
 {
-    public interface IListingRepository
+    public interface IListingRepository : IBaseRepository<Listing, Guid>
     {
-        void Update(Listing entity);
-        void Create(Listing entity);
-        Task<Listing> GetById(Guid id);
-        Task<List<Listing>> GetAll(string userId);
-        Task<List<Listing>> Search(string searchString, string userid);
-        Task<List<Listing>> SearchWithFilters(string userid, string? searchString=null,  string? city=null, string? category=null, string? condition=null, decimal minPrice=0, decimal maxPrice=0);
-        Task<List<Listing>> GetAllByCity(string city, string userid);
-        Task<List<Listing>> GetAllByCategory(string category, string userid);
-        Task<List<Listing>> GetAllCond(string condition, string userid); //test
-        Task<List<Listing>> Deals(string searchString, string userid);
-        Task<List<Listing>> MyActiveListings(string userId);
-        Task<List<Listing>> MySoldListings(string userId);
-        Task<List<Listing>> MyPurchases(string userId);
-        Task<List<Listing>> PendingListings(string userId);
-        void RequestPurchase(Listing entity);
-        void ConfirmPurchase(Listing entity);   
-        void CancelPurchase(Listing entity);
-        void Delete(Listing entity);
+        Task<List<Listing>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0,
+                                               Func<IQueryable<Listing>, IQueryable<Listing>>? queryFunction = null);
+        //Task<List<Listing>> Deals(string userid, Func<IQueryable<Listing>, IQueryable<Listing>>? queryFunction = null);
     }
 }

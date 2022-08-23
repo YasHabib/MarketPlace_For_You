@@ -3,6 +3,7 @@ using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlaceForYou.Api.Controllers
 {
@@ -38,7 +39,7 @@ namespace MarketPlaceForYou.Api.Controllers
             if (mismatchFound)
                 return BadRequest("Uploaded file(s) are not a valid accepted type, please upload a png, jpeg, jpg or gif file");
 
-            var results = await _uploadService.UploadFiles(Request.Form.Files.ToList());
+            var results = await _uploadService.UploadImages(Request.Form.Files.ToList());
 
             return Ok(results);
         }

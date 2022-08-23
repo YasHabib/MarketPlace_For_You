@@ -1,3 +1,4 @@
+using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services;
 using MarketPlaceForYou.Services.Services.Interfaces;
@@ -10,6 +11,13 @@ using System.Configuration;
 
 void ConfigureHost(ConfigureHostBuilder host)
 {
+    //Retrieving parameters in AWS Parameter Store
+    host.ConfigureAppConfiguration((builder) =>
+    {
+    builder.AddSystemsManager(string.Format("/Live/{0}/",
+            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")))
+            .AddSystemsManager(string.Format("/Live/Common/"));
+    });
 }
 
 
@@ -18,7 +26,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     //Setup CORs
     builder.Services.AddCors(option => option.AddPolicy("allowCORs", build =>
     {
-        build.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader();
+        build.WithOrigins("http://localhost:3000", "http://marketforyouyh-env.eba-fqgiudi2.ca-central-1.elasticbeanstalk.com").AllowAnyMethod().AllowAnyHeader();
     }));
 
     //Setup the database using the ApplicationDbContext
@@ -76,6 +84,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IFAQService, FAQService>();
     builder.Services.AddScoped<IUploadService, UploadService>();
     builder.Services.AddScoped<ISearchInputService, SearchInputService>();
+    builder.Services.AddScoped<IEmailService, EmailService>();
 }
 
 
@@ -99,9 +108,11 @@ void ConfigurePipeline(WebApplication app)
             c.SwaggerEndpoint("/swagger/v1/swagger.json", "MarketForYou V1");
         });
     }
+    //if(User.IsDeleted == false && User.IsBlocked == false)
+    //{
     app.UseAuthentication();
-    
-    app.UseAuthorization(); //:is the user allowed to use the particular endpoint?
+    //}
+    app.UseAuthorization(); //=is the user allowed to use the particular endpoint?
     app.MapControllers();
 }
 
@@ -136,41 +147,21 @@ ConfigurePipeline(app);
 app.Run();
 
 
-//Design-time factory
-//public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
-//{
-//    public MKPFYDbContext CreateDbContext(string[] args)
-//    {
-//        var optionsBuilder = new DbContextOptionsBuilder<MKPFYDbContext>();
-//        optionsBuilder.UseNpgsql("Data Source=mkpfydb");
 
-//        return new MKPFYDbContext(optionsBuilder.Options);
-//    }
-//}
+/// <summary>
+/// Design time for migrations
+/// </summary>
+public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
+{
+    /// <summary>
+    /// Design time for migrations
+    /// </summary>
+    public MKPFYDbContext CreateDbContext(string[] args)
+    {
+        var optionsBuilder = new DbContextOptionsBuilder<MKPFYDbContext>();
+        optionsBuilder.UseNpgsql("Data Source=mkpfydb");
 
+        return new MKPFYDbContext(optionsBuilder.Options);
+    }
+}
 
-//var builder = WebApplication.CreateBuilder(args);
-
-//// Add services to the container.
-
-//builder.Services.AddControllers();
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
-//var app = builder.Build();
-
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
-//app.MapControllers();
-
-//app.Run();

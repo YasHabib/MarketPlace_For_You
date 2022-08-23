@@ -25,12 +25,12 @@ public class ListingVM
         Address = listInfo.Address;
         City = listInfo.City;
         Created = listInfo.Created;
-        UserId = listInfo.UserId;
-        //Purchased = listInfo.Purchased;
-        //BuyerID = listInfo.BuyerID;
-        //Status = listInfo.Status;
+        //UserId = listInfo.UserId;
+        Status = listInfo.Status;
+        UserFullName = listInfo.User == null ? null : listInfo.User.FirstName + " " + listInfo.User.LastName;
+        UploadUrls = listInfo.Uploads.Select(i => i.Url).ToList();
     }
-
+    
     /// <summary>
     /// Listing id
     /// </summary>
@@ -79,20 +79,22 @@ public class ListingVM
     /// <summary>
     /// User id of the person who created it
     /// </summary>
-    public string UserId { get; set; }
+    //public string UserId { get; set; }
 
-    ///// <summary>
-    ///// Purchased date
-    ///// </summary>
-    //public DateTime Purchased { get; set; }
+    /// <summary>
+    /// Listing status
+    /// </summary>
+    public string? Status { get; set; } = string.Empty;
 
-    ///// <summary>
-    ///// Buyer's id for purchasing
-    ///// </summary> 
-    //public string? BuyerID { get; set; }
+    ///<summary>
+    /// Viewing images
+    /// </summary>
+    //public ICollection<Entities.Upload> Uploads { get; set; }
 
-    ///// <summary>
-    ///// Listing status
-    ///// </summary>
-    //public string? Status { get; set; }
+    //public List<string> ImageUrls { get; set; }
+    public string? UserFullName { get; set; }
+    /// <summary>
+    /// Image URLs
+    /// </summary>
+    public ICollection<string> UploadUrls { get; set; }
 }

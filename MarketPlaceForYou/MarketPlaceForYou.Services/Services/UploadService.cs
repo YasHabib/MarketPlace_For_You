@@ -25,7 +25,7 @@ namespace MarketPlaceForYou.Services.Services
             _config = config;
         }
 
-        public async Task<List<UploadResultVM>> UploadFiles(List<IFormFile> files)
+        public async Task<List<UploadResultVM>> UploadImages(List<IFormFile> files)
         {
             var results = new List<UploadResultVM>();
 
@@ -51,7 +51,7 @@ namespace MarketPlaceForYou.Services.Services
                 _uow.Uploads.Create(new Upload
                 {
                     Id = newId,
-                    Url = $"https://{bucket}.s3.{region}.amazonaws.com/{newId}"
+                    Url = $"https://{bucket}.s3.{region}.amazonaws.com/{newId}",
                 });
                 await _uow.SaveAsync();
 
@@ -63,5 +63,23 @@ namespace MarketPlaceForYou.Services.Services
             }
             return results;
         }
+        //public async Task<ListingImageVM> AddImageToListing (AddImageToListingVM src)
+        //{
+        //    //Getting the Id of the images
+        //    var images = await _uow.Uploads.GetById(src.Id);
+
+        //    images.ListingId = src.ListingId;
+        //    _uow.Uploads.Update(images);
+        //    await _uow.SaveAsync();
+
+        //    var model = new ListingImageVM(images);
+        //    return model;
+        //}
+        //public async Task<List<ListingImageVM>> GetAllPerListing(Guid listingId)
+        //{
+        //    var results = await _uow.Uploads.GetAllPerListing(listingId);
+        //    var model = results.Select(images => new ListingImageVM(images)).ToList();
+        //    return model;
+        //}
     }
 }

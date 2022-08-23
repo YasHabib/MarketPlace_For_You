@@ -1,8 +1,11 @@
 ﻿using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.User;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +14,7 @@ namespace MarketPlaceForYou.Models.Entities
 {/// <summary>
 /// User entity
 /// </summary>
-    public class User
+    public class User : BaseEntity<string>
     {/// <summary>
     /// Empty constructor
     /// </summary>
@@ -48,11 +51,6 @@ namespace MarketPlaceForYou.Models.Entities
             City = src.City;
         }
         /// <summary>
-        /// User id
-        /// </summary>
-        [Key]
-        public string Id { get; set; } = string.Empty;
-        /// <summary>
         /// User's first name
         /// </summary>
         [Required]
@@ -85,12 +83,31 @@ namespace MarketPlaceForYou.Models.Entities
         [Required]
         public string City { get; set; } = string.Empty;
 
-        //listing user has created
+        //public int NumOfPurchases
+        /// <summary>
+        /// Soft deleting an entity,
+        /// </summary>
+        public bool IsDeleted { get; set; }
+        /// <summary>
+        /// If the user is blocked or not
+        /// </summary>
+        public bool IsBlocked { get; set; }
+        //listing the user has created
         /// <summary>
         ///A collection of listing
         /// </summary>
-        public ICollection<Listing> Listings { get; set; }
+        [ForeignKey("UserId")]
+        public ICollection<Listing>? Listings { get; set; }
+        /// <summary>
+        /// Total purchases of the user
+        /// </summary>
+        [ForeignKey("BuyerID")]
+        public ICollection<Listing>? Purchases { get; set; }
 
+        /// <summary>
+        /// List of strings user has searched
+        /// </summary>
+        public ICollection<SearchInput> SearchInput { get; set; }
 
     }
 }

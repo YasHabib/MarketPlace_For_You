@@ -10,7 +10,7 @@ namespace MarketPlaceForYou.Models.Entities
 {/// <summary>
 /// Search input entity
 /// </summary>
-    public class SearchInput
+    public class SearchInput : BaseEntity<Guid>
     {
        /// <summary>
        /// Empty constructor
@@ -26,30 +26,28 @@ namespace MarketPlaceForYou.Models.Entities
             SearchString = src.SearchString;
             UserId = userId;
         }
-        /// <summary>
-        /// Id of the search string
-        /// </summary>
-        [Key]
-        public Guid Id { get; set; }
+
         /// <summary>
         /// Search String inputed in the search box
         /// </summary>
         public string SearchString { get; set; } = string.Empty;
+
         /// <summary>
         /// Date/Time the search string was used
         /// </summary>
         public DateTime SearchedDate { get; set; }
+
         /// <summary>
         /// Foreign key (user id)
         /// </summary>
         //relationships
         [Required]
         //foreign key
-        public string UserId { get; set; } //naming convention (EntityNameId)
-        /// <summary>
-        /// Settings relationship with user table
-        /// </summary>
-        public User? User { get; set; }
+        public string UserId { get; set; }
 
+        ///// <summary>
+        ///// Settings relationship with user table
+        ///// </summary>
+        //public User? User { get; set; }
     }
 }

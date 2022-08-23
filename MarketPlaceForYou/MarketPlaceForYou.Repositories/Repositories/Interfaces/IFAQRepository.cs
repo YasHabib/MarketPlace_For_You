@@ -7,12 +7,7 @@ using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
 {
-    public interface IFAQRepository
+    public interface IFAQRepository : IBaseRepository<FAQ, Guid>
     {
-        void Create(FAQ entity);
-        Task<List<FAQ>> GetAll();
-        Task<FAQ> GetById(Guid id);
-        void Update(FAQ entity);
-        void Delete(FAQ entity);   
     }
 }

@@ -2,6 +2,7 @@
 using MarketPlaceForYou.Models.ViewModels.SearchInput;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,8 @@ namespace MarketPlaceForYou.Services.Services
 
             if (searchString != null)
             {
-                _uow.SearchInputs.SaveSearch(save);
+                _uow.SearchInputs.Create(save);
+                save.SearchedDate = DateTime.UtcNow;
                 await _uow.SaveAsync();
             }
 
@@ -32,9 +34,9 @@ namespace MarketPlaceForYou.Services.Services
             return model;
         }
 
-        public async Task<List<SearchInputVM>> GetAll(string userId)
+        public async Task<List<SearchInputVM>> Get3(string userId)
         {
-            var results = await _uow.SearchInputs.GetAll(userId);
+            var results = await _uow.SearchInputs.Get3(userId);
             var models = results.Select(search => new SearchInputVM(search)).ToList();
             return models;
         }

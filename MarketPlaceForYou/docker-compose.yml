@@ -10,12 +10,6 @@ services:
     ports: 
       - '35010:80'
       - '35020:443'
-    environment:
-      - Auth0__Domain=https://marketforyou.us.auth0.com
-      - Auth0__Audience=http://marketforyou.com
-      - Auth0__TokenRedirectUrl=http://localhost:35010
-      - AWS__ImageBucket=marketforyou-yh
-      - AWS__Region=ca-central-1
     volumes:
       - .aws:/root/.aws
     depends_on:

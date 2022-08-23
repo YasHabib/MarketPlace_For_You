@@ -57,7 +57,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<List<SearchInputVM>>> GetAll()
+        public async Task<ActionResult<List<SearchInputVM>>> Get3()
         {
             try
             {
@@ -65,7 +65,7 @@ namespace MarketPlaceForYou.Api.Controllers
                 if (userId == null)
                     return BadRequest("Invalid Request");
                 // Have the service to save the search input
-                var result = await _searchInputService.GetAll(userId);
+                var result = await _searchInputService.Get3(userId);
 
                 return Ok(result);
             }

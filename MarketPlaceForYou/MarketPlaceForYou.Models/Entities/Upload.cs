@@ -9,17 +9,17 @@ namespace MarketPlaceForYou.Models.Entities
 {/// <summary>
 /// Upload enitty
 /// </summary>
-    public class Upload
-    {/// <summary>
-     /// Id of the uploaded file
-     /// </summary>
-        [Key]
-        public Guid Id { get; set; }
+    public class Upload : BaseEntity<Guid>
+    {   
         /// <summary>
         /// S3 url of the uploaded file
         /// </summary>
         [Required]
         public string Url { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Foreign key
+        /// </summary>
+        public Guid? ListingId { get; set; }
     }
 }

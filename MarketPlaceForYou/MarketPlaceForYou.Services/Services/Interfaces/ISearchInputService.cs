@@ -10,7 +10,6 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
     public interface ISearchInputService
     {
         Task<SearchInputVM> SaveSearch(SearchInputAddVM src, string userId, string? searchString=null);
-        Task<List<SearchInputVM>> GetAll(string userid);
-
+        Task<List<SearchInputVM>> Get3(string userid);
     }
 }

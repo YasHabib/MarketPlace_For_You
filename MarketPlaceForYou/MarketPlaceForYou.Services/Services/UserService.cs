@@ -3,32 +3,51 @@ using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.User;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.UserSecrets;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace MarketPlaceForYou.Services.Services
 {
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IConfiguration _configuration;
 
-        public UserService(IUnitOfWork uow)
+        public UserService(IUnitOfWork uow, IConfiguration configuration)
         {
             _uow = uow;
+            _configuration = configuration;
         }
 
         public async Task<UserVM> Create(UserAddVM src)
         {
             var newEntity = new User(src);
-
             _uow.Users.Create(newEntity);
             await _uow.SaveAsync();
 
-            var model = new UserVM(newEntity);
+            var apiKey = _configuration.GetValue<string>("SendGridAPIKey"); //gives back a 200 but no welcome email.
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("yasin_habib@outlook.com", "Market For You");
+            var subject = "Welcome to Market For You";
+            string fullName = src.FirstName + " " + src.LastName;
+            var to = new EmailAddress(src.Email, fullName);
+            var plainTextContent = "and easy to do anywhere, even with C#";
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
 
+            var model = new UserVM(newEntity);
             return model;
         }
 
@@ -38,13 +57,6 @@ namespace MarketPlaceForYou.Services.Services
             var model = new UserVM(result);
             return model;
         }
-        public async Task<List<UserVM>> GetAll()
-        {
-            var results = await _uow.Users.GetAll();
-            var models = results.Select(users => new UserVM(users)).ToList();
-            return models;
-        }
-
         public async Task<UserVM> Update(UserUpdateVM src)
         {
             //read
@@ -62,11 +74,59 @@ namespace MarketPlaceForYou.Services.Services
             var model = new UserVM(entity);
             return model;
         }
+
+
+        //Admin panel
+        public async Task<APUserDetailsVM> APGetById(string userId)
+        {
+            var user = await _uow.Users.GetById(userId,i => i.Include(i => i.Listings));
+            var purchases = await _uow.Listings.GetAll(items => items.Where(items => items.BuyerID == userId && items.Status == "Sold"));
+            var purchaseCount = purchases.Count();
+            var model = new APUserDetailsVM(user, purchaseCount);
+            return model;
+        }
+        public async Task<List<APUserListVM>> GetAll()
+        {
+            var results = await _uow.Users.GetAll(users => users.Include(users => users.Purchases));
+
+            var models = results.Select(users => new APUserListVM
+            {
+                Id = users.Id,
+                FullName = users.FirstName + " " + users.LastName,
+                City = users.City,
+                Email = users.Email,
+                TotalActive = users.Listings != null ? users.Listings.Where(i => i.UserId == users.Id && i.Status == "Active").Count() : 0,
+                TotalPurchases = users.Purchases != null ? users.Purchases.Where(i => i.BuyerID == users.Id && i.Status == "Sold").Count() : 0
+            }).ToList();
+            return models;
+        }
         public async Task Delete(string id)
         {
             var entity = await _uow.Users.GetById(id);
             _uow.Users.Delete(entity);
             await _uow.SaveAsync();
         }
+        public async Task SoftDelete(string id)
+        {
+            var entity = await _uow.Users.GetById(id);
+            entity.IsDeleted = true;
+            _uow.Users.Update(entity);
+            await _uow.SaveAsync();
+        }
+        public async Task BlockUser(string id)
+        {
+            var entity = await _uow.Users.GetById(id);
+            entity.IsBlocked = true;
+            _uow.Users.Update(entity);
+            await _uow.SaveAsync();
+        }
+        public async Task UnblockUser(string id)
+        {
+            var entity = await _uow.Users.GetById(id);
+            entity.IsBlocked=false;
+            _uow.Users.Update(entity);
+            await _uow.SaveAsync();
+        }
+
     }
 }
