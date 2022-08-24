@@ -31,22 +31,22 @@ namespace MarketPlaceForYou.Api.Controllers
         ///// </summary>
         ///// <param name="src"></param>
         ///// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> WelcomeEmail()
-        {
+        //[HttpPost]
+        //public async Task<ActionResult> WelcomeEmail()
+        //{
             
-            try
-            {
-                var email = User.Identity.Name;
-                var results = await _emailService.WelcomeEmail(email);
-                // Return a 200 response
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
-            }
-        }
+        //    try
+        //    {
+        //        var email = User.Identity.Name;
+        //        var results = await _emailService.WelcomeEmail(email);
+        //        // Return a 200 response
+        //        return Ok(results);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+        //    }
+        //}
 
     }
 }

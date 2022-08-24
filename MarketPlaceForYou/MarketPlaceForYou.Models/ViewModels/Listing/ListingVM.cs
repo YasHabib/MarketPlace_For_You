@@ -25,7 +25,7 @@ public class ListingVM
         Address = listInfo.Address;
         City = listInfo.City;
         Created = listInfo.Created;
-        UserId = listInfo.UserId;
+        //UserId = listInfo.UserId;
         Status = listInfo.Status;
         UserFullName = listInfo.User == null ? null : listInfo.User.FirstName + " " + listInfo.User.LastName;
         UploadUrls = listInfo.Uploads.Select(i => i.Url).ToList();
@@ -52,7 +52,7 @@ public class ListingVM
     public string Category { get; set; } = string.Empty;
 
     /// <summary>
-    /// Listing Condition (My condition is bad from all the commenting)
+    /// Listing Condition
     /// </summary>
     public string Condition { get; set; } = string.Empty;
 
@@ -79,20 +79,17 @@ public class ListingVM
     /// <summary>
     /// User id of the person who created it
     /// </summary>
-    public string UserId { get; set; }
+    public string UserId { get; set; } = string.Empty;
 
     /// <summary>
     /// Listing status
     /// </summary>
-    public string? Status { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
 
-    ///<summary>
-    /// Viewing images
+    /// <summary>
+    /// User's full name
     /// </summary>
-    //public ICollection<Entities.Upload> Uploads { get; set; }
-
-    //public List<string> ImageUrls { get; set; }
-    public string? UserFullName { get; set; }
+    public string UserFullName { get; set; } = string.Empty;
     /// <summary>
     /// Image URLs
     /// </summary>

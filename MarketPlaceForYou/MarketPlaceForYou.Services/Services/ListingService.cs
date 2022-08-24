@@ -12,6 +12,7 @@ using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
@@ -183,7 +184,7 @@ namespace MarketPlaceForYou.Services.Services
 
         public async Task<ListingVM> RequestPurchase(ListingPurchaseVM src, string buyerId)
         {
-            var entity = await _uow.Listings.GetById(src.Id, items => items.Include(items => items.User));
+            var entity = await _uow.Listings.GetById(src.Id, items => items.Include(items => items.User).Include(items => items.Uploads));
             entity.BuyerID = buyerId;
             entity.Status = "Pending";
             _uow.Listings.Update(entity);
@@ -195,7 +196,7 @@ namespace MarketPlaceForYou.Services.Services
         //Question on this
         public async Task<ListingVM> ConfirmPurchase(ListingPurchaseVM src)
         {
-            var entity = await _uow.Listings.GetById(src.Id, items => items.Include(items => items.User));
+            var entity = await _uow.Listings.GetById(src.Id, items => items.Include(items => items.User).Include(items => items.Uploads));
             entity.Purchased = DateTime.UtcNow;
             entity.Status = "Sold";
 
@@ -207,7 +208,7 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task<ListingVM> CancelPurchase(ListingPurchaseVM src)
         {
-            var entity = await _uow.Listings.GetById(src.Id, items => items.Include(items => items.User));
+            var entity = await _uow.Listings.GetById(src.Id, items => items.Include(items => items.User).Include(items => items.Uploads));
 
             entity.BuyerID = null;
             entity.Status = "Active";
@@ -220,7 +221,7 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task Delete(Guid id)
         {
-            var entity = await _uow.Listings.GetById(id, items => items.Include(items => items.User));
+            var entity = await _uow.Listings.GetById(id, items => items.Include(items => items.User).Include(items => items.Uploads));
             _uow.Listings.Delete(entity);
             await _uow.SaveAsync();
         }
