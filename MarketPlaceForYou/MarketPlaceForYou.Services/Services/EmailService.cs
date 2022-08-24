@@ -24,15 +24,15 @@ namespace MarketPlaceForYou.Services.Services
             //_uow = uow;
         }   
 
-        public async Task WelcomeEmail(UserAddVM src)
+        public async Task WelcomeEmail(string email, string firstName, string lastName)
         {
             var apiKey = _configuration.GetValue<string>("SendGridAPIKey"); //gives back a 200 but no welcome email.
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("no-reply@markteforyou.com", "Market For You");
+            var from = new EmailAddress("yasin+mktfy@vogcalgaryappdeveloper.com", "Market For You");
             var subject = "Welcome to Market For You";
-            string fullName = src.FirstName + " " + src.LastName;
-            var to = new EmailAddress(src.Email, fullName);
-            var plainTextContent = "and easy to do anywhere, even with C#";
+            var fullName = firstName + " " + lastName;
+            var to = new EmailAddress(email, fullName);
+            var plainTextContent = "Welcome to Market for you, start by creating a listing and check out what others are selling!";
             var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);

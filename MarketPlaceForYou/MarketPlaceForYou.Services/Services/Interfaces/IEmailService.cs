@@ -9,6 +9,6 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
 {
     public interface IEmailService
     {
-        Task WelcomeEmail(UserAddVM src);
+        Task WelcomeEmail(string email, string firstName, string lastName);
     }
 }

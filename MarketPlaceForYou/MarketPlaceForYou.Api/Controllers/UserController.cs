@@ -20,15 +20,18 @@ namespace MarketPlaceForYou.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        //private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
+
         /// <summary>
         /// Controller for user
         /// </summary>
         /// <param name="userService"></param>
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IEmailService emailService)
         {
             _userService = userService;
+            _emailService = emailService;
             //_configuration = configuration;
+
         }
         
         /// <summary>
@@ -46,13 +49,14 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 // Have the service create the new user
                 var result = await _userService.Create(src);
-
+                //Sending the welcome email
+                await _emailService.WelcomeEmail(src.Email, src.FirstName, src.LastName);
                 // Return a 200 response with the userVM
                 return Ok(result);
             }
             catch (DbUpdateException)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An user with this email already exists" });
             }
             catch (Exception ex)
             {
