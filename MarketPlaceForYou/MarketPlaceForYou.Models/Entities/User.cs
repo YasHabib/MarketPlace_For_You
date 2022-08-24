@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.ViewModels;
+﻿using MarketPlaceForYou.Models.Entities.Interfaces;
+using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.User;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,7 @@ namespace MarketPlaceForYou.Models.Entities
 {/// <summary>
 /// User entity
 /// </summary>
-    public class User : BaseEntity<string>
+    public class User : BaseEntity<string>, ISoftDeleted
     {/// <summary>
     /// Empty constructor
     /// </summary>

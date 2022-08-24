@@ -1,10 +1,13 @@
 ﻿using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.Entities.Interfaces;
 using MarketPlaceForYou.Repositories.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,6 +31,12 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
         public async Task<TEntity> GetById(TId id, Func<IQueryable<TEntity>,IQueryable<TEntity>>? queryFunction = null)
         {
+            if (typeof(TEntity).GetInterfaces().Contains(typeof(ISoftDeleted)) && (id as ISoftDeleted).IsDeleted == true)
+            {
+
+            }
+
+
             TEntity? result;
             if (queryFunction == null)
                 result = await _entityDbSet.FirstOrDefaultAsync(i => i.Id.Equals(id));

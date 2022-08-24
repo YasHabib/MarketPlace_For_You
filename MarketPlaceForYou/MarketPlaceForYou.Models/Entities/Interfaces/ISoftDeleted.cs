@@ -10,6 +10,9 @@ namespace MarketPlaceForYou.Models.Entities.Interfaces
 /// </summary>
     public interface ISoftDeleted
     {
-
+        /// <summary>
+        /// Generic interface for implementing soft delete
+        /// </summary>
+      public bool IsDeleted { get; set; }
     }
 }
