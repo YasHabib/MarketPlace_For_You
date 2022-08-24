@@ -1,4 +1,6 @@
-﻿using MarketPlaceForYou.Models.ViewModels;
+﻿using MarketPlaceForYou.Api.Helpers;
+using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.User;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -29,21 +31,22 @@ namespace MarketPlaceForYou.Api.Controllers
         ///// </summary>
         ///// <param name="src"></param>
         ///// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult> WelcomeEmail([FromBody] string email)
-        //{
-        //    try
-        //    {
-        //        var results = await _emailService.WelcomeEmail(email);
-        //        //"Welcome to MarketForYou", "<p>Now buy stuff" + DateTime.Now + "</p>"
-        //        // Return a 200 response
-        //        return Ok(results);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
-        //    }
-        //}
+        [HttpPost]
+        public async Task<ActionResult> WelcomeEmail()
+        {
+            
+            try
+            {
+                var email = User.Identity.Name;
+                var results = await _emailService.WelcomeEmail(email);
+                // Return a 200 response
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
 
     }
 }
