@@ -39,20 +39,9 @@ namespace MarketPlaceForYou.Repositories.Repositories
                 query = query.Where(i => i.Category == category);
             if (condition != null)
                 query = query.Where(i => i.Condition == condition);
-            if (minPrice != 0 && maxPrice != 0)
+            if (minPrice >= 0 && maxPrice != 0)
                 query = query.Where(i => (minPrice <= i.Price && i.Price <= maxPrice));
             return query.ToList();
         }
-
-        //public async Task<List<Listing>> Deals(string userid, Func<IQueryable<Listing>, IQueryable<Listing>>? queryFunction = null)
-        //{
-        //    List<Listing> listings;
-        //    if (queryFunction == null)
-        //        listings = await _entityDbSet.ToListAsync();
-        //    else
-        //        listings = await queryFunction(_entityDbSet).ToListAsync();
-
-        //    var query = _context.Listings.Where(i => i.UserId != userid && i.Status == "Active").Include(i => i.User).Include(i => i.Uploads).AsQueryable();
-        //}
     }
 }

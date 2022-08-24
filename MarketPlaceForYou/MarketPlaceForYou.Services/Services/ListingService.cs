@@ -151,7 +151,7 @@ namespace MarketPlaceForYou.Services.Services
             }
 
             var results = await _uow.Listings.SearchWithFilters(userid, searchString, city, category, condition, minPrice, maxPrice);
-            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            var models = results.Select(listing => new ListingVM(listing)).OrderBy(i => i.Price).ToList();
             return models;
         }
 
