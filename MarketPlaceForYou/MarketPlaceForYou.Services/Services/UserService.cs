@@ -38,7 +38,7 @@ namespace MarketPlaceForYou.Services.Services
 
             var apiKey = _configuration.GetValue<string>("SendGridAPIKey"); //gives back a 200 but no welcome email.
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("yasin_habib@outlook.com", "Market For You");
+            var from = new EmailAddress("no-reply@markteforyou.com", "Market For You");
             var subject = "Welcome to Market For You";
             string fullName = src.FirstName + " " + src.LastName;
             var to = new EmailAddress(src.Email, fullName);

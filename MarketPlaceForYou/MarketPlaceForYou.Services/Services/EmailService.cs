@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Repositories;
+﻿using MarketPlaceForYou.Models.ViewModels.User;
+using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using SendGrid;
@@ -23,14 +24,15 @@ namespace MarketPlaceForYou.Services.Services
             //_uow = uow;
         }   
 
-        public async Task SendEmail(string toEmail)
+        public async Task WelcomeEmail(UserAddVM src)
         {
-            var apiKey = _configuration.GetValue<string>("SendGridAPIKey");
+            var apiKey = _configuration.GetValue<string>("SendGridAPIKey"); //gives back a 200 but no welcome email.
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("test@demo.com", "MarketForYou");
-            var to = new EmailAddress(toEmail, "Example User");
-            var subject = "Sending with SendGrid is Fun";
-            var plainTextContent = "<p>Now buy something...NOW" + DateTime.Now + ".</p><p>Did you buuy anything yet?</p>";
+            var from = new EmailAddress("no-reply@markteforyou.com", "Market For You");
+            var subject = "Welcome to Market For You";
+            string fullName = src.FirstName + " " + src.LastName;
+            var to = new EmailAddress(src.Email, fullName);
+            var plainTextContent = "and easy to do anywhere, even with C#";
             var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
