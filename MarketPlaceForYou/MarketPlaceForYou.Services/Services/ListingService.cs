@@ -1,7 +1,6 @@
 ﻿using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.Listing;
-using MarketPlaceForYou.Models.ViewModels.SearchInput;
 using MarketPlaceForYou.Models.ViewModels.Upload;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Repositories.Migrations;
@@ -124,6 +123,16 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task<List<ListingVM>> Search(string searchString, string userid)
         {
+            //Saving the search result
+            var save = new SearchInput(searchString, userid);
+
+            if (searchString != null)
+            {
+                _uow.SearchInputs.Create(save);
+                save.SearchedDate = DateTime.UtcNow;
+                await _uow.SaveAsync();
+            }
+
             var results = await _uow.Listings.GetAll(items => items.Where(items => (items.Description.ToLower().Contains(searchString.ToLower()) || items.ProdName.ToLower().Contains(searchString.ToLower())) && items.UserId != userid).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
@@ -131,6 +140,16 @@ namespace MarketPlaceForYou.Services.Services
         //Search with filters
         public async Task<List<ListingVM>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0)
         {
+            //Saving the search result
+            var save = new SearchInput(searchString, userid);
+
+            if (searchString != null)
+            {
+                _uow.SearchInputs.Create(save);
+                save.SearchedDate = DateTime.UtcNow;
+                await _uow.SaveAsync();
+            }
+
             var results = await _uow.Listings.SearchWithFilters(userid, searchString, city, category, condition, minPrice, maxPrice);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;

@@ -104,10 +104,5 @@ namespace MarketPlaceForYou.Models.Entities
         [ForeignKey("BuyerID")]
         public ICollection<Listing>? Purchases { get; set; }
 
-        /// <summary>
-        /// List of strings user has searched
-        /// </summary>
-        //public ICollection<SearchInput> SearchInput { get; set; }
-
     }
 }

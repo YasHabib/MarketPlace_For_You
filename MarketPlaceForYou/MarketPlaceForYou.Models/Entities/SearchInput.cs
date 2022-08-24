@@ -1,5 +1,4 @@
-﻿using MarketPlaceForYou.Models.ViewModels.SearchInput;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,11 +18,11 @@ namespace MarketPlaceForYou.Models.Entities
     /// <summary>
     /// Constructor to add a search string
     /// </summary>
-    /// <param name="src"></param>
+    /// <param name="searchString"></param>
     /// <param name="userId"></param>
-        public SearchInput(SearchInputAddVM src, string userId)
+        public SearchInput(string searchString, string userId)
         {
-            SearchString = src.SearchString;
+            SearchString = searchString;
             UserId = userId;
         }
 
@@ -44,9 +43,5 @@ namespace MarketPlaceForYou.Models.Entities
         //foreign key
         public string UserId { get; set; }
 
-        ///// <summary>
-        ///// Settings relationship with user table
-        ///// </summary>
-        //public User? User { get; set; }
     }
 }

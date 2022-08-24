@@ -1,6 +1,5 @@
 ﻿using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.ViewModels.Listing;
-using MarketPlaceForYou.Models.ViewModels.SearchInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;
