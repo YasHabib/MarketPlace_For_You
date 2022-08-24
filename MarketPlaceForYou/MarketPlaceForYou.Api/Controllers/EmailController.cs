@@ -26,11 +26,11 @@ namespace MarketPlaceForYou.Api.Controllers
             _userService = userService;
             _emailService = emailService;
         }
-        ///// <summary>
-        ///// Sending an email
-        ///// </summary>
-        ///// <param name="src"></param>
-        ///// <returns></returns>
+        /// <summary>
+        /// Sending an email
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns></returns>
         //[HttpPost]
         //public async Task<ActionResult> WelcomeEmail()
         //{

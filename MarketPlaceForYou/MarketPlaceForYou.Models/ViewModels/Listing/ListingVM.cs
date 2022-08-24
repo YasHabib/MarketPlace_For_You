@@ -25,7 +25,7 @@ public class ListingVM
         Address = listInfo.Address;
         City = listInfo.City;
         Created = listInfo.Created;
-        //UserId = listInfo.UserId;
+        UserId = listInfo.UserId;
         Status = listInfo.Status;
         UserFullName = listInfo.User == null ? null : listInfo.User.FirstName + " " + listInfo.User.LastName;
         UploadUrls = listInfo.Uploads.Select(i => i.Url).ToList();
