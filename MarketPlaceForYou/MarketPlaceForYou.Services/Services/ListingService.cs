@@ -1,13 +1,20 @@
 ﻿using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Models.ViewModels.Upload;
 using MarketPlaceForYou.Repositories;
+using MarketPlaceForYou.Repositories.Migrations;
 using MarketPlaceForYou.Services.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.Replication;
 using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,12 +76,37 @@ namespace MarketPlaceForYou.Services.Services
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
-        //needs work*************
         public async Task<List<ListingVM>> Deals(string userid)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid).Include(items => items.Uploads));
-            var models = results.Select(listing => new ListingVM(listing)).ToList();
+            //Listing searchResults;
+            var list = new List<Listing>();
+
+            //Grabbing the last 3 searches
+            var search = await _uow.SearchInputs.GetAll(items => items.Where(i => i.UserId == userid).OrderByDescending(i => i.SearchedDate).Take(3));
+
+            //Default view if there are no search result stored/saved
+            if (search.Count() == 0)
+            {
+                list = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid && items.Status == "Active")
+                                                                   .Include(items => items.Uploads).Include(items => items.User)
+                                                                   .Take(16));
+            }
+            //Looping through each search strings
+            else if (search.Count() != 0)
+            {
+                foreach (var searchInput in search)
+                {
+                    var searchResults = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid && items.Status == "Active" &&
+                                                                       (items.ProdName.ToLower().Contains(searchInput.SearchString.ToLower()) || items.Description.ToLower().Contains(searchInput.SearchString.ToLower())))
+                                                                       .Include(items => items.Uploads).Include(items => items.User)
+                                                                       .Take(16));
+                    list.AddRange(searchResults);
+                }
+            }
+
+            var models = list.Select(listing => new ListingVM(listing)).DistinctBy(i => i.Id).OrderBy(i => i.Price).ToList();
             return models;
+
         }
         //Search and filter
         public async Task<List<ListingVM>> GetAllByCity(string city, string userid)
@@ -91,6 +123,16 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task<List<ListingVM>> Search(string searchString, string userid)
         {
+            //Saving the search result
+            var save = new SearchInput(searchString, userid);
+
+            if (searchString != null)
+            {
+                _uow.SearchInputs.Create(save);
+                save.SearchedDate = DateTime.UtcNow;
+                await _uow.SaveAsync();
+            }
+
             var results = await _uow.Listings.GetAll(items => items.Where(items => (items.Description.ToLower().Contains(searchString.ToLower()) || items.ProdName.ToLower().Contains(searchString.ToLower())) && items.UserId != userid).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
@@ -98,7 +140,17 @@ namespace MarketPlaceForYou.Services.Services
         //Search with filters
         public async Task<List<ListingVM>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0)
         {
-            var results = await _uow.Listings.SearchWithFilters(userid, searchString, city, category, condition, minPrice, maxPrice, items => items.Include(items => items.User).Include(items => items.Uploads));
+            //Saving the search result
+            var save = new SearchInput(searchString, userid);
+
+            if (searchString != null)
+            {
+                _uow.SearchInputs.Create(save);
+                save.SearchedDate = DateTime.UtcNow;
+                await _uow.SaveAsync();
+            }
+
+            var results = await _uow.Listings.SearchWithFilters(userid, searchString, city, category, condition, minPrice, maxPrice);
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }

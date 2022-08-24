@@ -1,5 +1,6 @@
 ﻿using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Repositories.Repositories.Interfaces;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
             else
                 listings = await queryFunction(_entityDbSet).ToListAsync();
 
-            var query = _context.Listings.Where(i => i.UserId != userid).Include(i => i.User).AsQueryable();
+            var query = _context.Listings.Where(i => i.UserId != userid && i.Status == "Active").Include(i => i.User).Include(i => i.Uploads).AsQueryable();
 
             if (!string.IsNullOrEmpty(searchString))
                 query = query.Where(i => (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())));
@@ -40,9 +41,18 @@ namespace MarketPlaceForYou.Repositories.Repositories
                 query = query.Where(i => i.Condition == condition);
             if (minPrice != 0 && maxPrice != 0)
                 query = query.Where(i => (minPrice <= i.Price && i.Price <= maxPrice));
-
-            var results = await query.ToListAsync();
-            return results;
+            return query.ToList();
         }
+
+        //public async Task<List<Listing>> Deals(string userid, Func<IQueryable<Listing>, IQueryable<Listing>>? queryFunction = null)
+        //{
+        //    List<Listing> listings;
+        //    if (queryFunction == null)
+        //        listings = await _entityDbSet.ToListAsync();
+        //    else
+        //        listings = await queryFunction(_entityDbSet).ToListAsync();
+
+        //    var query = _context.Listings.Where(i => i.UserId != userid && i.Status == "Active").Include(i => i.User).Include(i => i.Uploads).AsQueryable();
+        //}
     }
 }

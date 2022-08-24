@@ -3,6 +3,7 @@ using System;
 using MarketPlaceForYou.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlaceForYou.Repositories.Migrations
 {
     [DbContext(typeof(MKPFYDbContext))]
-    partial class MKPFYDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220717185332_AddedSearchTable")]
+    partial class AddedSearchTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,7 +76,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .HasColumnType("text");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("money");
+                        .HasColumnType("numeric");
 
                     b.Property<string>("ProdName")
                         .IsRequired()
@@ -128,16 +130,11 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ListingId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ListingId");
 
                     b.ToTable("Uploads");
                 });
@@ -164,12 +161,6 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
-
-                    b.Property<bool>("IsBlocked")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -205,25 +196,13 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                    modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Upload", b =>
-                        {
-                            b.HasOne("MarketPlaceForYou.Models.Entities.Listing", null)
-                                .WithMany("Uploads")
-                                .HasForeignKey("ListingId");
-                        });
-
-                    modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>
-                        {
-                            b.Navigation("Uploads");
-                        });
-
-                    modelBuilder.Entity("MarketPlaceForYou.Models.Entities.User", b =>
-                        {
-                            b.Navigation("Listings");
-                        });
-                    //#pragma warning restore 612, 618
                 });
+
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.User", b =>
+                {
+                    b.Navigation("Listings");
+                });
+#pragma warning restore 612, 618
         }
     }
 }
-

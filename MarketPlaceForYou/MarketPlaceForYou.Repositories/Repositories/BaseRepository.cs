@@ -20,7 +20,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
         {
             _entityDbSet = context.Set<TEntity>();
         }
-        public void Create(TEntity entity)
+        public void Create(TEntity entity, Func<IQueryable<TEntity>, IQueryable<TEntity>>? queryFunction = null)
         {
             if(typeof(TEntity).GetInterfaces().Contains(typeof(IDated)))
                 (entity as IDated).Created = DateTime.UtcNow;

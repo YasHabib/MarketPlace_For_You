@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.ViewModels.Listing;
+﻿using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Models.ViewModels.Listing;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -11,8 +11,6 @@ namespace MarketPlaceForYou.Repositories.Repositories.Interfaces
     {
         Task<List<Listing>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0,
                                                Func<IQueryable<Listing>, IQueryable<Listing>>? queryFunction = null);
-
-        //Admin Panel
-
+        //Task<List<Listing>> Deals(string userid, Func<IQueryable<Listing>, IQueryable<Listing>>? queryFunction = null);
     }
 }

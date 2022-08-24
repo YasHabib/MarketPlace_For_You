@@ -9,13 +9,11 @@ using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Repositories.Repositories
 {
-    public class UserRepository : BaseRepository<User, string, MKPFYDbContext>, IUserRepository
+    public class SearchInputRepository : BaseRepository<SearchInput, Guid, MKPFYDbContext>, ISearchInputRepository
     {
-        private readonly MKPFYDbContext _context;
-        public UserRepository(MKPFYDbContext context)
+        public SearchInputRepository(MKPFYDbContext context)
             : base(context)
         {
-            _context = context;
         }
     }
 }

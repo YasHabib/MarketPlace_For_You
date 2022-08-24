@@ -15,14 +15,5 @@ namespace MarketPlaceForYou.Repositories.Repositories
             : base(context)
         {
         }
-        //public async Task<List<Upload>> GetAll(Func<IQueryable<Upload>, IQueryable<Upload>>? queryFunction)
-        //{
-        //    List<Upload> results;
-        //    if (queryFunction == null)
-        //        results = await _context.Uploads.ToListAsync();
-        //    else
-        //        results = await queryFunction(_context.Uploads).ToListAsync();
-        //    return results;
-        //}
     }
 }

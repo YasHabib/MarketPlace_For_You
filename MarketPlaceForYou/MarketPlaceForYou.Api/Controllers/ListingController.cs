@@ -1,4 +1,5 @@
 ﻿using MarketPlaceForYou.Api.Helpers;
+using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -42,9 +43,7 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
                     return BadRequest("Invalid Request");
-                }
 
                 // Have the service create the new Listing
                 var result = await _listingService.Create(data, userId);
@@ -140,9 +139,8 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
-                    return BadRequest("Invalid Request");
-                }
+                     return BadRequest("Invalid Request");
+
                 // Get the listing entities from the service
                 var results = await _listingService.GetAllByCategory(category, userId);
 
@@ -170,9 +168,7 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
                     return BadRequest("Invalid Request");
-                }
                 // Get the listing entities from the service
                 var results = await _listingService.Search(searchString, userId);
 
@@ -202,13 +198,9 @@ namespace MarketPlaceForYou.Api.Controllers
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
                     return BadRequest("Invalid Request");
-                }
-                //else if (minPrice > maxPrice)
-                //{
-                //    return BadRequest("Invalid Price input");
-                //}
+                if (minPrice > maxPrice)
+                    return BadRequest("Invalid Price");
                 // Get the listing entities from the service
                 var results = await _listingService.SearchWithFilters(userId, searchString, city, category, condition, minPrice, maxPrice);
 
@@ -254,14 +246,14 @@ namespace MarketPlaceForYou.Api.Controllers
         [HttpGet("deals")]
         public async Task<ActionResult<List<ListingVM>>> Deals()
         {
-
+            //    "message": "An exception was thrown while attempting to evaluate a LINQ query parameter expression.
+            //    See the inner exception for more information. To show additional information call 'DbContextOptionsBuilder.EnableSensitiveDataLogging'."
             try
             {
                 var userId = User.GetId();
                 if (userId == null)
-                {
                     return BadRequest("Invalid Request");
-                }
+
                 // Get the listing entities from the service
                 var results = await _listingService.Deals(userId);
 
