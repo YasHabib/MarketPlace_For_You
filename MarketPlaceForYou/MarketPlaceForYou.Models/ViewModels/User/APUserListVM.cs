@@ -49,10 +49,10 @@ namespace MarketPlaceForYou.Models.ViewModels.User
         /// <summary>
         /// # of active listings
         /// </summary>
-        public int? TotalActive { get; set; }
+        public int TotalActive { get; set; }
         /// <summary>
         /// # of purchased listing
         /// </summary>
-        public decimal? TotalPurchases { get; set; }
+        public decimal TotalPurchases { get; set; }
     }
 }

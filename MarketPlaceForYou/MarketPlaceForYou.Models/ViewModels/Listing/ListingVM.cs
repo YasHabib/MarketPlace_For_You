@@ -84,7 +84,7 @@ public class ListingVM
     /// <summary>
     /// Listing status
     /// </summary>
-    public string? Status { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
 
     ///<summary>
     /// Viewing images
@@ -92,9 +92,11 @@ public class ListingVM
     //public ICollection<Entities.Upload> Uploads { get; set; }
 
     //public List<string> ImageUrls { get; set; }
-    public string? UserFullName { get; set; }
+    public string UserFullName { get; set; } = string.Empty;
     /// <summary>
     /// Image URLs
     /// </summary>
     public ICollection<string> UploadUrls { get; set; }
+
+    //public int TotalActiveListings { get; set; }
 }

@@ -22,12 +22,10 @@ namespace MarketPlaceForYou.Services.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _uow;
-        private readonly IConfiguration _configuration;
 
         public UserService(IUnitOfWork uow, IConfiguration configuration)
         {
             _uow = uow;
-            _configuration = configuration;
         }
 
         public async Task<UserVM> Create(UserAddVM src)
@@ -35,17 +33,6 @@ namespace MarketPlaceForYou.Services.Services
             var newEntity = new User(src);
             _uow.Users.Create(newEntity);
             await _uow.SaveAsync();
-
-            //var apiKey = _configuration.GetValue<string>("SendGridAPIKey"); //gives back a 200 but no welcome email.
-            //var client = new SendGridClient(apiKey);
-            //var from = new EmailAddress("yasin+mktfy@vogcalgaryappdeveloper.com", "Market For You");
-            //var subject = "Welcome to Market For You";
-            //string fullName = src.FirstName + " " + src.LastName;
-            //var to = new EmailAddress(src.Email, fullName);
-            //var plainTextContent = "and easy to do anywhere, even with C#";
-            //var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-            //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            //var response = await client.SendEmailAsync(msg);
 
             var model = new UserVM(newEntity);
             return model;
@@ -87,7 +74,7 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task<List<APUserListVM>> GetAll()
         {
-            var results = await _uow.Users.GetAll(users => users.Include(users => users.Purchases));
+            var results = await _uow.Users.GetAll(users => users.Include(users => users.Purchases).Include(users => users.Listings));
 
             var models = results.Select(users => new APUserListVM
             {

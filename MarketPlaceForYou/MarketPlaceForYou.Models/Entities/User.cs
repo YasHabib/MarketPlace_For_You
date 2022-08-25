@@ -83,26 +83,26 @@ namespace MarketPlaceForYou.Models.Entities
         [Required]
         public string City { get; set; } = string.Empty;
 
-        //public int NumOfPurchases
         /// <summary>
         /// Soft deleting an entity,
         /// </summary>
         public bool IsDeleted { get; set; }
+
         /// <summary>
         /// If the user is blocked or not
         /// </summary>
         public bool IsBlocked { get; set; }
-        //listing the user has created
+
         /// <summary>
         ///A collection of listing
         /// </summary>
         [ForeignKey("UserId")]
-        public ICollection<Listing>? Listings { get; set; }
+        public ICollection<Listing> Listings { get; set; }
         /// <summary>
         /// Total purchases of the user
         /// </summary>
         [ForeignKey("BuyerID")]
-        public ICollection<Listing>? Purchases { get; set; }
+        public ICollection<Listing> Purchases { get; set; }
 
     }
 }
