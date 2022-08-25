@@ -48,6 +48,7 @@ namespace MarketPlaceForYou.Models.Entities
         [Required]
         //foreign key
         public string UserId { get; set; } //naming convention (EntityNameId)
+
         /// <summary>
         /// Settings relationship with user table
         /// </summary>

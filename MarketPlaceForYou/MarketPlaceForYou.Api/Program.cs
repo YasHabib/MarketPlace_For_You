@@ -84,6 +84,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IFAQService, FAQService>();
     builder.Services.AddScoped<IUploadService, UploadService>();
     builder.Services.AddScoped<IEmailService, EmailService>();
+    builder.Services.AddScoped<IWebNotificationService, WebNotificationService>();
 }
 
 

@@ -94,4 +94,6 @@ public class ListingVM
     /// Image URLs
     /// </summary>
     public ICollection<string> UploadUrls { get; set; }
+
+    //public int TotalActiveListings { get; set; }
 }

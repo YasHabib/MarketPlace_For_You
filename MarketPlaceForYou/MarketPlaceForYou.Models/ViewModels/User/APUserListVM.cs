@@ -11,22 +11,6 @@ namespace MarketPlaceForYou.Models.ViewModels.User
 /// </summary>
     public class APUserListVM
     {
-        ///// <summary>
-        ///// User view model when admin is looking at user's list
-        ///// </summary>
-        ///// <param name="src"></param>
-        //public APUserListVM(Entities.User src)
-        //{
-        //    Id = src.Id;
-        //    FullName = src.FirstName + " " + src.LastName;
-        //    Email = src.Email;
-        //    City = src.City;
-        //    //Getting total user's active listing
-        //    TotalActive = src.Listings.Where(i => i.UserId == src.Id && i.Status == "Active").Count();
-        //    //Getting all the items user has purchased
-        //    //TotalPurchases = src.Listings.Where(i => i.BuyerID == src.Id && i.Status == "Sold").Count();
-        //    TotalPurchases = src.TotalPurchased;
-        //}
         /// <summary>
         /// User id (auth)
         /// </summary>
@@ -49,10 +33,10 @@ namespace MarketPlaceForYou.Models.ViewModels.User
         /// <summary>
         /// # of active listings
         /// </summary>
-        public int? TotalActive { get; set; }
+        public int TotalActive { get; set; }
         /// <summary>
         /// # of purchased listing
         /// </summary>
-        public decimal? TotalPurchases { get; set; }
+        public decimal TotalPurchases { get; set; }
     }
 }
