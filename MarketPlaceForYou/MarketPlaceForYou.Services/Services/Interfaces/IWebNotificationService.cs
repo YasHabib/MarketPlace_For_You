@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketPlaceForYou.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
     {
         Task<int> PendingListingCount(string userId);
         //Task<int> ActiveListingCount();
-        //Task<string> WelcomeNotification(string userId);
+        InAppNotificationVM WelcomeNotification(string firstname, DateTime sentDate);
+
+        InAppNotificationVM Create1stOffer(DateTime sentDate);
     }
 }

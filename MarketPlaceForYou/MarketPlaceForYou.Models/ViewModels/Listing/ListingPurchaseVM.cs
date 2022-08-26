@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
 /// </summary>
     public class ListingPurchaseVM
     {
+        //public ListingPurchaseVM(Entities.Listing src)
+        //{
+        //    Id = src.Id;
+
+        //}
         /// <summary>
         /// Listing id
         /// </summary>

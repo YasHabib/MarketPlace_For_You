@@ -21,16 +21,17 @@ namespace MarketPlaceForYou.Api.Controllers
     {
         private readonly IUserService _userService;
         private readonly IEmailService _emailService;
+        private readonly IWebNotificationService _webNotificationService;
 
         /// <summary>
         /// Controller for user
         /// </summary>
         /// <param name="userService"></param>
-        public UserController(IUserService userService, IEmailService emailService)
+        public UserController(IUserService userService, IEmailService emailService, IWebNotificationService webNotificationService)
         {
             _userService = userService;
             _emailService = emailService;
-            //_configuration = configuration;
+            _webNotificationService = webNotificationService;
 
         }
         
@@ -51,6 +52,10 @@ namespace MarketPlaceForYou.Api.Controllers
                 var result = await _userService.Create(src);
                 //Sending the welcome email
                 await _emailService.WelcomeEmail(src.Email, src.FirstName, src.LastName);
+                //Sending the inapp welcome notification
+                _webNotificationService.WelcomeNotification(src.FirstName, src.Created);
+                //Sending in-app notification to create their 1st offer
+                _webNotificationService.Create1stOffer(src.Created);
                 // Return a 200 response with the userVM
                 return Ok(result);
             }

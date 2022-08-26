@@ -61,5 +61,6 @@ namespace MarketPlaceForYou.Models.ViewModels
         /// user's city
         /// </summary>
         public string City { get; set; } = string.Empty;
+
     }
 }

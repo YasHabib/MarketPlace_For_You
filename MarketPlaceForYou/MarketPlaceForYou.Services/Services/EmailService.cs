@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.ViewModels.User;
+﻿using MarketPlaceForYou.Models.ViewModels.Listing;
+using MarketPlaceForYou.Models.ViewModels.User;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,7 @@ namespace MarketPlaceForYou.Services.Services
 
         public async Task WelcomeEmail(string email, string firstName, string lastName)
         {
-            var apiKey = _configuration.GetValue<string>("SendGridAPIKey"); //gives back a 200 but no welcome email.
+            var apiKey = _configuration.GetValue<string>("SendGridAPIKey");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("yasin+mktfy@vogcalgaryappdeveloper.com", "Market For You");
             var subject = "Welcome to Market For You";
@@ -37,5 +38,18 @@ namespace MarketPlaceForYou.Services.Services
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
         }
+
+        //public async Task PendingListing(ListingPurchaseVM src)
+        //{
+        //    var apiKey = _configuration.GetValue<string>("SendGridAPIKey");
+        //    var client = new SendGridClient(apiKey);
+        //    var from = new EmailAddress("yasin+mktfy@vogcalgaryappdeveloper.com", "Market For You");
+        //    var subject = "You have a pending listing";
+        //    var to = new EmailAddress(email, sellerfullName);
+        //    var plainTextContent = "Hello " + sellerfullName + ", You have a pending listing from ";
+        //    var htmlContent = "<strong></strong>";
+        //    var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+        //    var response = await client.SendEmailAsync(msg);
+        //}
     }
 }

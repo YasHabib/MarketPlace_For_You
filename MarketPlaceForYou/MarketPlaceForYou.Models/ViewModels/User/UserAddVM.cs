@@ -52,5 +52,11 @@ namespace MarketPlaceForYou.Models.ViewModels.User
         /// </summary>
         [Required]
         public string City { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Created date
+        /// </summary>
+        [Required]
+        public DateTime Created { get; set; }
     }
 }
