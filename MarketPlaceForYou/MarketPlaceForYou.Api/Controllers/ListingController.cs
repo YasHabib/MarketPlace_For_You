@@ -17,13 +17,15 @@ namespace MarketPlaceForYou.Api.Controllers
     public class ListingController : ControllerBase
     {
         private readonly IListingService _listingService;
+        private readonly IEmailService _emailService;
         /// <summary>
         /// Controller for listing
         /// </summary>
         /// <param name="listingService"></param>
-        public ListingController(IListingService listingService)
+        public ListingController(IListingService listingService, IEmailService emailservice)
         {
             _listingService = listingService;
+            _emailService = emailservice;
         }
 
         /// <summary>
@@ -420,6 +422,8 @@ namespace MarketPlaceForYou.Api.Controllers
                 }
                 // Update Listing entity from the service
                 var result = await _listingService.RequestPurchase(data, buyerId);
+                //sending the seller an email that they have an pending listing
+                //await _emailService.PendingListing(data);
 
                 // Return a 200 response with the ListingVM
                 return Ok(result);

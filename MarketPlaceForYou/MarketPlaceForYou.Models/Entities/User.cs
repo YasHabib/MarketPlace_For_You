@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.ViewModels;
+﻿using MarketPlaceForYou.Models.Entities.Interfaces;
+using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.User;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,7 @@ namespace MarketPlaceForYou.Models.Entities
 {/// <summary>
 /// User entity
 /// </summary>
-    public class User : BaseEntity<string>
+    public class User : BaseEntity<string>, IDated
     {/// <summary>
     /// Empty constructor
     /// </summary>
@@ -82,6 +83,12 @@ namespace MarketPlaceForYou.Models.Entities
         /// </summary>
         [Required]
         public string City { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Date the user has been created/added
+        /// </summary>
+        [Required]
+        public DateTime Created { get; set; }
 
         /// <summary>
         /// Soft deleting an entity,

@@ -28,6 +28,7 @@ public class ListingVM
         UserId = listInfo.UserId;
         Status = listInfo.Status;
         UserFullName = listInfo.User == null ? null : listInfo.User.FirstName + " " + listInfo.User.LastName;
+        //Email = listInfo.User == null ? null : listInfo.User.Email;
         UploadUrls = listInfo.Uploads.Select(i => i.Url).ToList();
     }
     
@@ -90,10 +91,14 @@ public class ListingVM
     /// User's full name
     /// </summary>
     public string UserFullName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Email of the lister
+    /// </summary>
+   // public string Email { get; set; } = string.Empty;
+
     /// <summary>
     /// Image URLs
     /// </summary>
     public ICollection<string> UploadUrls { get; set; }
-
-    //public int TotalActiveListings { get; set; }
 }
