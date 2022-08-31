@@ -8,11 +8,11 @@ namespace MarketPlaceForYou.Models.Entities.Interfaces
 {   /// <summary>
 /// Soft deleting a user
 /// </summary>
-    public interface ISoftDeleted
+    public interface IBlocked
     {
         /// <summary>
         /// Generic interface for implementing soft delete
         /// </summary>
-      public bool IsDeleted { get; set; }
+      public bool IsBlocked { get; set; }
     }
 }

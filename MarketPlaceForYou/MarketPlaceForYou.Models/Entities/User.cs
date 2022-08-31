@@ -15,7 +15,7 @@ namespace MarketPlaceForYou.Models.Entities
 {/// <summary>
 /// User entity
 /// </summary>
-    public class User : BaseEntity<string>, ISoftDeleted
+    public class User : BaseEntity<string>, IBlocked
     {/// <summary>
     /// Empty constructor
     /// </summary>
@@ -84,7 +84,6 @@ namespace MarketPlaceForYou.Models.Entities
         [Required]
         public string City { get; set; } = string.Empty;
 
-        //public int NumOfPurchases
         /// <summary>
         /// Soft deleting an entity,
         /// </summary>

@@ -1,3 +1,4 @@
+using MarketPlaceForYou.Api.Middleware;
 using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services;
@@ -107,11 +108,11 @@ void ConfigurePipeline(WebApplication app)
             c.SwaggerEndpoint("/swagger/v1/swagger.json", "MarketForYou V1");
         });
     }
-    //if(User.IsDeleted == false && User.IsBlocked == false)
-    //{
+
+    app.UseMiddleware<BlockUsers>();
     app.UseAuthentication();
-    //}
-    app.UseAuthorization(); //=is the user allowed to use the particular endpoint?
+    
+    app.UseAuthorization(); // means if the user allowed to use the particular endpoint?
     app.MapControllers();
 }
 

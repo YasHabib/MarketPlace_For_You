@@ -25,33 +25,36 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
         public void Create(TEntity entity, Func<IQueryable<TEntity>, IQueryable<TEntity>>? queryFunction = null)
         {
-            if(typeof(TEntity).GetInterfaces().Contains(typeof(IDated)))
+            if(ImplementsInterface<IDated>())
                 (entity as IDated).Created = DateTime.UtcNow;
             _entityDbSet.Add(entity);
         }
         public async Task<TEntity> GetById(TId id, Func<IQueryable<TEntity>,IQueryable<TEntity>>? queryFunction = null)
         {
-            if (typeof(TEntity).GetInterfaces().Contains(typeof(ISoftDeleted)) && (id as ISoftDeleted).IsDeleted == true)
-            {
-
-            }
-
 
             TEntity? result;
+            //if (ImplementsInterface<IBlocked>() && (id as IBlocked).IsBlocked == true)
+            //    result = null;
+
             if (queryFunction == null)
                 result = await _entityDbSet.FirstOrDefaultAsync(i => i.Id.Equals(id));
             else
                 result = await queryFunction(_entityDbSet).FirstOrDefaultAsync(i => i.Id.Equals(id));
             return result;
+
+
         }
         public async Task<List<TEntity>> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>>? queryFunction = null)
         {
             List<TEntity> results;
+            if (ImplementsInterface<IBlocked>() && (queryFunction as IBlocked).IsBlocked == true)
+                results = null;
             if (queryFunction == null)
                 results = await _entityDbSet.ToListAsync();
             else
                 results = await queryFunction(_entityDbSet).ToListAsync();
             return results;
+
         }
         public void Update(TEntity entity)
         {
