@@ -28,18 +28,21 @@ namespace MarketPlaceForYou.Services.Services
             return count;
         }
 
-        public InAppNotificationVM WelcomeNotification(string firstname, DateTime sentDate)
+        public async Task<InAppNotificationVM> WelcomeNotification(string userId)
         {
-            string welcome = "Hey " + firstname + ", welcome to MKTFY";
-            DateTime sent = sentDate.Date;
+            var user = await _uow.Users.GetById(userId);
+            string firstName = user.FirstName;
+            string welcome = "Hey " + firstName + ", welcome to MKTFY";
+            DateTime sent = user.Created.Date;
             var model = new InAppNotificationVM(welcome, sent);
             return model;
         }
-
-        public InAppNotificationVM Create1stOffer(DateTime sentDate)
+        
+        public async Task<InAppNotificationVM> Create1stOffer(string userId)
         {
             string welcome = "Let's create your 1st offer!";
-            DateTime sent = sentDate.Date;
+            var user = await _uow.Users.GetById(userId);
+            DateTime sent = user.Created.Date;
             var model = new InAppNotificationVM(welcome, sent);
             return model;
         }

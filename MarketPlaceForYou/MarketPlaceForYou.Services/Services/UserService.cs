@@ -28,6 +28,11 @@ namespace MarketPlaceForYou.Services.Services
             _uow = uow;
         }
 
+        //public async Task<UserVM> UserInfos()
+        //{
+        //    _uow.Users.Select
+        //}
+
         public async Task<UserVM> Create(UserAddVM src)
         {
             var newEntity = new User(src);

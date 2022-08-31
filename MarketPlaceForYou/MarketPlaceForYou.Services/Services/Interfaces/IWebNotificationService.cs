@@ -11,8 +11,8 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
     {
         Task<int> PendingListingCount(string userId);
         //Task<int> ActiveListingCount();
-        InAppNotificationVM WelcomeNotification(string firstname, DateTime sentDate);
+        Task<InAppNotificationVM> WelcomeNotification(string firstname);
 
-        InAppNotificationVM Create1stOffer(DateTime sentDate);
+        Task<InAppNotificationVM> Create1stOffer(string userId);
     }
 }

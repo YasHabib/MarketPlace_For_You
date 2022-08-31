@@ -52,10 +52,6 @@ namespace MarketPlaceForYou.Api.Controllers
                 var result = await _userService.Create(src);
                 //Sending the welcome email
                 await _emailService.WelcomeEmail(src.Email, src.FirstName, src.LastName);
-                //Sending the inapp welcome notification
-                _webNotificationService.WelcomeNotification(src.FirstName, src.Created);
-                //Sending in-app notification to create their 1st offer
-                _webNotificationService.Create1stOffer(src.Created);
                 // Return a 200 response with the userVM
                 return Ok(result);
             }

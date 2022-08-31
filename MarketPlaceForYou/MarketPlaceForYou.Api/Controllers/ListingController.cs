@@ -1,5 +1,6 @@
 ﻿using MarketPlaceForYou.Api.Helpers;
 using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -363,6 +364,7 @@ namespace MarketPlaceForYou.Api.Controllers
                 // Get the listing entities from the service
                 var results = await _listingService.PendingListings(userId);
 
+
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
             }
@@ -422,8 +424,8 @@ namespace MarketPlaceForYou.Api.Controllers
                 }
                 // Update Listing entity from the service
                 var result = await _listingService.RequestPurchase(data, buyerId);
-                //sending the seller an email that they have an pending listing
-                //await _emailService.PendingListing(data);
+                //Sending an email notification to the user who created the listing
+                await _emailService.PendingListing(data, buyerId);
 
                 // Return a 200 response with the ListingVM
                 return Ok(result);

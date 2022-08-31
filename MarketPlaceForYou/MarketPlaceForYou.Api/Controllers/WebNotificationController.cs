@@ -61,5 +61,59 @@ namespace MarketPlaceForYou.Api.Controllers
 
         }
 
+        /// <summary>
+        /// 1st notification user get's upon their 1st time login.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("Welcome")]
+        public async Task<ActionResult<InAppNotificationVM>> Welcome()
+        {
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                    return BadRequest("Invalid Request");
+
+                var result = await _webNotificationService.WelcomeNotification(userId);
+
+                return Ok(result);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Create your 1st offer
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("CreateListing")]
+        public async Task<ActionResult<InAppNotificationVM>> CreateListing()
+        {
+            try
+            {
+                var userId = User.GetId();
+                if (userId == null)
+                    return BadRequest("Invalid Request");
+
+                var result = await _webNotificationService.Create1stOffer(userId);
+
+                return Ok(result);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }
