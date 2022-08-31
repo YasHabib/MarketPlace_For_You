@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.ViewModels;
+﻿using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
         Task<InAppNotificationVM> WelcomeNotification(string firstname);
 
         Task<InAppNotificationVM> Create1stOffer(string userId);
+
+        void AddNotifications(string userId);
     }
 }

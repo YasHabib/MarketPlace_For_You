@@ -91,11 +91,6 @@ namespace MarketPlaceForYou.Models.Entities
         public DateTime Created { get; set; }
 
         /// <summary>
-        /// Soft deleting an entity,
-        /// </summary>
-        public bool IsDeleted { get; set; }
-
-        /// <summary>
         /// If the user is blocked or not
         /// </summary>
         public bool IsBlocked { get; set; }

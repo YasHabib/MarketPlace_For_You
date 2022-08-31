@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.ViewModels;
+﻿using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
@@ -19,6 +20,35 @@ namespace MarketPlaceForYou.Services.Services
         public WebNotificationService(IUnitOfWork uow)
         {
             _uow = uow;
+        }
+
+        public async void AddNotifications(string userId)
+        {
+            var user = await _uow.Users.GetById(userId);
+            string firstName = user.FirstName;
+            DateTime userCreatedDate = user.Created.Date; //Date of the user created
+
+            Notification welcome = new Notification();
+            {
+                new Notification
+                {
+                    Id = "Welcome",
+                    Content = "Hey " + firstName + ", welcome to MKTFY",
+                    SentDate = userCreatedDate,
+                };
+                _uow.Notifications.Create(welcome);
+            }
+            Notification create1stOffer = new Notification();
+            {
+                new Notification
+                {
+                    Id = "Create1stOffer",
+                    Content = "Let's create your 1st offer!",
+                    SentDate = userCreatedDate,
+                };
+                _uow.Notifications.Create(create1stOffer);
+            }
+            _uow.SaveAsync();
         }
 
         public async Task<int> PendingListingCount(string userId)
