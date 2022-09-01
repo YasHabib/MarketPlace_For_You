@@ -1,4 +1,5 @@
 ﻿using MarketPlaceForYou.Api.Helpers;
+using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.User;
 using MarketPlaceForYou.Services.Services;
@@ -37,7 +38,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// Retrieving the total amount of 
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("pendingCount")]
         public async Task<ActionResult<int>> PendingListingCount()
         {
             try
@@ -65,16 +66,13 @@ namespace MarketPlaceForYou.Api.Controllers
         /// 1st notification user get's upon their 1st time login.
         /// </summary>
         /// <returns></returns>
-        [HttpPost("Welcome")]
-        public async Task<ActionResult<InAppNotificationVM>> Welcome()
+        [HttpPost("welcome/{notificationId}")]
+        public async Task<ActionResult<InAppNotificationVM>> Welcome(string notificationId)
         {
             try
             {
-                var userId = User.GetId();
-                if (userId == null)
-                    return BadRequest("Invalid Request");
 
-                var result = await _webNotificationService.WelcomeNotification(userId);
+                var result = await _webNotificationService.WelcomeNotification(notificationId);
 
                 return Ok(result);
             }
@@ -92,18 +90,34 @@ namespace MarketPlaceForYou.Api.Controllers
         /// Create your 1st offer
         /// </summary>
         /// <returns></returns>
-        [HttpPost("CreateListing")]
-        public async Task<ActionResult<InAppNotificationVM>> CreateListing()
+        [HttpPost("CreateListing/{notificationId}")]
+        public async Task<ActionResult<InAppNotificationVM>> CreateListing(string notificationId)
         {
             try
             {
-                var userId = User.GetId();
-                if (userId == null)
-                    return BadRequest("Invalid Request");
 
-                var result = await _webNotificationService.Create1stOffer(userId);
+                var result = await _webNotificationService.Create1stListing(notificationId);
 
                 return Ok(result);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> MarkAsRead()
+        {
+            try
+            {
+                await _webNotificationService.MarkAsRead();
+
+                return Ok();
             }
             catch (DbUpdateException)
             {

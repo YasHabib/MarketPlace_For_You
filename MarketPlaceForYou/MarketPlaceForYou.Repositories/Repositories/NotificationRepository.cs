@@ -13,7 +13,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
         public NotificationRepository(MKPFYDbContext context)
             : base(context)
         {
-
         }
     }
+
 }

@@ -11,11 +11,8 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
     public interface IWebNotificationService
     {
         Task<int> PendingListingCount(string userId);
-        //Task<int> ActiveListingCount();
-        Task<InAppNotificationVM> WelcomeNotification(string firstname);
-
-        Task<InAppNotificationVM> Create1stOffer(string userId);
-
-        void AddNotifications(string userId);
+        Task<InAppNotificationVM> WelcomeNotification(string notificationId);
+        Task<InAppNotificationVM> Create1stListing(string notificationId);
+        Task MarkAsRead();
     }
 }

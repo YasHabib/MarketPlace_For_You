@@ -122,25 +122,25 @@ namespace MarketPlaceForYou.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> SoftDelete([FromRoute] string id)
-        {
-            try
-            {
-                await _userService.SoftDelete(id);
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult> SoftDelete([FromRoute] string id)
+        //{
+        //    try
+        //    {
+        //        await _userService.SoftDelete(id);
 
-                // Return a 200 response
-                return Ok();
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
-            }
-            catch
-            {
-                return BadRequest(new { message = "Unable to delete the requested Listing" });
-            }
-        }
+        //        // Return a 200 response
+        //        return Ok();
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+        //    }
+        //    catch
+        //    {
+        //        return BadRequest(new { message = "Unable to delete the requested Listing" });
+        //    }
+        //}
         /// <summary>
         /// Blocks the user (not fully implemented)
         /// </summary>

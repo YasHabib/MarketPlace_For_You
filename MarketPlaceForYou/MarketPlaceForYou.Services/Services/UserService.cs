@@ -98,13 +98,6 @@ namespace MarketPlaceForYou.Services.Services
             _uow.Users.Delete(entity);
             await _uow.SaveAsync();
         }
-        public async Task SoftDelete(string id)
-        {
-            var entity = await _uow.Users.GetById(id);
-            entity.IsDeleted = true;
-            _uow.Users.Update(entity);
-            await _uow.SaveAsync();
-        }
         public async Task BlockUser(string id)
         {
             var entity = await _uow.Users.GetById(id);

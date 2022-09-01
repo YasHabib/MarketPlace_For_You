@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketPlaceForYou.Models.ViewModels.FAQ;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,10 @@ namespace MarketPlaceForYou.Models.Entities
     /// </summary>
     public class Notification : BaseEntity<string>
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public Notification() { }
 
         /// <summary>
         /// Content of the notification
@@ -20,17 +25,19 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Date the notification was sent
         /// </summary>
-        public DateTime SentDate { get; set; }
+        public DateTime? SentDate { get; set; }
 
         /// <summary>
         /// If the notification is read by the user
         /// </summary>
         public bool IsRead { get; set; }
 
-        ///// <summary>
-        ///// Setting up many to many relation to the user
-        ///// </summary>
-        //public ICollection<User> users;
+        ///////// <summary>
+        ///////// Setting up many to many relation to the user
+        ///////// </summary>
+        //////public ICollection<User> users;
+
+        ////public User Users { get; set; }
 
     }
 }

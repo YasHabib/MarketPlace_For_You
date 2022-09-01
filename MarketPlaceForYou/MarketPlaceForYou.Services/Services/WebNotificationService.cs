@@ -1,5 +1,6 @@
 ﻿using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.ViewModels;
+using MarketPlaceForYou.Models.ViewModels.FAQ;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
@@ -22,35 +23,6 @@ namespace MarketPlaceForYou.Services.Services
             _uow = uow;
         }
 
-        public async void AddNotifications(string userId)
-        {
-            var user = await _uow.Users.GetById(userId);
-            string firstName = user.FirstName;
-            DateTime userCreatedDate = user.Created.Date; //Date of the user created
-
-            Notification welcome = new Notification();
-            {
-                new Notification
-                {
-                    Id = "Welcome",
-                    Content = "Hey " + firstName + ", welcome to MKTFY",
-                    SentDate = userCreatedDate,
-                };
-                _uow.Notifications.Create(welcome);
-            }
-            Notification create1stOffer = new Notification();
-            {
-                new Notification
-                {
-                    Id = "Create1stOffer",
-                    Content = "Let's create your 1st offer!",
-                    SentDate = userCreatedDate,
-                };
-                _uow.Notifications.Create(create1stOffer);
-            }
-            _uow.SaveAsync();
-        }
-
         public async Task<int> PendingListingCount(string userId)
         {
             var pending = await _uow.Listings.GetAll(items => items.Where(items => items.UserId == userId && items.Status == "Pending"));
@@ -58,23 +30,40 @@ namespace MarketPlaceForYou.Services.Services
             return count;
         }
 
-        public async Task<InAppNotificationVM> WelcomeNotification(string userId)
+        public async Task<InAppNotificationVM> WelcomeNotification(string notificationId)
         {
-            var user = await _uow.Users.GetById(userId);
-            string firstName = user.FirstName;
-            string welcome = "Hey " + firstName + ", welcome to MKTFY";
-            DateTime sent = user.Created.Date;
-            var model = new InAppNotificationVM(welcome, sent);
+            var notification = await _uow.Notifications.GetById(notificationId);
+
+            notification.SentDate = DateTime.UtcNow;
+            _uow.Notifications.Update(notification);
+            await _uow.SaveAsync();
+
+            var model = new InAppNotificationVM(notification);
             return model;
         }
-        
-        public async Task<InAppNotificationVM> Create1stOffer(string userId)
+
+        public async Task<InAppNotificationVM> Create1stListing(string notificationId)
         {
-            string welcome = "Let's create your 1st offer!";
-            var user = await _uow.Users.GetById(userId);
-            DateTime sent = user.Created.Date;
-            var model = new InAppNotificationVM(welcome, sent);
+            var notification = await _uow.Notifications.GetById(notificationId);
+
+            notification.SentDate = DateTime.UtcNow;
+            _uow.Notifications.Update(notification);
+            await _uow.SaveAsync();
+
+            var model = new InAppNotificationVM(notification);
             return model;
+        }
+
+        //Method to mark all notifications when the user will click the bell icon
+        public async Task MarkAsRead()
+        {
+            var notifications = await _uow.Notifications.GetAll();
+            foreach (var notification in notifications)
+            {
+                notification.IsRead = true;
+                _uow.Notifications.Update(notification);
+            }
+            await _uow.SaveAsync();
         }
     }
 }

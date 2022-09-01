@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MarketPlaceForYou.Models.Entities;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,12 +15,11 @@ namespace MarketPlaceForYou.Models.ViewModels
         /// <summary>
         /// Constructor for notification view model
         /// </summary>
-        /// <param name="notificationMsg"></param>
-        /// <param name="notificationDate"></param>
-        public InAppNotificationVM(string notificationMsg, DateTime notificationDate)
+        /// <param name="src"></param>
+        public InAppNotificationVM(Notification src)
         {
-            NotificationMsg = notificationMsg;
-            NotificationDate = notificationDate;
+            NotificationMsg = src.Content;
+            NotificationDate = DateTime.UtcNow.Date;
         }
     
         /// <summary>
