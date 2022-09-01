@@ -1,10 +1,12 @@
 ﻿using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Api.Helpers;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Newtonsoft.Json;
 using SendGrid.Helpers.Errors.Model;
 using System.Net;
+using Microsoft.AspNetCore.Identity;
 
 namespace MarketPlaceForYou.Api.Middleware
 {
@@ -15,10 +17,23 @@ namespace MarketPlaceForYou.Api.Middleware
     {
         private readonly RequestDelegate _next;
 
+        /// <summary>
+        /// Constructor, anything before will be before the request coming in and after will be what will come back out.
+        /// </summary>
+        /// <param name="next"></param>
+        public BlockUsers(RequestDelegate next)
+        {
+            _next = next;
+        }
         public async Task Invoke(HttpContext context, IUserService userService)
         {
             try
             {
+                var userId = User.GetId();
+                if (userId == null)
+                    return BadRequest("Invalid Request");
+
+                var getUserId = userService.GetById(userId);
                 var blocked = userService.BlockUser;
                 await _next(context);
             }
@@ -44,15 +59,5 @@ namespace MarketPlaceForYou.Api.Middleware
                 //await response.WriteAsync(result);
             }
         }
-
-        /// <summary>
-        /// Constructor, anything before will be before the request coming in and after will be what will come back out.
-        /// </summary>
-        /// <param name="next"></param>
-        public BlockUsers(RequestDelegate next)
-        {
-            _next = next;
-        }
-
     }
 }

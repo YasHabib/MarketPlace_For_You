@@ -109,9 +109,10 @@ void ConfigurePipeline(WebApplication app)
         });
     }
 
-    app.UseMiddleware<BlockUsers>();
     app.UseAuthentication();
-    
+    app.UseMiddleware<BlockUsers>();
+
+
     app.UseAuthorization(); // means if the user allowed to use the particular endpoint?
     app.MapControllers();
 }
