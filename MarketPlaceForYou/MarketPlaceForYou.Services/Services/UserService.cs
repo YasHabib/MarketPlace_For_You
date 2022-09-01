@@ -28,6 +28,11 @@ namespace MarketPlaceForYou.Services.Services
             _uow = uow;
         }
 
+        //public async Task<UserVM> UserInfos()
+        //{
+        //    _uow.Users.Select
+        //}
+
         public async Task<UserVM> Create(UserAddVM src)
         {
             var newEntity = new User(src);
@@ -91,13 +96,6 @@ namespace MarketPlaceForYou.Services.Services
         {
             var entity = await _uow.Users.GetById(id);
             _uow.Users.Delete(entity);
-            await _uow.SaveAsync();
-        }
-        public async Task SoftDelete(string id)
-        {
-            var entity = await _uow.Users.GetById(id);
-            entity.IsDeleted = true;
-            _uow.Users.Update(entity);
             await _uow.SaveAsync();
         }
         public async Task BlockUser(string id)

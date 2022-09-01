@@ -11,6 +11,6 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
     public interface IEmailService
     {
         Task WelcomeEmail(string email, string firstName, string lastName);
-        //Task PendingListing(ListingPurchaseVM src);
+        Task PendingListing(ListingPurchaseVM src, string userId);
     }
 }

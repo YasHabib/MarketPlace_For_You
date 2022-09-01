@@ -1,4 +1,6 @@
-﻿using MarketPlaceForYou.Models.ViewModels;
+﻿using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Models.ViewModels;
+using MarketPlaceForYou.Models.ViewModels.FAQ;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Repositories;
 using MarketPlaceForYou.Services.Services.Interfaces;
@@ -28,20 +30,40 @@ namespace MarketPlaceForYou.Services.Services
             return count;
         }
 
-        public InAppNotificationVM WelcomeNotification(string firstname, DateTime sentDate)
+        public async Task<InAppNotificationVM> WelcomeNotification(string notificationId)
         {
-            string welcome = "Hey " + firstname + ", welcome to MKTFY";
-            DateTime sent = sentDate.Date;
-            var model = new InAppNotificationVM(welcome, sent);
+            var notification = await _uow.Notifications.GetById(notificationId);
+
+            notification.SentDate = DateTime.UtcNow;
+            _uow.Notifications.Update(notification);
+            await _uow.SaveAsync();
+
+            var model = new InAppNotificationVM(notification);
             return model;
         }
 
-        public InAppNotificationVM Create1stOffer(DateTime sentDate)
+        public async Task<InAppNotificationVM> Create1stListing(string notificationId)
         {
-            string welcome = "Let's create your 1st offer!";
-            DateTime sent = sentDate.Date;
-            var model = new InAppNotificationVM(welcome, sent);
+            var notification = await _uow.Notifications.GetById(notificationId);
+
+            notification.SentDate = DateTime.UtcNow;
+            _uow.Notifications.Update(notification);
+            await _uow.SaveAsync();
+
+            var model = new InAppNotificationVM(notification);
             return model;
+        }
+
+        //Method to mark all notifications when the user will click the bell icon
+        public async Task MarkAsRead()
+        {
+            var notifications = await _uow.Notifications.GetAll();
+            foreach (var notification in notifications)
+            {
+                notification.IsRead = true;
+                _uow.Notifications.Update(notification);
+            }
+            await _uow.SaveAsync();
         }
     }
 }

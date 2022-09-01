@@ -14,6 +14,7 @@ namespace MarketPlaceForYou.Repositories
         IFAQRepository FAQs { get; }
         IUploadRepository Uploads { get; }
         ISearchInputRepository SearchInputs { get; }
+        INotificationRepository Notifications { get; }
 
         Task SaveAsync();
     }

@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.ViewModels;
+﻿using MarketPlaceForYou.Models.Entities;
+using MarketPlaceForYou.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,8 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
     public interface IWebNotificationService
     {
         Task<int> PendingListingCount(string userId);
-        //Task<int> ActiveListingCount();
-        InAppNotificationVM WelcomeNotification(string firstname, DateTime sentDate);
-
-        InAppNotificationVM Create1stOffer(DateTime sentDate);
+        Task<InAppNotificationVM> WelcomeNotification(string notificationId);
+        Task<InAppNotificationVM> Create1stListing(string notificationId);
+        Task MarkAsRead();
     }
 }

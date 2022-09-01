@@ -19,5 +19,6 @@ namespace MarketPlaceForYou.Repositories
         public DbSet<FAQ> FAQs => Set<FAQ>(); 
         public DbSet<Upload> Uploads => Set<Upload>();
         public DbSet<SearchInput> SearchInputs => Set<SearchInput>();
+        public DbSet<Notification> Notification => Set<Notification>();
     }
 }

@@ -18,6 +18,7 @@ namespace MarketPlaceForYou.Repositories
         private IFAQRepository _faqRepository;
         private IUploadRepository _uploadRepository;
         private ISearchInputRepository _searchInputRepository;
+        private INotificationRepository _notificationRepository;
 
         public IUserRepository Users
         {
@@ -63,6 +64,16 @@ namespace MarketPlaceForYou.Repositories
                 if (_searchInputRepository == null)
                     _searchInputRepository = new SearchInputRepository(_context);
                 return _searchInputRepository;
+            }
+        }
+
+        public INotificationRepository Notifications
+        {
+            get
+            {
+                if (_notificationRepository == null)
+                    _notificationRepository = new NotificationRepository(_context);
+                return _notificationRepository;
             }
         }
         //end 
