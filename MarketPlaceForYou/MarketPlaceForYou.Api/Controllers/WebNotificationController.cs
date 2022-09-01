@@ -35,10 +35,10 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
         /// <summary>
-        /// Retrieving the total amount of 
+        /// Retrieving the total amount of pending listing the logged in user has
         /// </summary>
         /// <returns></returns>
-        [HttpPost("pendingCount")]
+        [HttpGet("pendingCount")]
         public async Task<ActionResult<int>> PendingListingCount()
         {
             try
@@ -66,7 +66,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// 1st notification user get's upon their 1st time login.
         /// </summary>
         /// <returns></returns>
-        [HttpPost("welcome/{notificationId}")]
+        [HttpGet("welcome/{notificationId}")]
         public async Task<ActionResult<InAppNotificationVM>> Welcome(string notificationId)
         {
             try
@@ -90,7 +90,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// Create your 1st offer
         /// </summary>
         /// <returns></returns>
-        [HttpPost("CreateListing/{notificationId}")]
+        [HttpGet("CreateListing/{notificationId}")]
         public async Task<ActionResult<InAppNotificationVM>> CreateListing(string notificationId)
         {
             try
@@ -109,7 +109,10 @@ namespace MarketPlaceForYou.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Marks all the notification as Read
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ActionResult> MarkAsRead()
         {
