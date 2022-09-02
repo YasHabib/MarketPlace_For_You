@@ -127,6 +127,11 @@ namespace MarketPlaceForYou.Services.Services
             _uow.Users.Update(entity);
             await _uow.SaveAsync();
         }
-
+        public async Task<User> GetUser(string userId)
+        {
+            //bool userBlocked = false;
+            var entity = await _uow.Users.GetById(userId);
+            return entity;
+        }
     }
 }

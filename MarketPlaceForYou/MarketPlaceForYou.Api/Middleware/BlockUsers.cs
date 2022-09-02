@@ -29,11 +29,6 @@ namespace MarketPlaceForYou.Api.Middleware
         {
             try
             {
-                var userId = User.GetId();
-                if (userId == null)
-                    return BadRequest("Invalid Request");
-
-                var getUserId = userService.GetById(userId);
                 var blocked = userService.BlockUser;
                 await _next(context);
             }

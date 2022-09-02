@@ -22,6 +22,7 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
         Task SoftDelete(string id);
         Task BlockUser(string id);
         Task UnblockUser(string id);
+        Task<User> GetUser(string id);
 
 
 
