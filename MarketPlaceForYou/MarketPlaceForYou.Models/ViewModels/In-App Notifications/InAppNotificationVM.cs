@@ -26,6 +26,7 @@ namespace MarketPlaceForYou.Models.ViewModels
         /// Message in the notification the user will see
         /// </summary>
         public string NotificationMsg { get; set; } = string.Empty;
+
         /// <summary>
         /// Date when the notification was sent
         /// </summary>
