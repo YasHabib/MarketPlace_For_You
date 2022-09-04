@@ -20,6 +20,7 @@ namespace MarketPlaceForYou.Models.ViewModels
         {
             NotificationMsg = src.Content;
             NotificationDate = DateTime.UtcNow.Date;
+            IsRead = src.IsRead;
         }
     
         /// <summary>
@@ -31,5 +32,9 @@ namespace MarketPlaceForYou.Models.ViewModels
         /// Date when the notification was sent
         /// </summary>
         public DateTime NotificationDate { get; set; }
+        /// <summary>
+        /// Display if the notification has been read or not
+        /// </summary>
+        public bool IsRead { get; set; }
     }
 }
