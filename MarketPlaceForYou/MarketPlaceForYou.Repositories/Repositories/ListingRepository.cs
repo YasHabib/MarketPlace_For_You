@@ -29,7 +29,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
             else
                 listings = await queryFunction(_entityDbSet).ToListAsync();
 
-            var query = _context.Listings.Where(i => i.UserId != userid && i.Status == "Active").Include(i => i.User).Include(i => i.Uploads).AsQueryable();
+            var query = _context.Listings.Where(i => i.UserId != userid && i.Status == "Active" && i.User.IsBlocked == false).Include(i => i.User).Include(i => i.Uploads).AsQueryable();
 
             if (!string.IsNullOrEmpty(searchString))
                 query = query.Where(i => (i.ProdName.ToLower().Contains(searchString.ToLower()) || i.Description.ToLower().Contains(searchString.ToLower())));

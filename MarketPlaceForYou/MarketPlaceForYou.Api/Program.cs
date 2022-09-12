@@ -1,6 +1,7 @@
 using MarketPlaceForYou.Api.Middleware;
 using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Repositories;
+using MarketPlaceForYou.Services;
 using MarketPlaceForYou.Services.Services;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -85,6 +86,8 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IFAQService, FAQService>();
     builder.Services.AddScoped<IUploadService, UploadService>();
     builder.Services.AddScoped<IEmailService, EmailService>();
+    //builder.Services.AddScoped<IAuth0Service, Auth0Service>();
+    builder.Services.AddScoped<IAPListingService, APListingService>();
 }
 
 

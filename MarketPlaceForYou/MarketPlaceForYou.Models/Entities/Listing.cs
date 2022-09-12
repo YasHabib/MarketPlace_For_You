@@ -86,24 +86,34 @@ namespace MarketPlaceForYou.Models.Entities
         /// </summary>
         [Required]
         public string Address { get; set; } = String.Empty;
+
         /// <summary>
         /// City
         /// </summary>
         [Required]
         public string City { get; set; } = String.Empty;
+
         /// <summary>
         /// Created date
         /// </summary>
         [Required]
         public DateTime Created { get; set; }
+
         /// <summary>
         /// Status of a listing. Actual status (ie. Active, Pending, Sold) are written in DB during repository layer and are not hardcoded.
         /// </summary>
         public string Status { get; set; } = String.Empty;
+
+        /// <summary>
+        /// Soft deleting a listing
+        /// </summary>
+        public bool IsDeleted { get; set; }
+
         /// <summary>
         /// Purchased date
         /// </summary>
         public DateTime Purchased { get; set; }
+
         /// <summary>
         /// Buyer's id for purchasing
         /// </summary> 

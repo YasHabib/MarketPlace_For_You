@@ -19,16 +19,17 @@ namespace MarketPlaceForYou.Api.Controllers
     {
         private readonly IListingService _listingService;
         private readonly IUserService _userService;
+        private readonly IAuth0Service _auth0Service;
         /// <summary>
         /// Controller for admin panel which will use listing and user service
         /// </summary>
         /// <param name="userService"></param>
         /// <param name="listingService"></param>
-        public APUsersController(IListingService listingService, IUserService userService)
+        public APUsersController(IListingService listingService, IUserService userService, IAuth0Service auth0Service)
         {
             _listingService = listingService;
             _userService = userService;
-
+            _auth0Service = auth0Service;
         }
         /// <summary>
         /// Retrives all user data in a list format
@@ -117,18 +118,43 @@ namespace MarketPlaceForYou.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
+        ///// <summary>
+        ///// Soft deleting an user (not fully implemented)
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //[HttpDelete("{id}")]
+        //public async Task<ActionResult> SoftDelete([FromRoute] string id)
+        //{
+        //    try
+        //    {
+        //        await _userService.SoftDelete(id);
+
+        //        // Return a 200 response
+        //        return Ok();
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
+        //    }
+        //    catch
+        //    {
+        //        return BadRequest(new { message = "Unable to delete the requested Listing" });
+        //    }
+        //}
+
         /// <summary>
-        /// Soft deleting an user (not fully implemented)
+        /// Blocks the user from database and from auth0
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="Id"></param>
         /// <returns></returns>
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> SoftDelete([FromRoute] string id)
+        [HttpPut("{id}/block")]
+        public async Task<ActionResult> BlockUnblockUser([FromRoute] string Id)
         {
             try
             {
-                await _userService.SoftDelete(id);
-
+                await _userService.BlockUser(Id);
+                await _auth0Service.BlockUser(Id);
                 // Return a 200 response
                 return Ok();
             }
@@ -138,45 +164,21 @@ namespace MarketPlaceForYou.Api.Controllers
             }
             catch
             {
-                return BadRequest(new { message = "Unable to delete the requested Listing" });
+                return BadRequest(new { message = "Unable to block the user" });
             }
         }
         /// <summary>
-        /// Blocks the user (not fully implemented)
+        /// Unblocks the user from database and from auth0
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("{id}/block")]
-        public async Task<ActionResult> BlockUser([FromRoute] string id)
-        {
-            try
-            {
-                await _userService.BlockUser(id);
-
-                // Return a 200 response
-                return Ok();
-            }
-            catch (DbUpdateException)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Unable to contact the database" });
-            }
-            catch
-            {
-                return BadRequest(new { message = "Unable to delete the requested Listing" });
-            }
-        }
-        /// <summary>
-        /// Unblocks the user
-        /// </summary>
-        /// <param name="id"></param>
+        /// <param name="Id"></param>
         /// <returns></returns>
         [HttpPut("{id}/unblock")]
-        public async Task<ActionResult> UnblockUser([FromRoute] string id)
+        public async Task<ActionResult> UnblockUser([FromRoute] string Id)
         {
             try
             {
-                await _userService.UnblockUser(id);
-
+                await _userService.UnblockUser(Id);
+                await _auth0Service.UnblockUser(Id);
                 // Return a 200 response
                 return Ok();
             }
@@ -186,7 +188,7 @@ namespace MarketPlaceForYou.Api.Controllers
             }
             catch
             {
-                return BadRequest(new { message = "Unable to delete the requested Listing" });
+                return BadRequest(new { message = "Unable to unblock the user at this moment" });
             }
         }
     }

@@ -19,7 +19,7 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
         Task<APUserDetailsVM> APGetById(string userId);
         Task<List<APUserListVM>> GetAll();
         Task Delete(string Id);
-        Task SoftDelete(string id);
+        //Task SoftDelete(string id);
         Task BlockUser(string id);
         Task UnblockUser(string id);
         Task<User> GetUser(string id);

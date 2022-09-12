@@ -72,7 +72,10 @@ namespace MarketPlaceForYou.Services.Services
         }
         public async Task<List<ListingVM>> GetAll(string userId)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userId).Include(items => items.User).Include(items => items.Uploads));
+            var results = await _uow.Listings.GetAll(items => items.Where
+                                                                        (items => items.UserId != userId
+                                                                        && items.User.IsBlocked == false)
+                                                                        .Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
@@ -87,7 +90,7 @@ namespace MarketPlaceForYou.Services.Services
             //Default view if there are no search result stored/saved
             if (search.Count() == 0)
             {
-                list = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid && items.Status == "Active")
+                list = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid && items.Status == "Active" && items.User.IsBlocked == false)
                                                                    .Include(items => items.Uploads).Include(items => items.User)
                                                                    .Take(16));
             }
@@ -96,7 +99,7 @@ namespace MarketPlaceForYou.Services.Services
             {
                 foreach (var searchInput in search)
                 {
-                    var searchResults = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid && items.Status == "Active" &&
+                    var searchResults = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userid && items.Status == "Active" && items.User.IsBlocked == false &&
                                                                        (items.ProdName.ToLower().Contains(searchInput.SearchString.ToLower()) || items.Description.ToLower().Contains(searchInput.SearchString.ToLower())))
                                                                        .Include(items => items.Uploads).Include(items => items.User)
                                                                        .Take(16));
@@ -111,13 +114,13 @@ namespace MarketPlaceForYou.Services.Services
         //Search and filter
         public async Task<List<ListingVM>> GetAllByCity(string city, string userid)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.City == city && items.UserId != userid).Include(items => items.User).Include(items => items.User).Include(items => items.Uploads));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.City == city && items.UserId != userid && items.User.IsBlocked == false).Include(items => items.User).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
         public async Task<List<ListingVM>> GetAllByCategory(string category, string userid)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.Category == category && items.UserId != userid).Include(items => items.User).Include(items => items.Uploads));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.Category == category && items.UserId != userid && items.User.IsBlocked == false).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
@@ -133,7 +136,7 @@ namespace MarketPlaceForYou.Services.Services
                 await _uow.SaveAsync();
             }
 
-            var results = await _uow.Listings.GetAll(items => items.Where(items => (items.Description.ToLower().Contains(searchString.ToLower()) || items.ProdName.ToLower().Contains(searchString.ToLower())) && items.UserId != userid).Include(items => items.User).Include(items => items.Uploads));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => (items.Description.ToLower().Contains(searchString.ToLower()) || items.ProdName.ToLower().Contains(searchString.ToLower())) && items.UserId != userid && items.User.IsBlocked == false).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }

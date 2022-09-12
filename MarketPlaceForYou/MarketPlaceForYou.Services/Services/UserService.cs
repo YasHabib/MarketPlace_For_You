@@ -76,7 +76,7 @@ namespace MarketPlaceForYou.Services.Services
         }
 
 
-        //Admin panel
+        //----------------------------------------------------------------Admin panel---------------------------------------------------------------
         public async Task<APUserDetailsVM> APGetById(string userId)
         {
             var user = await _uow.Users.GetById(userId,i => i.Include(i => i.Listings));
@@ -106,19 +106,20 @@ namespace MarketPlaceForYou.Services.Services
             _uow.Users.Delete(entity);
             await _uow.SaveAsync();
         }
-        public async Task SoftDelete(string id)
-        {
-            var entity = await _uow.Users.GetById(id);
-            entity.IsDeleted = true;
-            _uow.Users.Update(entity);
-            await _uow.SaveAsync();
-        }
+        //public async Task SoftDelete(string id)
+        //{
+        //    var entity = await _uow.Users.GetById(id);
+        //    entity.IsDeleted = true;
+        //    _uow.Users.Update(entity);
+        //    await _uow.SaveAsync();
+        //}
         public async Task BlockUser(string id)
         {
             var entity = await _uow.Users.GetById(id);
             entity.IsBlocked = true;
             _uow.Users.Update(entity);
             await _uow.SaveAsync();
+
         }
         public async Task UnblockUser(string id)
         {
