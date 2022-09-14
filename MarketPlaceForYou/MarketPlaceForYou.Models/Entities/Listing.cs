@@ -37,10 +37,10 @@ namespace MarketPlaceForYou.Models.Entities
             Address = addListing.Address;
             City = addListing.City;
             UserId = userId;
-            //Uploads is set under ListingService/Create
-
+            //Uploads is set under ListingService/Create, or alternatively
             //Uploads = addListing.UploadIds.Select(id => new Upload { Id = id }).ToList();
         }
+
         /// <summary>
         /// Foreign key (user id)
         /// </summary>
@@ -61,50 +61,65 @@ namespace MarketPlaceForYou.Models.Entities
         /// </summary>
         [Required]
         public string ProdName { get; set; } = String.Empty;
+
         /// <summary>
         /// Description
         /// </summary>
         [Required]
         public string Description { get; set; } =String.Empty;
+
         /// <summary>
         /// Category
         /// </summary>
         [Required]
         public string Category { get; set; } = String.Empty;
+
         /// <summary>
         /// COndition
         /// </summary>
         [Required]
-        public string Condition { get; set; } = String.Empty ;
+        public string Condition { get; set; } = String.Empty;
+
         /// <summary>
         /// Price
         /// </summary>
         [Column(TypeName = "money")]
         [Required]
         public decimal Price { get; set; }
+
         /// <summary>
         /// Address
         /// </summary>
         [Required]
         public string Address { get; set; } = String.Empty;
+
         /// <summary>
         /// City
         /// </summary>
         [Required]
         public string City { get; set; } = String.Empty;
+
         /// <summary>
         /// Created date
         /// </summary>
         [Required]
         public DateTime Created { get; set; }
+
         /// <summary>
         /// Status of a listing. Actual status (ie. Active, Pending, Sold) are written in DB during repository layer and are not hardcoded.
         /// </summary>
         public string Status { get; set; } = String.Empty;
+
+        /// <summary>
+        /// Soft deleting a user's listing
+        /// </summary>
+        public bool IsDeleted { get; set; }
+
         /// <summary>
         /// Purchased date
         /// </summary>
         public DateTime Purchased { get; set; }
+
         /// <summary>
         /// Buyer's id for purchasing
         /// </summary> 
