@@ -18,8 +18,4 @@
     <ProjectReference Include="..\MarketPlaceForYou.Models\MarketPlaceForYou.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

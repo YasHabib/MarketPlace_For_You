@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlaceForYou.Repositories.Migrations
 {
     [DbContext(typeof(MKPFYDbContext))]
-    [Migration("20220808165759_UpdatedImageUploads")]
-    partial class UpdatedImageUploads
+    [Migration("20220914010222_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,9 +95,53 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BuyerID");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Listings");
+                });
+
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Notification", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("SentDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notification");
+                });
+
+            modelBuilder.Entity("MarketPlaceForYou.Models.Entities.SearchInput", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SearchString")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("SearchedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SearchInputs");
                 });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Upload", b =>
@@ -125,9 +169,6 @@ namespace MarketPlaceForYou.Repositories.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<int>("ActiveListings")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("text");
@@ -135,6 +176,9 @@ namespace MarketPlaceForYou.Repositories.Migrations
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -149,9 +193,6 @@ namespace MarketPlaceForYou.Repositories.Migrations
                     b.Property<bool>("IsBlocked")
                         .HasColumnType("boolean");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -161,15 +202,6 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Purchases")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("TotalPurchase")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("TotalSold")
-                        .HasColumnType("money");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -177,6 +209,10 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>
                 {
+                    b.HasOne("MarketPlaceForYou.Models.Entities.User", null)
+                        .WithMany("Purchases")
+                        .HasForeignKey("BuyerID");
+
                     b.HasOne("MarketPlaceForYou.Models.Entities.User", "User")
                         .WithMany("Listings")
                         .HasForeignKey("UserId")
@@ -188,11 +224,9 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Upload", b =>
                 {
-                    b.HasOne("MarketPlaceForYou.Models.Entities.Listing", "Listing")
+                    b.HasOne("MarketPlaceForYou.Models.Entities.Listing", null)
                         .WithMany("Uploads")
                         .HasForeignKey("ListingId");
-
-                    b.Navigation("Listing");
                 });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>
@@ -203,6 +237,8 @@ namespace MarketPlaceForYou.Repositories.Migrations
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.User", b =>
                 {
                     b.Navigation("Listings");
+
+                    b.Navigation("Purchases");
                 });
 #pragma warning restore 612, 618
         }

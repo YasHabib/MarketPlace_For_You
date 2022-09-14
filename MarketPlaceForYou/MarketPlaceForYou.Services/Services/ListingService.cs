@@ -3,7 +3,6 @@ using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Models.ViewModels.Upload;
 using MarketPlaceForYou.Repositories;
-using MarketPlaceForYou.Repositories.Migrations;
 using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;

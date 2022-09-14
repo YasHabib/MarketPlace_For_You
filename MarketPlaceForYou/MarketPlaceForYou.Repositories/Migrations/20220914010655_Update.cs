@@ -4,7 +4,7 @@
 
 namespace MarketPlaceForYou.Repositories.Migrations
 {
-    public partial class UpdatedUserInfo : Migration
+    public partial class Update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
