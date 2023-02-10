@@ -20,10 +20,10 @@ namespace MarketPlaceForYou.Models.Entities
     /// </summary>
     /// <param name="searchString"></param>
     /// <param name="userId"></param>
-        public SearchInput(string searchString, string userId)
+        public SearchInput(string searchString /*string userId*/)
         {
             SearchString = searchString;
-            UserId = userId;
+            //UserId = userId;
         }
 
         /// <summary>

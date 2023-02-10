@@ -8,15 +8,16 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Configuration;
+using System.Text.Json.Serialization;
 
 void ConfigureHost(ConfigureHostBuilder host)
 {
     //Retrieving parameters in AWS Parameter Store
     host.ConfigureAppConfiguration((builder) =>
     {
-    builder.AddSystemsManager(string.Format("/Live/{0}/",
-            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")))
-            .AddSystemsManager(string.Format("/Live/Common/"));
+    //builder.AddSystemsManager(string.Format("/Live/{0}/",
+    //        Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")))
+    //        .AddSystemsManager(string.Format("/Live/Common/"));
     });
 }
 
@@ -60,6 +61,8 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddSwaggerGen(options =>
     {
         options.SwaggerDoc("v1", new OpenApiInfo { Title = "MarketForYou API", Version = "V1" });
+        options.UseInlineDefinitionsForEnums();
+
 
         var apiXmlFile = Path.Combine(AppContext.BaseDirectory, "MarketPlaceForYou.Api.xml");
         var modelsXmlFile = Path.Combine(AppContext.BaseDirectory, "MarketPlaceForYou.Models.xml");
@@ -74,8 +77,10 @@ void ConfigureServices(WebApplicationBuilder builder)
             Scheme = "bearer"
         });
     });
+    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers().AddJsonOptions(options =>
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
     //Setup dependency injection
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -86,6 +91,7 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IEmailService, EmailService>();
     builder.Services.AddScoped<IWebNotificationService, WebNotificationService>();
     builder.Services.AddScoped<IAPListingService, APListingService>();
+    builder.Services.AddScoped<IAPDashboardService, APDashboardService>();
 }
 
 

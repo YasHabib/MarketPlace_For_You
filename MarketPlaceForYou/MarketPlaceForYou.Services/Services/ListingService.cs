@@ -17,6 +17,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using static MarketPlaceForYou.Models.Entities.Listing;
 
 namespace MarketPlaceForYou.Services.Services
 {
@@ -70,9 +71,9 @@ namespace MarketPlaceForYou.Services.Services
             var model = new ListingVM(result);
             return model;
         }
-        public async Task<List<ListingVM>> GetAll(string userId)
+        public async Task<List<ListingVM>> GetAll()
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.UserId != userId).Include(items => items.User).Include(items => items.Uploads));
+            var results = await _uow.Listings.GetAll(items => items.Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
@@ -109,22 +110,22 @@ namespace MarketPlaceForYou.Services.Services
 
         }
         //Search and filter
-        public async Task<List<ListingVM>> GetAllByCity(string city, string userid)
+        public async Task<List<ListingVM>> GetAllByCity(string city)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.City == city && items.UserId != userid && items.IsDeleted == false).Include(items => items.User).Include(items => items.User).Include(items => items.Uploads));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.City == city && items.IsDeleted == false).Include(items => items.User).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
-        public async Task<List<ListingVM>> GetAllByCategory(string category, string userid)
+        public async Task<List<ListingVM>> GetAllByCategory(string category)
         {
-            var results = await _uow.Listings.GetAll(items => items.Where(items => items.Category == category && items.UserId != userid && items.IsDeleted == false).Include(items => items.User).Include(items => items.Uploads));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => items.Category == category && items.IsDeleted == false).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
-        public async Task<List<ListingVM>> Search(string searchString, string userid)
+        public async Task<List<ListingVM>> Search(string searchString)
         {
             //Saving the search result
-            var save = new SearchInput(searchString, userid);
+            var save = new SearchInput(searchString);
 
             if (searchString != null)
             {
@@ -133,15 +134,15 @@ namespace MarketPlaceForYou.Services.Services
                 await _uow.SaveAsync();
             }
 
-            var results = await _uow.Listings.GetAll(items => items.Where(items => (items.Description.ToLower().Contains(searchString.ToLower()) || items.ProdName.ToLower().Contains(searchString.ToLower())) && items.UserId != userid && items.IsDeleted == false).Include(items => items.User).Include(items => items.Uploads));
+            var results = await _uow.Listings.GetAll(items => items.Where(items => (items.Description.ToLower().Contains(searchString.ToLower()) || items.ProdName.ToLower().Contains(searchString.ToLower())) && items.IsDeleted == false).Include(items => items.User).Include(items => items.Uploads));
             var models = results.Select(listing => new ListingVM(listing)).ToList();
             return models;
         }
         //Search with filters
-        public async Task<List<ListingVM>> SearchWithFilters(string userid, string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0)
+        public async Task<List<ListingVM>> SearchWithFilters(string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0)
         {
             //Saving the search result
-            var save = new SearchInput(searchString, userid);
+            var save = new SearchInput(searchString);
 
             if (searchString != null)
             {
@@ -150,7 +151,7 @@ namespace MarketPlaceForYou.Services.Services
                 await _uow.SaveAsync();
             }
 
-            var results = await _uow.Listings.SearchWithFilters(userid, searchString, city, category, condition, minPrice, maxPrice);
+            var results = await _uow.Listings.SearchWithFilters(searchString, city, category, condition, minPrice, maxPrice);
             var models = results.Select(listing => new ListingVM(listing)).OrderBy(i => i.Price).ToList();
             return models;
         }

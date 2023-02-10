@@ -12,7 +12,7 @@ namespace MarketPlaceForYou.Api.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class UploadController : ControllerBase
     {
         private readonly IUploadService _uploadService;
@@ -27,10 +27,12 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <summary>
         /// API for uploading images
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// This will not return anything as the AWS account and S3 bucket associated with it is currently shut down
+        /// </returns>
         /// 
         [HttpPost]
-        public async Task<ActionResult<List<UploadResultVM>>> UploadImages()
+        public async Task<ActionResult<List<UploadResultVM>>> UploadImages(IFormFile file)
         {
             //file validation
             var supportedTypes = new[] { ".png", ".jpeg", ".jpg", ".gif" };

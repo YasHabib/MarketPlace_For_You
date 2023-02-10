@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketPlaceForYou.Models.ViewModels.APAnalytics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,8 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
         Task<int> TotalListings();
         Task<int> NewUsers();
         Task<decimal> PerDayAvgSalesInYear();
-        Task<List<decimal>> SalesPerDayOverAMonth();
-        Task<List<decimal>> PercentIncreaseThisWeekDeals();
+        Task<SalesPerDayVM> SalesPerDayOverAMonth(DateTime start, DateTime end);
+        //Task<SalesPerDayVM> SalesPerDay();
+
     }
 }

@@ -5,6 +5,10 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>98b28b5d-9f91-477c-89c3-74fb3ed46ab1</ProjectGuid>
   </PropertyGroup>
+  <PropertyGroup>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>http://localhost:35010/swagger/index.html</DockerServiceUrl>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>

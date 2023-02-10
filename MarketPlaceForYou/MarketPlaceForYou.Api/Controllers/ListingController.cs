@@ -6,6 +6,7 @@ using MarketPlaceForYou.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static MarketPlaceForYou.Models.Entities.Listing;
 
 namespace MarketPlaceForYou.Api.Controllers
 {
@@ -14,7 +15,7 @@ namespace MarketPlaceForYou.Api.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ListingController : ControllerBase
     {
         private readonly IListingService _listingService;
@@ -78,11 +79,11 @@ namespace MarketPlaceForYou.Api.Controllers
 
             try
             {
-                var userId = User.GetId();
-                if (userId == null)
-                    return BadRequest("Invalid Request");
+                //var userId = User.GetId();
+                //if (userId == null)
+                //    return BadRequest("Invalid Request");
                 // Get the listing entities from the service
-                var results = await _listingService.GetAll(userId);
+                var results = await _listingService.GetAll();
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
@@ -96,7 +97,7 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <summary>
         /// Filters all the listings by city only (non-purchased and listings were not created by the user)
         /// </summary>
-        /// <param name="city">Listing data</param>
+        /// <param name="city">Calgary/Canmore/Brooks</param>
         /// <returns>Returns all listings by city</returns>
         /// <response code = "200">Successfull</response>
         /// <response code = "401">User not logged in or token has expired</response>
@@ -107,13 +108,13 @@ namespace MarketPlaceForYou.Api.Controllers
 
             try
             {
-                var userId = User.GetId();
-                if (userId == null)
-                {
-                    return BadRequest("Invalid Request");
-                }
+                //var userId = User.GetId();
+                //if (userId == null)
+                //{
+                //    return BadRequest("Invalid Request");
+                //}
                 // Get the listing entities from the service
-                var results = await _listingService.GetAllByCity(city, userId);
+                var results = await _listingService.GetAllByCity(city);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
@@ -125,27 +126,27 @@ namespace MarketPlaceForYou.Api.Controllers
         }
 
         /// <summary>
-        /// Filters all listings by Category only (non-purchased and listings were not created by the user)
+        /// Filter by categories
         /// </summary>
-        /// <param name="category">Encoded: 
-        /// Cars&Vehicle: Cars%20%26%20Vehicle
-        /// RealEstate: Real%20Estate</param>
-        /// <returns>Returns all listings by category</returns>
-        /// <response code = "200">Successfull</response>
-        /// <response code = "401">User not logged in or token has expired</response>
-        /// <response code = "500">Internal server issue</response>
+        /// <param name="category">
+        /// Cars & Vehicle
+        /// Electronics
+        /// Real Estate
+        /// Furniture
+        /// </param>
+        /// <returns></returns>
         [HttpGet("all/category/{category}")]
         public async Task<ActionResult<List<ListingVM>>> GetAllByCategory(string category)
         {
 
             try
             {
-                var userId = User.GetId();
-                if (userId == null)
-                     return BadRequest("Invalid Request");
+                //var userId = User.GetId();
+                //if (userId == null)
+                //     return BadRequest("Invalid Request");
 
                 // Get the listing entities from the service
-                var results = await _listingService.GetAllByCategory(category, userId);
+                var results = await _listingService.GetAllByCategory(category);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
@@ -169,11 +170,11 @@ namespace MarketPlaceForYou.Api.Controllers
 
             try
             {
-                var userId = User.GetId();
-                if (userId == null)
-                    return BadRequest("Invalid Request");
+                //var userId = User.GetId();
+                //if (userId == null)
+                //    return BadRequest("Invalid Request");
                 // Get the listing entities from the service
-                var results = await _listingService.Search(searchString, userId);
+                var results = await _listingService.Search(searchString);
 
                 // Return a 200 response with the listingVMs
                 return Ok(results);
@@ -199,13 +200,13 @@ namespace MarketPlaceForYou.Api.Controllers
 
             try
             {
-                var userId = User.GetId();
-                if (userId == null)
-                    return BadRequest("Invalid Request");
+                //var userId = User.GetId();
+                //if (userId == null)
+                //    return BadRequest("Invalid Request");
                 if (minPrice > maxPrice)
                     return BadRequest("Invalid Price");
                 // Get the listing entities from the service
-                var results = await _listingService.SearchWithFilters(userId, searchString, city, category, condition, minPrice, maxPrice);
+                var results = await _listingService.SearchWithFilters(searchString, city, category, condition, minPrice, maxPrice);
 
                 // Return a 200 response with the listingVMs
                 return Ok(results);

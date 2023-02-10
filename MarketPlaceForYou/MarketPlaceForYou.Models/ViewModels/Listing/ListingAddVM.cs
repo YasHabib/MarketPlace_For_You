@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MarketPlaceForYou.Models.Entities;
+using static MarketPlaceForYou.Models.Entities.Listing;
 
 namespace MarketPlaceForYou.Models.ViewModels.Listing
 {
@@ -27,7 +28,7 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         /// Category of the listing
         /// </summary>
         [Required]
-        public string Category { get; set; } = string.Empty;
+        public string Category { get; set; } = String.Empty ;
         /// <summary>
         /// Condition of the listing
         /// </summary>

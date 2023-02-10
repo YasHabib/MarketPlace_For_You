@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MarketPlaceForYou.Models.Entities.Listing;
 
 namespace MarketPlaceForYou.Models.ViewModels.Listing
 {
@@ -32,7 +33,7 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         /// Category of listing
         /// </summary>
         [Required]
-        public string Category { get; set; } = string.Empty;
+        public string Category { get; set; }
         /// <summary>
         /// Condition of the listing
         /// </summary>
@@ -52,6 +53,6 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         /// City of the listing
         /// </summary>
         [Required]
-        public string City { get; set; } = string.Empty;
+        public string City { get; set; }
     }
 }

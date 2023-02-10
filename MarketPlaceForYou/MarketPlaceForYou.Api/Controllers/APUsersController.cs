@@ -14,7 +14,7 @@ namespace MarketPlaceForYou.Api.Controllers
 /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class APUsersController : ControllerBase
     {
         private readonly IListingService _listingService;

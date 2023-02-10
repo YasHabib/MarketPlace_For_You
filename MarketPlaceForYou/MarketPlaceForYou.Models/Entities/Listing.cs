@@ -3,6 +3,7 @@ using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Models.ViewModels.Upload;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -15,6 +16,31 @@ namespace MarketPlaceForYou.Models.Entities
 /// </summary>
     public class Listing : BaseEntity<Guid>,IDated
     {
+        /// <summary>
+        /// A list of categories
+        /// </summary>
+        //public enum Categories
+        //{
+        //    [Description("Cars  & Vehicle")]
+        //    Cars_And_Vehicle = 1,
+        //    [Description("Electronics")]
+        //    Electronics = 2,
+        //    [Description("Real Estate")]
+        //    Real_Estate =3,
+        //    [Description("Furniture")]
+        //    Furniture =4
+        //}
+
+        //public enum Cities
+        //{
+        //    [Description("calgary")]
+        //    Calgary = 1,
+        //    [Description("Brooks")]
+        //    Brooks =2,
+        //    [Description("Canmore")]
+        //    Canmore =3
+        //}
+
         //empty constructor
         /// <summary>
         /// Empty constructor
@@ -72,7 +98,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// Category
         /// </summary>
         [Required]
-        public string Category { get; set; } = String.Empty;
+        public string Category { get; set; }
 
         /// <summary>
         /// COndition
@@ -97,7 +123,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// City
         /// </summary>
         [Required]
-        public string City { get; set; } = String.Empty;
+        public string City { get; set; }
 
         /// <summary>
         /// Created date

@@ -15,7 +15,7 @@ namespace MarketPlaceForYou.Api.Controllers
 /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
 
     public class WebNotificationController : ControllerBase
     {
