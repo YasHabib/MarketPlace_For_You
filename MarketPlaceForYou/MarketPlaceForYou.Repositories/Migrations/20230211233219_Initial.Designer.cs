@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlaceForYou.Repositories.Migrations
 {
     [DbContext(typeof(MKPFYDbContext))]
-    [Migration("20230211221546_reInitialized")]
-    partial class reInitialized
+    [Migration("20230211233219_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
