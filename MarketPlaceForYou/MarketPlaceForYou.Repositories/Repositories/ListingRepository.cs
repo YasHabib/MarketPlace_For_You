@@ -21,7 +21,7 @@ namespace MarketPlaceForYou.Repositories.Repositories
         }
 
         //Searching with filters
-        public async Task<List<Listing>> SearchWithFilters(string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0,
+        public async Task<List<Listing>> SearchWithFilters(string? searchString = null, Cities? city = null, Categories? category = null, Conditions? condition = null, decimal minPrice = 0, decimal maxPrice = 0,
                                                             Func<IQueryable<Listing>, IQueryable<Listing>>? queryFunction = null)
         {
             List<Listing> listings;

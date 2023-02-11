@@ -16,30 +16,26 @@ namespace MarketPlaceForYou.Models.Entities
 /// </summary>
     public class Listing : BaseEntity<Guid>,IDated
     {
-        /// <summary>
-        /// A list of categories
-        /// </summary>
-        //public enum Categories
-        //{
-        //    [Description("Cars  & Vehicle")]
-        //    Cars_And_Vehicle = 1,
-        //    [Description("Electronics")]
-        //    Electronics = 2,
-        //    [Description("Real Estate")]
-        //    Real_Estate =3,
-        //    [Description("Furniture")]
-        //    Furniture =4
-        //}
+        public enum Categories
+        {
+            Cars_And_Vehicle,
+            Electronics,
+            Real_Estate,
+            Furniture
+        }
 
-        //public enum Cities
-        //{
-        //    [Description("calgary")]
-        //    Calgary = 1,
-        //    [Description("Brooks")]
-        //    Brooks =2,
-        //    [Description("Canmore")]
-        //    Canmore =3
-        //}
+        public enum Cities
+        {
+            Calgary,
+            Brooks,
+            Canmore
+        }
+
+        public enum Conditions
+        {
+            New,
+            Used
+        }
 
         //empty constructor
         /// <summary>
@@ -57,11 +53,8 @@ namespace MarketPlaceForYou.Models.Entities
         {
             ProdName = addListing.ProdName;
             Description = addListing.Description;
-            Category = addListing.Category;
-            Condition = addListing.Condition;
             Price = addListing.Price;
             Address = addListing.Address;
-            City = addListing.City;
             UserId = userId;
             //Uploads is set under ListingService/Create, or alternatively
             //Uploads = addListing.UploadIds.Select(id => new Upload { Id = id }).ToList();
@@ -86,25 +79,25 @@ namespace MarketPlaceForYou.Models.Entities
         /// Listing name
         /// </summary>
         [Required]
-        public string ProdName { get; set; } = String.Empty;
+        public string ProdName { get; set; }
 
         /// <summary>
         /// Description
         /// </summary>
         [Required]
-        public string Description { get; set; } =String.Empty;
+        public string Description { get; set; }
 
         /// <summary>
         /// Category
         /// </summary>
         [Required]
-        public string Category { get; set; }
+        public Categories Category { get; set; }
 
         /// <summary>
         /// COndition
         /// </summary>
         [Required]
-        public string Condition { get; set; } = String.Empty;
+        public Conditions Condition { get; set; }
 
         /// <summary>
         /// Price
@@ -117,13 +110,13 @@ namespace MarketPlaceForYou.Models.Entities
         /// Address
         /// </summary>
         [Required]
-        public string Address { get; set; } = String.Empty;
+        public string Address { get; set; }
 
         /// <summary>
         /// City
         /// </summary>
         [Required]
-        public string City { get; set; }
+        public Cities City { get; set; }
 
         /// <summary>
         /// Created date
@@ -134,7 +127,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Status of a listing. Actual status (ie. Active, Pending, Sold) are written in DB during repository layer and are not hardcoded.
         /// </summary>
-        public string Status { get; set; } = String.Empty;
+        public string Status { get; set; }
 
         /// <summary>
         /// Soft deleting a user's listing

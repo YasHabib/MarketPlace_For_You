@@ -51,12 +51,12 @@ public class ListingVM
     /// <summary>
     /// Listing Category
     /// </summary>
-    public string Category { get; set; }
+    public Categories Category { get; set; }
 
     /// <summary>
     /// Listing Condition
     /// </summary>
-    public string Condition { get; set; } = string.Empty;
+    public Conditions Condition { get; set; }
 
     /// <summary>
     /// Price of listing
@@ -71,7 +71,7 @@ public class ListingVM
     /// <summary>
     /// City of the lister
     /// </summary>
-    public string City { get; set; }
+    public Cities City { get; set; }
 
     /// <summary>
     /// Created date
@@ -81,7 +81,7 @@ public class ListingVM
     /// <summary>
     /// User id of the person who created it
     /// </summary>
-    public string UserId { get; set; } = string.Empty;
+    public string UserId { get; set; }
 
     /// <summary>
     /// Listing status
@@ -101,5 +101,5 @@ public class ListingVM
     /// <summary>
     /// Image URLs
     /// </summary>
-    public ICollection<string> UploadUrls { get; set; }
+    public ICollection<string>? UploadUrls { get; set; }
 }

@@ -24,7 +24,7 @@ namespace MarketPlaceForYou.Services.Services
         {
             _configuration = configuration;
             _uow = uow;
-        }   
+        }
 
         public async Task WelcomeEmail(string email, string firstName, string lastName)
         {

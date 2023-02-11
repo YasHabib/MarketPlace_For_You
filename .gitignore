@@ -454,11 +454,6 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 ##
-## Docker Compose
-##
-docker-compose.override.yml
-
-##
 ##AWS Cred
 ##
 .aws

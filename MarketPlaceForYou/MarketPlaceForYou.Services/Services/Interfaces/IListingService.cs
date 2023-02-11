@@ -11,16 +11,18 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
 {
     public interface IListingService
     {
-        Task<ListingVM> Create(ListingAddVM src, string userId);
-        Task<ListingVM> Update(ListingUpdateVM src);
+        Task<ListingVM> Create(ListingAddVM src, string userId, Categories category, Cities city, Conditions condition);
+        Task<ListingVM> Update(ListingUpdateVM src, Cities city, Categories category, Conditions condition);
         Task<ListingVM> GetById(Guid id);
         //Task<List<ListingVM>> GetAll(string userId);
-        Task<List<ListingVM>> GetAll();
+        Task<List<ListingVM>> GetAll(string userId);
 
-        Task<List<ListingVM>> Search(string searchString);
-        Task<List<ListingVM>> SearchWithFilters(string? searchString = null, string? city = null, string? category = null, string? condition = null, decimal minPrice = 0, decimal maxPrice = 0);
-        Task<List<ListingVM>> GetAllByCity(string city);
-        Task<List<ListingVM>> GetAllByCategory(string category);
+        Task<List<ListingVM>> Search(string searchString, string userId);
+        Task<List<ListingVM>> SearchWithFilters(string userId, string? searchString = null, Cities? city = null, Categories? category = null, Conditions? condition = null, decimal minPrice = 0, decimal maxPrice = 0);
+        Task<List<ListingVM>> GetAllByCity(Cities city, string userId);
+        Task<List<ListingVM>> GetAllByCategory(Categories category, string userId);
+
+        // This interface will implement a function which will retrieve all the listings based on the user's last 3 search results.
         Task<List<ListingVM>> Deals(string userid);
         Task<List<ListingVM>> MyActiveListings(string userId);
         Task<List<ListingVM>> MySoldListings(string userId);

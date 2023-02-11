@@ -24,35 +24,41 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         /// </summary>
         [Required]
         public string ProdName { get; set; } = string.Empty;
+
         /// <summary>
         /// Description of listing
         /// </summary>
         [Required]
         public string Description { get; set; } = string.Empty;
-        /// <summary>
-        /// Category of listing
-        /// </summary>
-        [Required]
-        public string Category { get; set; }
-        /// <summary>
-        /// Condition of the listing
-        /// </summary>
-        [Required]
-        public string Condition { get; set; } = string.Empty;
+
+        ///// <summary>
+        ///// Category of listing
+        ///// </summary>
+        //[Required]
+        //public Categories Category { get; set; }
+
+        ///// <summary>
+        ///// Condition of the listing
+        ///// </summary>
+        //[Required]
+        //public Conditions Condition { get; set; }
+
         /// <summary>
         /// Price of the listing
         /// </summary>
         [Required]
         public decimal Price { get; set; }
+
         /// <summary>
         /// Address of the listing
         /// </summary>
         [Required]
         public string Address { get; set; } = string.Empty;
-        /// <summary>
-        /// City of the listing
-        /// </summary>
-        [Required]
-        public string City { get; set; }
+
+        ///// <summary>
+        ///// City of the listing
+        ///// </summary>
+        //[Required]
+        //public Cities City { get; set; }
     }
 }

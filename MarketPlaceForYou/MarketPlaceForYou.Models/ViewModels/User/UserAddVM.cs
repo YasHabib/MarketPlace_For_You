@@ -12,11 +12,11 @@ namespace MarketPlaceForYou.Models.ViewModels.User
     /// </summary>
     public class UserAddVM
     {
-        /// <summary>
-        /// Auth id of the user
-        /// </summary>
-        [Required]
-        public string Id { get; set; } = string.Empty;
+        ///// <summary>
+        ///// Auth id of the user
+        ///// </summary>
+        //[Required]
+        //public string Id { get; set; } = string.Empty;
 
         /// <summary>
         /// User's first name

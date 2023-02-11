@@ -1,4 +1,5 @@
-﻿using MarketPlaceForYou.Models.Entities;
+﻿using MarketPlaceForYou.Api.Helpers;
+using MarketPlaceForYou.Models.Entities;
 using MarketPlaceForYou.Models.ViewModels;
 using MarketPlaceForYou.Models.ViewModels.User;
 using MarketPlaceForYou.Services.Services.Interfaces;
@@ -16,7 +17,7 @@ namespace MarketPlaceForYou.Api.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -48,10 +49,13 @@ namespace MarketPlaceForYou.Api.Controllers
         {
             try
             {
+                var userId = User.GetId();
+                if (userId == null)
+                    return BadRequest("Invalid Request");
                 // Have the service create the new user
-                var result = await _userService.Create(src);
-                //Sending the welcome email
-                await _emailService.WelcomeEmail(src.Email, src.FirstName, src.LastName);
+                var result = await _userService.Create(src, userId);
+                //Sending the welcome email (commented out as SendGrid API key is in AWS Parameter Store and associated AWS account is closed)
+                //await _emailService.WelcomeEmail(src.Email, src.FirstName, src.LastName);
                 // Return a 200 response with the userVM
                 return Ok(result);
             }

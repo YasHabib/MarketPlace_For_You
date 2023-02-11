@@ -11,7 +11,7 @@ namespace MarketPlaceForYou.Services.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserVM> Create(UserAddVM userAdd);
+        Task<UserVM> Create(UserAddVM userAdd, string userId);
         Task<UserVM> GetById(string userId); //to get the user by their Id
         Task<UserVM> Update(UserUpdateVM userUpdate); //Do not use entity as return type
 

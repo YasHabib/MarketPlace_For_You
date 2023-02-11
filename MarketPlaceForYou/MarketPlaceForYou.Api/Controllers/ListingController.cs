@@ -15,7 +15,7 @@ namespace MarketPlaceForYou.Api.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ListingController : ControllerBase
     {
         private readonly IListingService _listingService;
@@ -41,7 +41,7 @@ namespace MarketPlaceForYou.Api.Controllers
         //------------------------------------------------------------CREATE------------------------------------------------
 
         [HttpPost]
-        public async Task<ActionResult<ListingVM>> Create([FromBody] ListingAddVM data)
+        public async Task<ActionResult<ListingVM>> Create([FromBody] ListingAddVM data, Categories category, Cities city, Conditions condition)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace MarketPlaceForYou.Api.Controllers
                     return BadRequest("Invalid Request");
 
                 // Have the service create the new Listing
-                var result = await _listingService.Create(data, userId);
+                var result = await _listingService.Create(data, userId, category, city, condition);
 
                 // Return a 200 response with the ListingVM
                 return Ok(result);
@@ -79,11 +79,11 @@ namespace MarketPlaceForYou.Api.Controllers
 
             try
             {
-                //var userId = User.GetId();
-                //if (userId == null)
-                //    return BadRequest("Invalid Request");
+                var userId = User.GetId();
+                if (userId == null)
+                    return BadRequest("Invalid Request");
                 // Get the listing entities from the service
-                var results = await _listingService.GetAll();
+                var results = await _listingService.GetAll(userId);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
@@ -103,18 +103,18 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <response code = "401">User not logged in or token has expired</response>
         /// <response code = "500">Internal server issue</response>
         [HttpGet("all/{city}")]
-        public async Task<ActionResult<List<ListingVM>>> GetAllByCity(string city)
+        public async Task<ActionResult<List<ListingVM>>> GetAllByCity(Cities city)
         {
 
             try
             {
-                //var userId = User.GetId();
-                //if (userId == null)
-                //{
-                //    return BadRequest("Invalid Request");
-                //}
+                var userId = User.GetId();
+                if (userId == null)
+                {
+                    return BadRequest("Invalid Request");
+                }
                 // Get the listing entities from the service
-                var results = await _listingService.GetAllByCity(city);
+                var results = await _listingService.GetAllByCity(city,userId);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
@@ -136,17 +136,17 @@ namespace MarketPlaceForYou.Api.Controllers
         /// </param>
         /// <returns></returns>
         [HttpGet("all/category/{category}")]
-        public async Task<ActionResult<List<ListingVM>>> GetAllByCategory(string category)
+        public async Task<ActionResult<List<ListingVM>>> GetAllByCategory(Categories category)
         {
 
             try
             {
-                //var userId = User.GetId();
-                //if (userId == null)
-                //     return BadRequest("Invalid Request");
+                var userId = User.GetId();
+                if (userId == null)
+                    return BadRequest("Invalid Request");
 
                 // Get the listing entities from the service
-                var results = await _listingService.GetAllByCategory(category);
+                var results = await _listingService.GetAllByCategory(category, userId);
 
                 // Return a 200 response with the ListingVMs
                 return Ok(results);
@@ -170,18 +170,18 @@ namespace MarketPlaceForYou.Api.Controllers
 
             try
             {
-                //var userId = User.GetId();
-                //if (userId == null)
-                //    return BadRequest("Invalid Request");
+                var userId = User.GetId();
+                if (userId == null)
+                    return BadRequest("Invalid Request");
                 // Get the listing entities from the service
-                var results = await _listingService.Search(searchString);
+                var results = await _listingService.Search(searchString, userId);
 
                 // Return a 200 response with the listingVMs
                 return Ok(results);
             }
             catch (Exception)
             {
-                return BadRequest(new { message = "There are no listing associated with {0}", searchString });
+                return BadRequest(new { message = "There are no listings associated with "+ searchString + " ."});
             }
         }
         /// <summary>
@@ -195,18 +195,18 @@ namespace MarketPlaceForYou.Api.Controllers
         /// <param name="maxPrice"></param>
         /// <returns></returns>
         [HttpGet("filter")]
-        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters([FromQuery] string? searchString=null, [FromQuery] string? city = null, [FromQuery] string? category = null, [FromQuery] string? condition = null, [FromQuery] decimal minPrice=0, [FromQuery]decimal maxPrice=0)
+        public async Task<ActionResult<List<ListingVM>>> SearchWithFilters([FromQuery] string? searchString=null, [FromQuery] Cities? city = null, [FromQuery] Categories? category = null, [FromQuery] Conditions? condition = null, [FromQuery] decimal minPrice=0, [FromQuery]decimal maxPrice=0)
         {
 
             try
             {
-                //var userId = User.GetId();
-                //if (userId == null)
-                //    return BadRequest("Invalid Request");
+                var userId = User.GetId();
+                if (userId == null)
+                    return BadRequest("Invalid Request");
                 if (minPrice > maxPrice)
                     return BadRequest("Invalid Price");
                 // Get the listing entities from the service
-                var results = await _listingService.SearchWithFilters(searchString, city, category, condition, minPrice, maxPrice);
+                var results = await _listingService.SearchWithFilters(userId, searchString, city, category, condition, minPrice, maxPrice);
 
                 // Return a 200 response with the listingVMs
                 return Ok(results);
@@ -250,8 +250,6 @@ namespace MarketPlaceForYou.Api.Controllers
         [HttpGet("deals")]
         public async Task<ActionResult<List<ListingVM>>> Deals()
         {
-            //    "message": "An exception was thrown while attempting to evaluate a LINQ query parameter expression.
-            //    See the inner exception for more information. To show additional information call 'DbContextOptionsBuilder.EnableSensitiveDataLogging'."
             try
             {
                 var userId = User.GetId();
@@ -388,10 +386,6 @@ namespace MarketPlaceForYou.Api.Controllers
 
             try
             {
-                //var userId = User.GetId();
-                //if (userId == null)
-                //    return BadRequest("Invalid Request");
-
                 // Update Listing entity from the service
                 var result = await _listingService.ConfirmPurchase(data);
 
@@ -470,17 +464,20 @@ namespace MarketPlaceForYou.Api.Controllers
         /// Updates a listing
         /// </summary>
         /// <param name="data">Listing data</param>
+        /// <param name="category"></param>
+        /// <param name="city"></param>
+        /// <param name="condition"></param>
         /// <returns>Returns the updated listing to database</returns>
         /// <response code = "200">Successfull</response>
         /// <response code = "401">User not logged in or token has expired</response>
         /// <response code = "500">Internal server issue</response>
         [HttpPut]
-        public async Task<ActionResult<ListingVM>> Update([FromBody] ListingUpdateVM data)
+        public async Task<ActionResult<ListingVM>> Update([FromBody] ListingUpdateVM data, Cities city, Categories category, Conditions condition)
         {
             try
             {
                 // Update Listing entity from the service
-                var result = await _listingService.Update(data);
+                var result = await _listingService.Update(data,city, category, condition);
 
                 // Return a 200 response with the ListingVM
                 return Ok(result);

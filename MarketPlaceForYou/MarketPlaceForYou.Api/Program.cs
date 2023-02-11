@@ -69,12 +69,29 @@ void ConfigureServices(WebApplicationBuilder builder)
         options.IncludeXmlComments(apiXmlFile);
         options.IncludeXmlComments(modelsXmlFile);
 
-        options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
+            In = ParameterLocation.Header,
+            Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter your token in the text input below.\r\n\r\nExample: \"12345abcdef\"",
+            Name = "Authorization",
             Type = SecuritySchemeType.Http,
             BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Scheme = "bearer"
+            Scheme = "Bearer"
+        });
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    },
+
+                },
+            new string[]{}
+            }
         });
     });
     AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -158,17 +175,17 @@ app.Run();
 /// <summary>
 /// Design time for migrations
 /// </summary>
-public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
-{
-    /// <summary>
-    /// Design time for migrations
-    /// </summary>
-    public MKPFYDbContext CreateDbContext(string[] args)
-    {
-        var optionsBuilder = new DbContextOptionsBuilder<MKPFYDbContext>();
-        optionsBuilder.UseNpgsql("Data Source=mkpfydb");
+//public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
+//{
+//    /// <summary>
+//    /// Design time for migrations
+//    /// </summary>
+//    public MKPFYDbContext CreateDbContext(string[] args)
+//    {
+//        var optionsBuilder = new DbContextOptionsBuilder<MKPFYDbContext>();
+//        optionsBuilder.UseNpgsql("DataSource=mkpfydb");
 
-        return new MKPFYDbContext(optionsBuilder.Options);
-    }
-}
+//        return new MKPFYDbContext(optionsBuilder.Options);
+//    }
+//}
 

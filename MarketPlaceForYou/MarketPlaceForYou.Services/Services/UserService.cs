@@ -33,9 +33,10 @@ namespace MarketPlaceForYou.Services.Services
         //    _uow.Users.Select
         //}
 
-        public async Task<UserVM> Create(UserAddVM src)
+        public async Task<UserVM> Create(UserAddVM src, string userId)
         {
             var newEntity = new User(src);
+            newEntity.Id = userId;
             _uow.Users.Create(newEntity);
             await _uow.SaveAsync();
 

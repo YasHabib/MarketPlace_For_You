@@ -24,38 +24,43 @@ namespace MarketPlaceForYou.Models.ViewModels.Listing
         /// </summary>
         [Required]
         public string Description { get; set; } = string.Empty ;
-        /// <summary>
-        /// Category of the listing
-        /// </summary>
-        [Required]
-        public string Category { get; set; } = String.Empty ;
-        /// <summary>
-        /// Condition of the listing
-        /// </summary>
-        [Required]
-        public string Condition { get; set; } = string.Empty;
+
+        ///// <summary>
+        ///// Category of the listing
+        ///// </summary>
+        //[Required]
+        //public Categories Category { get; set; }
+
+        ///// <summary>
+        ///// Condition of the listing
+        ///// </summary>
+        //[Required]
+        //public string Condition { get; set; }
+
         /// <summary>
         /// Price of the listing
         /// </summary>
         [Required]
         public decimal Price { get; set; }
+
         /// <summary>
         /// Address of the lister
         /// </summary>
         [Required]
         public string Address { get; set; } = string.Empty;
-        /// <summary>
-        /// City of the lister
-        /// </summary>
-        [Required]
-        public string City { get; set; } = string.Empty;
+
+        ///// <summary>
+        ///// City of the lister
+        ///// </summary>
+        //[Required]
+        //public Cities City { get; set; }
 
         /// <summary>
         /// Allowing listing to have max 5 of uploads
         /// </summary>
         [Required]
         [MaxLength(5)]
-        public ICollection<Guid> UploadIds { get; set; }
+        public ICollection<Guid>? UploadIds { get; set; }
 
     }
 }

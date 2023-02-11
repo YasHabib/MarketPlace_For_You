@@ -12,7 +12,7 @@ namespace MarketPlaceForYou.Api.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class UploadController : ControllerBase
     {
         private readonly IUploadService _uploadService;
