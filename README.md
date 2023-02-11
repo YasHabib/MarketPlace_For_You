@@ -11,7 +11,7 @@ Navigate to: https://marketforyou-upgrade.us.auth0.com/authorize?audience=http:/
 To test admin endpoints (marked with AP in front of the controller): use the following credential:<br>
 Email: yasin.habib1992+admin@gmail.com<br>
 Password: Test@123<br>
-Click Accept and copy the access token<br>
+Click Continue and Accept and copy the access token (this will be either on the address bar or in the browser window<br>
 Click on Authorize on Swagger UI and paste the token **without** putting Bearer in-front. <br><br>
 
 To test other endpoints, you can use the same credential or a different one: <br>
