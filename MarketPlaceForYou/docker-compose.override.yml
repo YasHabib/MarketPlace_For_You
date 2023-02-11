@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  marketplaceforyou.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=marketplaceforyou.db;Database=mkpfydb;User Id=dbuseryasin;password=launchpadmay2022project
+    ports:
+      - "80"
+      - "443"
