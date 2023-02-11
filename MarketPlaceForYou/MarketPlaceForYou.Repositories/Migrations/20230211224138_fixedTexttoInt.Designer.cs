@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlaceForYou.Repositories.Migrations
 {
     [DbContext(typeof(MKPFYDbContext))]
-    [Migration("20220914012837_AddIsDeletedForListing")]
-    partial class AddIsDeletedForListing
+    [Migration("20230211224138_fixedTexttoInt")]
+    partial class fixedTexttoInt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,20 +56,17 @@ namespace MarketPlaceForYou.Repositories.Migrations
                     b.Property<string>("BuyerID")
                         .HasColumnType("text");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("City")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("Condition")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Condition")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -86,7 +83,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Purchased")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -118,7 +115,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime?>("SentDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -136,7 +133,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("SearchedDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -181,7 +178,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MarketPlaceForYou.Repositories.Migrations
 {
-    public partial class Initial : Migration
+    public partial class reInitialized : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: false),
-                    SentDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    SentDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     IsRead = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -42,7 +42,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     SearchString = table.Column<string>(type: "text", nullable: false),
-                    SearchedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    SearchedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -61,7 +61,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                     Address = table.Column<string>(type: "text", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
                     City = table.Column<string>(type: "text", nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     IsBlocked = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -77,14 +77,15 @@ namespace MarketPlaceForYou.Repositories.Migrations
                     UserId = table.Column<string>(type: "text", nullable: false),
                     ProdName = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    Category = table.Column<string>(type: "text", nullable: false),
-                    Condition = table.Column<string>(type: "text", nullable: false),
+                    Category = table.Column<int>(type: "integer", nullable: false),
+                    Condition = table.Column<int>(type: "USING 'Condition'::integer", nullable: false),
                     Price = table.Column<decimal>(type: "money", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
-                    City = table.Column<string>(type: "text", nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    City = table.Column<int>(type: "integer", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: false),
-                    Purchased = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    Purchased = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     BuyerID = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

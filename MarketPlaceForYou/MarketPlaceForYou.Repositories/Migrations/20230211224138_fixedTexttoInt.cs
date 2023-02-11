@@ -4,7 +4,7 @@
 
 namespace MarketPlaceForYou.Repositories.Migrations
 {
-    public partial class Update : Migration
+    public partial class fixedTexttoInt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

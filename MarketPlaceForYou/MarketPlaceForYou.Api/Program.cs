@@ -172,9 +172,6 @@ app.Run();
 
 
 
-/// <summary>
-/// Design time for migrations
-/// </summary>
 //public class DesignTimeMKPFYtFactory : IDesignTimeDbContextFactory<MKPFYDbContext>
 //{
 //    /// <summary>
@@ -183,7 +180,7 @@ app.Run();
 //    public MKPFYDbContext CreateDbContext(string[] args)
 //    {
 //        var optionsBuilder = new DbContextOptionsBuilder<MKPFYDbContext>();
-//        optionsBuilder.UseNpgsql("DataSource=mkpfydb");
+//        optionsBuilder.UseNpgsql("Data Source=mkpfydb");
 
 //        return new MKPFYDbContext(optionsBuilder.Options);
 //    }
