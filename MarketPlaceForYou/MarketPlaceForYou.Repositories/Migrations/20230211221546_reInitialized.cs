@@ -78,7 +78,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                     ProdName = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Category = table.Column<int>(type: "integer", nullable: false),
-                    Condition = table.Column<int>(type: "USING 'Condition'::integer", nullable: false),
+                    Condition = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "money", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
                     City = table.Column<int>(type: "integer", nullable: false),
