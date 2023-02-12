@@ -16,26 +16,6 @@ namespace MarketPlaceForYou.Models.Entities
 /// </summary>
     public class Listing : BaseEntity<Guid>,IDated
     {
-        public enum Categories
-        {
-            Cars_And_Vehicle,
-            Electronics,
-            Real_Estate,
-            Furniture
-        }
-
-        public enum Cities
-        {
-            Calgary,
-            Brooks,
-            Canmore
-        }
-
-        public enum Conditions
-        {
-            New,
-            Used
-        }
 
         //empty constructor
         /// <summary>
@@ -58,6 +38,27 @@ namespace MarketPlaceForYou.Models.Entities
             UserId = userId;
             //Uploads is set under ListingService/Create, or alternatively
             //Uploads = addListing.UploadIds.Select(id => new Upload { Id = id }).ToList();
+        }
+
+        public enum Categories
+        {
+            Cars_And_Vehicle,
+            Electronics,
+            Real_Estate,
+            Furniture
+        }
+
+        public enum Cities
+        {
+            Calgary,
+            Brooks,
+            Canmore
+        }
+
+        public enum Conditions
+        {
+            New,
+            Used
         }
 
         /// <summary>
@@ -90,6 +91,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Category
         /// </summary>
+        [Column(TypeName ="int")]
         [Required]
         public Categories Category { get; set; }
 
