@@ -2,8 +2,8 @@
 
 To start the project, clone the project into your drive. Set Docker Compose as your startup project. <br>
 Start debugging<br>
-Swagger UI should open automatically upon starting docker-compose<br>
-If not, to open swagger ui, launch http://localhost:35010/swagger/index.html into your web browser. **Swagger UI is not set to automatically upon upon debugging**. Make sure docker is installed and marketplaceforyou.api and marketplaceforyou.db is running.<br><br>
+Swagger UI should open automatically upon starting Docker-Compose<br>
+If not, to open swagger ui, launch http://localhost:35010/swagger/index.html into your web browser. Make sure docker is installed and marketplaceforyou.api and marketplaceforyou.db is running.<br><br>
 
 **Getting access token to test the endpoints**<br>
 Open a cognito window on your browser.
@@ -14,9 +14,7 @@ Password: Test@123<br>
 Click Continue and Accept and copy the access token (this will be either on the address bar or in the browser window<br>
 Click on Authorize on Swagger UI and paste the token **without** putting Bearer in-front. <br><br>
 
-To test other endpoints, you can use the same credential or a different one: <br>
-Email: yasin.habib1992+user1@gmail.com<br>
-Password: Test@123<br>
+All test data are stored in local drive, so upon execuring an API, you will get a 200 response with an empty response.<br>
 
 
 **important**<br><br>
