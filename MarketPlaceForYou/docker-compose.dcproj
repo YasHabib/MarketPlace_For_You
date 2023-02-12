@@ -8,6 +8,7 @@
   <PropertyGroup>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>http://localhost:35010/swagger/index.html</DockerServiceUrl>
+    <DockerServiceName>marketplaceforyou.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

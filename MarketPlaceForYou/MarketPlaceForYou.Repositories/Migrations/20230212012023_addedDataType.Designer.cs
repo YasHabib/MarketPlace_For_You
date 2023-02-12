@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MarketPlaceForYou.Repositories.Migrations
 {
     [DbContext(typeof(MKPFYDbContext))]
-    [Migration("20230212001620_changedColumnTypeToInt")]
-    partial class changedColumnTypeToInt
+    [Migration("20230212012023_addedDataType")]
+    partial class addedDataType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,7 +57,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("Category")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("City")
                         .HasColumnType("integer");

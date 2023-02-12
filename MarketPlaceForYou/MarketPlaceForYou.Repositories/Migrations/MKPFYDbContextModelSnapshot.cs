@@ -38,7 +38,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FAQs");
+                    b.ToTable("FAQs", (string)null);
                 });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>
@@ -55,7 +55,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("Category")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("City")
                         .HasColumnType("integer");
@@ -97,7 +97,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Listings");
+                    b.ToTable("Listings", (string)null);
                 });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Notification", b =>
@@ -117,7 +117,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notification");
+                    b.ToTable("Notification", (string)null);
                 });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.SearchInput", b =>
@@ -139,7 +139,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SearchInputs");
+                    b.ToTable("SearchInputs", (string)null);
                 });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Upload", b =>
@@ -159,7 +159,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
                     b.HasIndex("ListingId");
 
-                    b.ToTable("Uploads");
+                    b.ToTable("Uploads", (string)null);
                 });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.User", b =>
@@ -202,7 +202,7 @@ namespace MarketPlaceForYou.Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("MarketPlaceForYou.Models.Entities.Listing", b =>

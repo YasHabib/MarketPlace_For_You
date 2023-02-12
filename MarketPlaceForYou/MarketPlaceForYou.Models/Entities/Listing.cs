@@ -1,6 +1,8 @@
 ﻿using MarketPlaceForYou.Models.Entities.Interfaces;
 using MarketPlaceForYou.Models.ViewModels.Listing;
 using MarketPlaceForYou.Models.ViewModels.Upload;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace MarketPlaceForYou.Models.Entities
@@ -39,7 +42,7 @@ namespace MarketPlaceForYou.Models.Entities
             //Uploads is set under ListingService/Create, or alternatively
             //Uploads = addListing.UploadIds.Select(id => new Upload { Id = id }).ToList();
         }
-
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public enum Categories
         {
             Cars_And_Vehicle,
@@ -47,7 +50,7 @@ namespace MarketPlaceForYou.Models.Entities
             Real_Estate,
             Furniture
         }
-
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public enum Cities
         {
             Calgary,
@@ -55,6 +58,7 @@ namespace MarketPlaceForYou.Models.Entities
             Canmore
         }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public enum Conditions
         {
             New,
@@ -91,13 +95,14 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// Category
         /// </summary>
-        [Column(TypeName ="int")]
+        [Column(TypeName = "integer USING CAST(Category AS integer)")]
         [Required]
         public Categories Category { get; set; }
 
         /// <summary>
         /// COndition
         /// </summary>
+        [Column(TypeName = "integer USING CAST(Condition AS integer)")]
         [Required]
         public Conditions Condition { get; set; }
 
@@ -117,6 +122,7 @@ namespace MarketPlaceForYou.Models.Entities
         /// <summary>
         /// City
         /// </summary>
+        [Column(TypeName = "integer USING CAST(City AS integer)")]
         [Required]
         public Cities City { get; set; }
 
